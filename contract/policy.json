@@ -1,0 +1,650 @@
+{
+  "version": 1,
+  "operations": [
+    {
+      "sourcePath": "/api/llms",
+      "path": "/api/v1/llms",
+      "method": "get",
+      "operationId": "listLlms"
+    },
+    {
+      "sourcePath": "/api/llms",
+      "path": "/api/v1/llms",
+      "method": "post",
+      "operationId": "createLlm"
+    },
+    {
+      "sourcePath": "/api/llms/{llmId}",
+      "path": "/api/v1/llms/{llmId}",
+      "method": "get",
+      "operationId": "getLlm"
+    },
+    {
+      "sourcePath": "/api/llms/{llmId}",
+      "path": "/api/v1/llms/{llmId}",
+      "method": "patch",
+      "operationId": "updateLlm"
+    },
+    {
+      "sourcePath": "/api/llms/{llmId}",
+      "path": "/api/v1/llms/{llmId}",
+      "method": "delete",
+      "operationId": "deleteLlm"
+    },
+    {
+      "sourcePath": "/api/agents",
+      "path": "/api/v1/agents",
+      "method": "get",
+      "operationId": "listAgents"
+    },
+    {
+      "sourcePath": "/api/agents",
+      "path": "/api/v1/agents",
+      "method": "post",
+      "operationId": "createAgent"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}",
+      "path": "/api/v1/agents/{agentId}",
+      "method": "get",
+      "operationId": "getAgent"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}",
+      "path": "/api/v1/agents/{agentId}",
+      "method": "patch",
+      "operationId": "updateAgent"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}",
+      "path": "/api/v1/agents/{agentId}",
+      "method": "delete",
+      "operationId": "deleteAgent"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/versions",
+      "path": "/api/v1/agents/{agentId}/versions",
+      "method": "get",
+      "operationId": "listAgentVersions"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/versions",
+      "path": "/api/v1/agents/{agentId}/versions",
+      "method": "post",
+      "operationId": "createAgentDraftVersion"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/versions/{version}/publish",
+      "path": "/api/v1/agents/{agentId}/versions/{version}/publish",
+      "method": "post",
+      "operationId": "publishAgentVersion"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/versions/{version}",
+      "path": "/api/v1/agents/{agentId}/versions/{version}",
+      "method": "delete",
+      "operationId": "deleteAgentVersion"
+    },
+    {
+      "sourcePath": "/api/chat-agents",
+      "path": "/api/v1/chat-agents",
+      "method": "get",
+      "operationId": "listChatAgents"
+    },
+    {
+      "sourcePath": "/api/chat-agents",
+      "path": "/api/v1/chat-agents",
+      "method": "post",
+      "operationId": "createChatAgent"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}",
+      "path": "/api/v1/chat-agents/{agentId}",
+      "method": "get",
+      "operationId": "getChatAgent"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}",
+      "path": "/api/v1/chat-agents/{agentId}",
+      "method": "patch",
+      "operationId": "updateChatAgent"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}",
+      "path": "/api/v1/chat-agents/{agentId}",
+      "method": "delete",
+      "operationId": "deleteChatAgent"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/versions",
+      "path": "/api/v1/chat-agents/{agentId}/versions",
+      "method": "get",
+      "operationId": "listChatAgentVersions"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/versions",
+      "path": "/api/v1/chat-agents/{agentId}/versions",
+      "method": "post",
+      "operationId": "createChatAgentDraftVersion"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/versions/{version}/publish",
+      "path": "/api/v1/chat-agents/{agentId}/versions/{version}/publish",
+      "method": "post",
+      "operationId": "publishChatAgentVersion"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/versions/{version}",
+      "path": "/api/v1/chat-agents/{agentId}/versions/{version}",
+      "method": "delete",
+      "operationId": "deleteChatAgentVersion"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/publish",
+      "path": "/api/v1/chat-agents/{agentId}/publish",
+      "method": "post",
+      "operationId": "publishChatAgentVersionFiltered"
+    },
+    {
+      "sourcePath": "/api/chats",
+      "path": "/api/v1/chats",
+      "method": "get",
+      "operationId": "listChats"
+    },
+    {
+      "sourcePath": "/api/chats",
+      "path": "/api/v1/chats",
+      "method": "post",
+      "operationId": "createChat"
+    },
+    {
+      "sourcePath": "/api/chats/outbound-sms",
+      "path": "/api/v1/chats/outbound-sms",
+      "method": "post",
+      "operationId": "createOutboundSmsChat"
+    },
+    {
+      "sourcePath": "/api/chats/{chatId}",
+      "path": "/api/v1/chats/{chatId}",
+      "method": "get",
+      "operationId": "getChat"
+    },
+    {
+      "sourcePath": "/api/chats/{chatId}",
+      "path": "/api/v1/chats/{chatId}",
+      "method": "patch",
+      "operationId": "updateChat"
+    },
+    {
+      "sourcePath": "/api/chats/{chatId}/completions",
+      "path": "/api/v1/chats/{chatId}/completions",
+      "method": "post",
+      "operationId": "createChatCompletion"
+    },
+    {
+      "sourcePath": "/api/chats/{chatId}/end",
+      "path": "/api/v1/chats/{chatId}/end",
+      "method": "post",
+      "operationId": "endChat"
+    },
+    {
+      "sourcePath": "/api/v1/chat-widgets",
+      "path": "/api/v1/chat-widgets",
+      "method": "get",
+      "operationId": "listChatWidgets"
+    },
+    {
+      "sourcePath": "/api/v1/chat-widgets",
+      "path": "/api/v1/chat-widgets",
+      "method": "post",
+      "operationId": "createChatWidget"
+    },
+    {
+      "sourcePath": "/api/v1/chat-widgets/{widgetId}",
+      "path": "/api/v1/chat-widgets/{widgetId}",
+      "method": "get",
+      "operationId": "getChatWidget"
+    },
+    {
+      "sourcePath": "/api/v1/chat-widgets/{widgetId}",
+      "path": "/api/v1/chat-widgets/{widgetId}",
+      "method": "patch",
+      "operationId": "updateChatWidget"
+    },
+    {
+      "sourcePath": "/api/v1/chat-widgets/{widgetId}/regenerate-key",
+      "path": "/api/v1/chat-widgets/{widgetId}/regenerate-key",
+      "method": "post",
+      "operationId": "regenerateWidgetKey"
+    },
+    {
+      "sourcePath": "/api/conversation-flows",
+      "path": "/api/v1/conversation-flows",
+      "method": "get",
+      "operationId": "listConversationFlows"
+    },
+    {
+      "sourcePath": "/api/conversation-flows",
+      "path": "/api/v1/conversation-flows",
+      "method": "post",
+      "operationId": "createConversationFlow"
+    },
+    {
+      "sourcePath": "/api/conversation-flows/{conversationFlowId}",
+      "path": "/api/v1/conversation-flows/{conversationFlowId}",
+      "method": "get",
+      "operationId": "getConversationFlow"
+    },
+    {
+      "sourcePath": "/api/conversation-flows/{conversationFlowId}",
+      "path": "/api/v1/conversation-flows/{conversationFlowId}",
+      "method": "patch",
+      "operationId": "updateConversationFlow"
+    },
+    {
+      "sourcePath": "/api/conversation-flows/{conversationFlowId}",
+      "path": "/api/v1/conversation-flows/{conversationFlowId}",
+      "method": "delete",
+      "operationId": "deleteConversationFlow"
+    },
+    {
+      "sourcePath": "/api/knowledge-bases",
+      "path": "/api/v1/knowledge-bases",
+      "method": "get",
+      "operationId": "listKnowledgeBases"
+    },
+    {
+      "sourcePath": "/api/knowledge-bases",
+      "path": "/api/v1/knowledge-bases",
+      "method": "post",
+      "operationId": "createKnowledgeBase"
+    },
+    {
+      "sourcePath": "/api/knowledge-bases/{knowledgeBaseId}",
+      "path": "/api/v1/knowledge-bases/{knowledgeBaseId}",
+      "method": "get",
+      "operationId": "getKnowledgeBase"
+    },
+    {
+      "sourcePath": "/api/knowledge-bases/{knowledgeBaseId}",
+      "path": "/api/v1/knowledge-bases/{knowledgeBaseId}",
+      "method": "delete",
+      "operationId": "deleteKnowledgeBase"
+    },
+    {
+      "sourcePath": "/api/knowledge-bases/{knowledgeBaseId}/sources",
+      "path": "/api/v1/knowledge-bases/{knowledgeBaseId}/sources",
+      "method": "post",
+      "operationId": "addKnowledgeBaseSources"
+    },
+    {
+      "sourcePath": "/api/knowledge-bases/{knowledgeBaseId}/sources/{sourceId}",
+      "path": "/api/v1/knowledge-bases/{knowledgeBaseId}/sources/{sourceId}",
+      "method": "delete",
+      "operationId": "deleteKnowledgeBaseSource"
+    },
+    {
+      "sourcePath": "/api/voices",
+      "path": "/api/v1/voices",
+      "method": "get",
+      "operationId": "listVoices"
+    },
+    {
+      "sourcePath": "/api/voices/search",
+      "path": "/api/v1/voices/search",
+      "method": "post",
+      "operationId": "searchCommunityVoices"
+    },
+    {
+      "sourcePath": "/api/voices/community",
+      "path": "/api/v1/voices/community",
+      "method": "post",
+      "operationId": "addCommunityVoice"
+    },
+    {
+      "sourcePath": "/api/voices/clone",
+      "path": "/api/v1/voices/clone",
+      "method": "post",
+      "operationId": "cloneVoice"
+    },
+    {
+      "sourcePath": "/api/voices/{voiceId}",
+      "path": "/api/v1/voices/{voiceId}",
+      "method": "get",
+      "operationId": "getVoice"
+    },
+    {
+      "sourcePath": "/api/voices/{voiceId}/sample",
+      "path": "/api/v1/voices/{voiceId}/sample",
+      "method": "get",
+      "operationId": "streamVoiceSample"
+    },
+    {
+      "sourcePath": "/api/test-case-definitions",
+      "path": "/api/v1/test-case-definitions",
+      "method": "get",
+      "operationId": "listTestCaseDefinitions"
+    },
+    {
+      "sourcePath": "/api/test-case-definitions",
+      "path": "/api/v1/test-case-definitions",
+      "method": "post",
+      "operationId": "createTestCaseDefinition"
+    },
+    {
+      "sourcePath": "/api/batch-tests",
+      "path": "/api/v1/batch-tests",
+      "method": "get",
+      "operationId": "listBatchTests"
+    },
+    {
+      "sourcePath": "/api/batch-tests",
+      "path": "/api/v1/batch-tests",
+      "method": "post",
+      "operationId": "createBatchTest"
+    },
+    {
+      "sourcePath": "/api/batch-tests/{testCaseBatchJobId}",
+      "path": "/api/v1/batch-tests/{testCaseBatchJobId}",
+      "method": "get",
+      "operationId": "getBatchTest"
+    },
+    {
+      "sourcePath": "/api/test-case-definitions/{testCaseDefinitionId}",
+      "path": "/api/v1/test-case-definitions/{testCaseDefinitionId}",
+      "method": "get",
+      "operationId": "getTestCaseDefinition"
+    },
+    {
+      "sourcePath": "/api/test-case-definitions/{testCaseDefinitionId}",
+      "path": "/api/v1/test-case-definitions/{testCaseDefinitionId}",
+      "method": "put",
+      "operationId": "updateTestCaseDefinition"
+    },
+    {
+      "sourcePath": "/api/test-case-definitions/{testCaseDefinitionId}",
+      "path": "/api/v1/test-case-definitions/{testCaseDefinitionId}",
+      "method": "delete",
+      "operationId": "deleteTestCaseDefinition"
+    },
+    {
+      "sourcePath": "/api/test-runs/{testCaseJobId}",
+      "path": "/api/v1/test-runs/{testCaseJobId}",
+      "method": "get",
+      "operationId": "getTestRun"
+    },
+    {
+      "sourcePath": "/api/test-runs/batches/{testCaseBatchJobId}",
+      "path": "/api/v1/test-runs/batches/{testCaseBatchJobId}",
+      "method": "get",
+      "operationId": "listTestRunsByBatch"
+    },
+    {
+      "sourcePath": "/api/concurrency",
+      "path": "/api/v1/concurrency",
+      "method": "get",
+      "operationId": "getConcurrency"
+    },
+    {
+      "sourcePath": "/api/workspaces",
+      "path": "/api/v1/workspaces",
+      "method": "get",
+      "operationId": "listWorkspaces"
+    },
+    {
+      "sourcePath": "/api/v1/calls/initiate",
+      "path": "/api/v1/calls/initiate",
+      "method": "post",
+      "operationId": "createPhoneCall"
+    },
+    {
+      "sourcePath": "/api/calls/web",
+      "path": "/api/v1/calls/web",
+      "method": "post",
+      "operationId": "createWebCall"
+    },
+    {
+      "sourcePath": "/api/v1/calls",
+      "path": "/api/v1/calls",
+      "method": "get",
+      "operationId": "listCalls"
+    },
+    {
+      "sourcePath": "/api/v1/calls/list",
+      "path": "/api/v1/calls/list",
+      "method": "post",
+      "operationId": "listCallsFiltered"
+    },
+    {
+      "sourcePath": "/api/v1/calls/history",
+      "path": "/api/v1/calls/history",
+      "method": "get",
+      "operationId": "fetchCallHistory"
+    },
+    {
+      "sourcePath": "/api/v1/calls/{callId}",
+      "path": "/api/v1/calls/{callId}",
+      "method": "get",
+      "operationId": "getCall"
+    },
+    {
+      "sourcePath": "/api/calls/{callId}",
+      "path": "/api/v1/calls/{callId}",
+      "method": "patch",
+      "operationId": "updateCall"
+    },
+    {
+      "sourcePath": "/api/calls/{callId}/end",
+      "path": "/api/v1/calls/{callId}/end",
+      "method": "post",
+      "operationId": "endLiveCall"
+    },
+    {
+      "sourcePath": "/api/calls/{callId}/live",
+      "path": "/api/v1/calls/{callId}/live",
+      "method": "patch",
+      "operationId": "updateLiveCall"
+    },
+    {
+      "sourcePath": "/api/calls/{callId}/analysis/rerun",
+      "path": "/api/v1/calls/{callId}/analysis/rerun",
+      "method": "put",
+      "operationId": "rerunCallAnalysis"
+    }
+  ],
+  "components": {
+    "parameters": [
+      "WorkspaceIdQuery",
+      "WorkspaceIdQueryOptional",
+      "LimitQuery",
+      "LimitQueryDefault20",
+      "PageQuery",
+      "PaginationKeyQuery",
+      "PaginationKeyVersionQuery",
+      "VersionQuery",
+      "VersionPath",
+      "AgentIdPath",
+      "AgentIdQuery",
+      "AgentVersionQuery",
+      "CallIdPath",
+      "ChatIdPath",
+      "WidgetIdPath",
+      "ConversationFlowIdPath",
+      "ConversationFlowIdQuery",
+      "KnowledgeBaseIdPath",
+      "SourceIdPath",
+      "VoiceIdPath",
+      "LlmIdPath",
+      "LlmIdQuery",
+      "TestCaseDefinitionIdPath",
+      "TestCaseJobIdPath",
+      "TestCaseBatchJobIdPath",
+      "TestCaseDefinitionTypeQuery",
+      "StatusQuery",
+      "SortOrderQuery",
+      "SearchQuery",
+      "FromDateQuery",
+      "ToDateQuery",
+      "IncludeArchivedQuery",
+      "IncludeChildCallsQuery"
+    ],
+    "schemas": [
+      "LlmSummary",
+      "Llm",
+      "Tool",
+      "LlmTool",
+      "TransferCallTool",
+      "TransferDestination",
+      "TransferDestinationPredefined",
+      "TransferDestinationInferred",
+      "TransferOption",
+      "TransferOptionColdTransfer",
+      "TransferOptionWarmTransfer",
+      "TransferOptionAgenticWarmTransfer",
+      "WarmTransferHandoffOption",
+      "WarmTransferPrompt",
+      "WarmTransferStaticMessage",
+      "EndCallTool",
+      "BridgeTransferTool",
+      "CancelTransferTool",
+      "CustomFunctionTool",
+      "LlmState",
+      "LlmStateEdge",
+      "McpConnection",
+      "CreateLlmRequest",
+      "UpdateLlmRequest",
+      "AgentSummary",
+      "Agent",
+      "ResponseEngine",
+      "VoiceModel",
+      "CustomSttConfig",
+      "CreateAgentRequest",
+      "UpdateAgentRequest",
+      "AgentVersion",
+      "ChatResponseEngine",
+      "ChatAgentAnalysisField",
+      "ChatAgentVersion",
+      "ChatAgentSummary",
+      "ChatAgent",
+      "ChatAgentListEnvelope",
+      "ChatAgentListResponse",
+      "ChatAgentVersionListResponse",
+      "CreateAgentVersionRequest",
+      "PublishAgentVersionRequest",
+      "CreateChatAgentRequest",
+      "UpdateChatAgentRequest",
+      "ChatMessage",
+      "Chat",
+      "ChatListEnvelope",
+      "ChatListResponse",
+      "CreateChatRequest",
+      "CreateOutboundSmsChatRequest",
+      "UpdateChatRequest",
+      "CreateChatCompletionRequest",
+      "ChatCompletionResponse",
+      "ChatWidgetConfig",
+      "CreateChatWidgetRequest",
+      "UpdateChatWidgetRequest",
+      "ConversationFlowSummary",
+      "ConversationFlow",
+      "ModelChoice",
+      "ConversationNode",
+      "Instruction",
+      "ConversationEdge",
+      "CreateConversationFlowRequest",
+      "UpdateConversationFlowRequest",
+      "KnowledgeBaseSummary",
+      "KnowledgeBase",
+      "KnowledgeBaseSource",
+      "KnowledgeBaseSourceDocument",
+      "KnowledgeBaseSourceText",
+      "KnowledgeBaseSourceUrl",
+      "CreateKnowledgeBaseRequest",
+      "KnowledgeBaseSourceInput",
+      "AddKnowledgeBaseSourcesRequest",
+      "Voice",
+      "SearchCommunityVoiceRequest",
+      "SearchCommunityVoiceItem",
+      "SearchCommunityVoiceResponse",
+      "AddCommunityVoiceRequest",
+      "CloneVoiceRequest",
+      "TestResponseEngine",
+      "TestCaseDefinitionInput",
+      "TestCaseDefinition",
+      "CreateTestCaseDefinitionRequest",
+      "UpdateTestCaseDefinitionRequest",
+      "BatchTest",
+      "CreateBatchTestRequest",
+      "TestRun",
+      "Concurrency",
+      "CreateWebCallRequest",
+      "WebCall",
+      "CreatePhoneCallRequest",
+      "CreatePhoneCallResponse",
+      "CallDetail",
+      "CallRecord",
+      "CallList",
+      "V3ListCallsRequest",
+      "V3ListCallsResponse",
+      "CallFilter",
+      "AgentFilter",
+      "EnumFilter",
+      "StringFilter",
+      "BooleanFilter",
+      "NumberFilter",
+      "RangeFilter",
+      "V3CallResponse",
+      "V3WebCallResponse",
+      "V3PhoneCallResponse",
+      "V3CallBase",
+      "CallHistoryCosts",
+      "CallHistoryRecord",
+      "CallHistoryFilters",
+      "CallHistoryList",
+      "UpdateCallRequest",
+      "CallActionWorkspaceRequest",
+      "EndLiveCallResponse",
+      "UpdateLiveCallFields",
+      "LiveCallControl",
+      "LiveCallListenControl",
+      "UpdateLiveCallRequest",
+      "UpdateLiveCallResponse",
+      "RerunCallAnalysisResponse",
+      "CallAgentOverrideRequest",
+      "CallAgentConfigOverride",
+      "CallLlmOverride",
+      "CallConversationFlowOverride",
+      "WorkspaceSummary"
+    ]
+  },
+  "tags": [
+    "LLM Models",
+    "Agents",
+    "Chat Agents",
+    "Chats",
+    "Chat Widgets",
+    "Conversation Flows",
+    "Knowledge Bases",
+    "Voices",
+    "Test Case Definitions",
+    "Batch Tests",
+    "Test Runs",
+    "Account",
+    "Calls"
+  ],
+  "families": [
+    "llms",
+    "agents",
+    "chat-agents",
+    "chats",
+    "conversation-flows",
+    "knowledge-bases",
+    "voices",
+    "test-case-definitions",
+    "batch-tests",
+    "test-runs",
+    "concurrency",
+    "workspaces",
+    "calls"
+  ]
+}

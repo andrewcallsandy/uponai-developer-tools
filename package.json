@@ -1,0 +1,25 @@
+{
+  "name": "uponai-developer-tools",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.14"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "npm run generate && tsc -b packages/sdk packages/mcp-server",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "check": "npm test && npm run typecheck:consumer && node scripts/check-release.mjs",
+    "pack:release": "node scripts/pack.mjs",
+    "typecheck:consumer": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ES2022 test/types.ts"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "22.19.15",
+    "openapi-typescript": "7.13.0"
+  }
+}

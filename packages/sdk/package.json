@@ -1,0 +1,43 @@
+{
+  "name": "@upon-ai/sdk",
+  "version": "0.1.0",
+  "description": "Typed customer API client for UponAI",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "author": "UponAI",
+  "homepage": "https://docs.uponai.com",
+  "keywords": [
+    "uponai",
+    "api",
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewcallsandy/uponai-developer-tools.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/andrewcallsandy/uponai-developer-tools/issues"
+  }
+}

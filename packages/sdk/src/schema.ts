@@ -1,0 +1,4887 @@
+export interface paths {
+    "/api/v1/llms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List LLMs
+         * @description Enumerate the UponAI LLM configurations available to a workspace. Results are returned newest first.
+         */
+        get: operations["listLlms"];
+        put?: never;
+        /**
+         * Create LLM
+         * @description Provision a new UponAI large language model configuration.
+         */
+        post: operations["createLlm"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/llms/{llmId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description LLM identifier. */
+                llmId: components["parameters"]["LlmIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get LLM
+         * @description Retrieve the latest or a specific version of an LLM configuration.
+         */
+        get: operations["getLlm"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete LLM
+         * @description Permanently delete an LLM configuration and its versions.
+         */
+        delete: operations["deleteLlm"];
+        options?: never;
+        head?: never;
+        /**
+         * Update LLM
+         * @description Apply partial updates to an existing LLM configuration.
+         */
+        patch: operations["updateLlm"];
+        trace?: never;
+    };
+    "/api/v1/agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List agents
+         * @description List agents created inside a workspace.
+         */
+        get: operations["listAgents"];
+        put?: never;
+        /**
+         * Create agent
+         * @description Create a new UponAI agent for use in calls and web sessions.
+         */
+        post: operations["createAgent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get agent
+         * @description Retrieve the active configuration or a historical version of an agent.
+         */
+        get: operations["getAgent"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete agent
+         * @description Permanently remove an agent and all saved versions.
+         */
+        delete: operations["deleteAgent"];
+        options?: never;
+        head?: never;
+        /**
+         * Update agent
+         * @description Apply partial updates to an existing agent configuration.
+         */
+        patch: operations["updateAgent"];
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List agent versions
+         * @description Review the revision history for an agent.
+         */
+        get: operations["listAgentVersions"];
+        put?: never;
+        /**
+         * Create agent draft version
+         * @description Create a new editable draft from an existing agent version.
+         */
+        post: operations["createAgentDraftVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/versions/{version}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish agent version
+         * @description Publish one existing draft version in place.
+         */
+        post: operations["publishAgentVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete agent version
+         * @description Delete one specific agent version.
+         */
+        delete: operations["deleteAgentVersion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List chat agents
+         * @description List chat agents created inside a workspace.
+         */
+        get: operations["listChatAgents"];
+        put?: never;
+        /**
+         * Create chat agent
+         * @description Create a new UponAI chat agent for browser and messaging use cases.
+         */
+        post: operations["createChatAgent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get chat agent
+         * @description Retrieve the active configuration or a historical version of a chat agent.
+         */
+        get: operations["getChatAgent"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete chat agent
+         * @description Permanently remove a chat agent and all saved versions.
+         */
+        delete: operations["deleteChatAgent"];
+        options?: never;
+        head?: never;
+        /**
+         * Update chat agent
+         * @description Apply partial updates to an existing chat agent configuration.
+         */
+        patch: operations["updateChatAgent"];
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List chat agent versions
+         * @description Review the revision history for a chat agent.
+         */
+        get: operations["listChatAgentVersions"];
+        put?: never;
+        /**
+         * Create chat agent draft version
+         * @description Create a new editable draft from an existing chat agent version.
+         */
+        post: operations["createChatAgentDraftVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/versions/{version}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish chat agent version
+         * @description Publish one existing chat agent draft version in place.
+         */
+        post: operations["publishChatAgentVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete chat agent version
+         * @description Delete one specific chat agent version.
+         */
+        delete: operations["deleteChatAgentVersion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish chat agent version (legacy path)
+         * @deprecated
+         * @description Deprecated compatibility path. Publish the explicit version supplied in the request body.
+         */
+        post: operations["publishChatAgentVersionFiltered"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List chats
+         * @description List chats for a workspace, newest first by default.
+         */
+        get: operations["listChats"];
+        put?: never;
+        /**
+         * Create chat
+         * @description Start a new live chat session backed by a chat agent.
+         */
+        post: operations["createChat"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chats/outbound-sms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create outbound SMS chat
+         * @description Start an outbound SMS chat session for a workspace.
+         */
+        post: operations["createOutboundSmsChat"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chats/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get chat
+         * @description Retrieve details for a specific chat session.
+         */
+        get: operations["getChat"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update chat
+         * @description Update metadata, custom attributes, or dynamic-variable overrides for an existing chat.
+         */
+        patch: operations["updateChat"];
+        trace?: never;
+    };
+    "/api/v1/chats/{chatId}/completions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create chat completion
+         * @description Send a user message into an existing chat and receive the assistant response messages.
+         */
+        post: operations["createChatCompletion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chats/{chatId}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * End chat
+         * @description Mark a chat as completed and close the session.
+         */
+        post: operations["endChat"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-widgets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List chat widgets
+         * @description List embeddable website chat widget configurations for a workspace.
+         */
+        get: operations["listChatWidgets"];
+        put?: never;
+        /**
+         * Create chat widget
+         * @description Create a public widget key and embed configuration for a website chat widget. The returned `embedScript` is the snippet to place on the customer's website. Browser traffic uses the widget public key and calls UponAI runtime endpoints; provider credentials and provider URLs are never exposed to the website.
+         */
+        post: operations["createChatWidget"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-widgets/{widgetId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat widget configuration identifier. */
+                widgetId: components["parameters"]["WidgetIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get chat widget
+         * @description Retrieve a website chat widget configuration and its embed script.
+         */
+        get: operations["getChatWidget"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update chat widget
+         * @description Update styling, allowed origins, assigned chat agent, or enabled state for a website widget.
+         */
+        patch: operations["updateChatWidget"];
+        trace?: never;
+    };
+    "/api/v1/chat-widgets/{widgetId}/regenerate-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat widget configuration identifier. */
+                widgetId: components["parameters"]["WidgetIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Regenerate widget key
+         * @description Rotate the public widget key. Existing website embeds using the old key will stop working until the script tag is updated with the returned `embedScript`.
+         */
+        post: operations["regenerateWidgetKey"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversation-flows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List conversation flows
+         * @description Enumerate conversation flows for the workspace.
+         */
+        get: operations["listConversationFlows"];
+        put?: never;
+        /**
+         * Create conversation flow
+         * @description Compose a reusable flow graph for agents to attach to.
+         */
+        post: operations["createConversationFlow"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversation-flows/{conversationFlowId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Conversation flow identifier. */
+                conversationFlowId: components["parameters"]["ConversationFlowIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get conversation flow
+         * @description Retrieve the latest or a specific version of a conversation flow.
+         */
+        get: operations["getConversationFlow"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete conversation flow
+         * @description Remove a conversation flow and its versions.
+         */
+        delete: operations["deleteConversationFlow"];
+        options?: never;
+        head?: never;
+        /**
+         * Update conversation flow
+         * @description Apply partial updates to a conversation flow.
+         */
+        patch: operations["updateConversationFlow"];
+        trace?: never;
+    };
+    "/api/v1/knowledge-bases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List knowledge bases
+         * @description Enumerate knowledge bases available to the workspace.
+         */
+        get: operations["listKnowledgeBases"];
+        put?: never;
+        /**
+         * Create knowledge base
+         * @description Create a knowledge base and ingest documents, URLs, or free-form text for grounded responses. URL auto-refresh and chunking controls are supported when needed.
+         */
+        post: operations["createKnowledgeBase"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge-bases/{knowledgeBaseId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get knowledge base
+         * @description Retrieve knowledge base metadata and ingestion status.
+         */
+        get: operations["getKnowledgeBase"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete knowledge base
+         * @description Permanently remove a knowledge base and its sources.
+         */
+        delete: operations["deleteKnowledgeBase"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge-bases/{knowledgeBaseId}/sources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add knowledge base sources
+         * @description Append new source material to an existing knowledge base.
+         */
+        post: operations["addKnowledgeBaseSources"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge-bases/{knowledgeBaseId}/sources/{sourceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+                /** @description Knowledge base source identifier. */
+                sourceId: components["parameters"]["SourceIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete knowledge base source
+         * @description Remove a specific source entry from a knowledge base.
+         */
+        delete: operations["deleteKnowledgeBaseSource"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List voices
+         * @description Explore the UponAI voice catalog available to a workspace.
+         */
+        get: operations["listVoices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voices/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search community voices
+         * @description Search provider voice catalogs for community voices.
+         */
+        post: operations["searchCommunityVoices"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voices/community": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add community voice
+         * @description Add a provider community voice into the workspace library.
+         */
+        post: operations["addCommunityVoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voices/clone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Clone voice
+         * @description Clone a custom voice from uploaded source audio files.
+         */
+        post: operations["cloneVoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voices/{voiceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Voice identifier. */
+                voiceId: components["parameters"]["VoiceIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get voice
+         * @description Retrieve metadata for a specific voice.
+         */
+        get: operations["getVoice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voices/{voiceId}/sample": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Voice identifier. */
+                voiceId: components["parameters"]["VoiceIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Stream voice sample
+         * @description Stream an MPEG sample to preview the voice.
+         */
+        get: operations["streamVoiceSample"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/test-case-definitions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List test case definitions
+         * @description List test case definitions for a target response engine.
+         */
+        get: operations["listTestCaseDefinitions"];
+        put?: never;
+        /**
+         * Create test case definition
+         * @description Create a simulation test case definition for a response engine.
+         */
+        post: operations["createTestCaseDefinition"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batch-tests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List batch tests
+         * @description List simulation batch jobs for a target response engine.
+         */
+        get: operations["listBatchTests"];
+        put?: never;
+        /**
+         * Create batch test
+         * @description Run one or more saved simulation test case definitions against a response engine.
+         */
+        post: operations["createBatchTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batch-tests/{testCaseBatchJobId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Test run batch identifier. */
+                testCaseBatchJobId: components["parameters"]["TestCaseBatchJobIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get batch test
+         * @description Retrieve a simulation batch job by ID.
+         */
+        get: operations["getBatchTest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/test-case-definitions/{testCaseDefinitionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Test case definition identifier. */
+                testCaseDefinitionId: components["parameters"]["TestCaseDefinitionIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get test case definition
+         * @description Retrieve a single test case definition.
+         */
+        get: operations["getTestCaseDefinition"];
+        /**
+         * Update test case definition
+         * @description Update an existing test case definition.
+         */
+        put: operations["updateTestCaseDefinition"];
+        post?: never;
+        /**
+         * Delete test case definition
+         * @description Delete an existing test case definition.
+         */
+        delete: operations["deleteTestCaseDefinition"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/test-runs/{testCaseJobId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Test run job identifier. */
+                testCaseJobId: components["parameters"]["TestCaseJobIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get test run
+         * @description Retrieve a single test run result by job ID.
+         */
+        get: operations["getTestRun"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/test-runs/batches/{testCaseBatchJobId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Test run batch identifier. */
+                testCaseBatchJobId: components["parameters"]["TestCaseBatchJobIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List test runs by batch
+         * @description List all test runs associated with a batch job.
+         */
+        get: operations["listTestRunsByBatch"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/concurrency": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get concurrency
+         * @description Retrieve concurrency limits and current usage for the account.
+         */
+        get: operations["getConcurrency"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workspaces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List workspaces
+         * @description List the workspaces accessible to the bearer token. Use this endpoint to discover the workspaceId required by workspace-scoped endpoints.
+         */
+        get: operations["listWorkspaces"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls/initiate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create phone call
+         * @description Initiate a PSTN phone call via UponAI infrastructure. The workspace is inferred from the unique agentId. You may still send workspaceId for backward compatibility. Native-transfer workspaces expose the full per-call override surface, including agentOverride, overrideAgentVersion, customSipHeaders, and ignoreE164Validation.
+         */
+        post: operations["createPhoneCall"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls/web": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create web call
+         * @description Start a browser based call session powered by an UponAI agent. The workspace is inferred from the unique agentId. You may still send workspaceId for backward compatibility.
+         */
+        post: operations["createWebCall"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List calls
+         * @deprecated
+         * @description Deprecated. List calls with optional workspace, agent, status, and date filters from local call history. Use POST /api/v1/calls/list for the current cursor-compatible listing contract.
+         */
+        get: operations["listCalls"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls/list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * List calls
+         * @description List calls from local call history with the current unified pagination envelope. The response returns `items`, `has_more`, and `pagination_key`; send the returned pagination key in the next request to continue. You may include workspaceId to scope the query to one accessible workspace.
+         */
+        post: operations["listCallsFiltered"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch call history
+         * @description Return paginated call history for a single workspace, including agent and workspace metadata plus optional search and date filters.
+         */
+        get: operations["fetchCallHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls/{callId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Get call
+         * @description Retrieve details for a specific call.
+         */
+        get: operations["getCall"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update call
+         * @description Update stored metadata or opt out of sensitive data storage. The API infers workspace from stored call data when available; workspaceId remains an optional backward-compatible fallback.
+         */
+        patch: operations["updateCall"];
+        trace?: never;
+    };
+    "/api/v1/calls/{callId}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * End live call
+         * @description Immediately ends an active voice or web call. If the call is already stored in call history, the workspace is inferred from that record; otherwise provide workspaceId in the request body so the action can be scoped to the correct workspace.
+         */
+        post: operations["endLiveCall"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calls/{callId}/live": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update live call
+         * @description Applies runtime changes to an active call. You can override dynamic variables, metadata, and data storage setting, inject additional context, request a fresh agent response, and start or stop a listen-only audio stream while the call is in progress. These changes take effect immediately; metadata and data storage setting changes are also persisted to the call record. CamelCase and snake_case request field names are both accepted.
+         */
+        patch: operations["updateLiveCall"];
+        trace?: never;
+    };
+    "/api/v1/calls/{callId}/analysis/rerun": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Rerun call analysis
+         * @description Reprocess post-call analysis for a completed call. If the call is already stored in call history, the workspace is inferred from that record; otherwise provide workspaceId in the request body.
+         */
+        put: operations["rerunCallAnalysis"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+}
+export type webhooks = Record<string, never>;
+export interface components {
+    schemas: {
+        LlmSummary: {
+            llm_id: string;
+            display_name: string;
+            version: number;
+        };
+        CreateLlmRequest: {
+            workspaceId: number;
+            display_name: string;
+            model?: string;
+            /** @description Speech-to-speech model. Set either `model` or `s2s_model`, not both. */
+            s2s_model?: string | null;
+            general_prompt?: string;
+            begin_message?: string | null;
+            /** @enum {string} */
+            start_speaker?: "user" | "agent";
+            begin_after_user_silence_ms?: number | null;
+            responsiveness?: string;
+            model_temperature?: number;
+            model_high_priority?: boolean;
+            tool_call_strict_mode?: boolean;
+            knowledge_base_ids?: string[];
+            kb_config?: {
+                [key: string]: unknown;
+            };
+            general_tools?: components["schemas"]["LlmTool"][];
+            states?: components["schemas"]["LlmState"][];
+            starting_state?: string | null;
+            default_dynamic_variables?: {
+                [key: string]: string;
+            };
+            mcps?: components["schemas"]["McpConnection"][];
+            /** @description Optional LLM version number. */
+            version?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        LlmTool: components["schemas"]["TransferCallTool"] | components["schemas"]["EndCallTool"] | components["schemas"]["BridgeTransferTool"] | components["schemas"]["CancelTransferTool"] | components["schemas"]["CustomFunctionTool"] | components["schemas"]["Tool"];
+        TransferCallTool: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "TransferCallTool";
+            /** @example transfer_to_support */
+            name: string;
+            /** @description Prompt-style description that tells the LLM when to call this transfer tool. */
+            description?: string;
+            transfer_destination: components["schemas"]["TransferDestination"];
+            transfer_option: components["schemas"]["TransferOption"];
+            /** @description Disable E.164 validation for internal or custom telephony destinations. */
+            ignore_e164_validation?: boolean;
+            /**
+             * @description SIP headers sent with the outbound transfer leg.
+             * @example {
+             *       "x-department": "support"
+             *     }
+             */
+            custom_sip_headers?: {
+                [key: string]: string;
+            };
+            speak_during_execution?: boolean;
+            execution_message_description?: string;
+            /** @enum {string} */
+            execution_message_type?: "prompt" | "static_text";
+        };
+        TransferDestination: components["schemas"]["TransferDestinationPredefined"] | components["schemas"]["TransferDestinationInferred"];
+        TransferDestinationPredefined: {
+            /** @enum {string} */
+            type: "predefined";
+            /**
+             * @description E.164 number, internal extension, or dynamic variable such as `{{transfer_destination}}`.
+             * @example +18885551212
+             */
+            number?: string;
+            /**
+             * @description SIP URI destination for SIP transfers.
+             * @example sip:support@pbx.example.com
+             */
+            sip_uri?: string;
+            /**
+             * @description DTMF extension to dial after the main transfer connects.
+             * @example 1234
+             */
+            extension?: string;
+        };
+        TransferDestinationInferred: {
+            /** @enum {string} */
+            type: "inferred";
+            /**
+             * @description Prompt used with the global prompt and transcript to infer the transfer destination.
+             * @example Transfer to billing at +18885550111 or sales at +18885550112 based on the user's request.
+             */
+            prompt: string;
+        };
+        TransferOption: components["schemas"]["TransferOptionColdTransfer"] | components["schemas"]["TransferOptionWarmTransfer"] | components["schemas"]["TransferOptionAgenticWarmTransfer"];
+        TransferOptionColdTransfer: {
+            /** @enum {string} */
+            type: "cold_transfer";
+            /**
+             * @description Use SIP INVITE for a new outbound leg, or SIP REFER to ask the carrier/PBX to transfer the call.
+             * @default sip_invite
+             * @enum {string}
+             */
+            cold_transfer_mode: "sip_invite" | "sip_refer";
+            /** @description Show the original caller as caller ID when supported. Applies to SIP INVITE transfers. */
+            show_transferee_as_caller?: boolean;
+            transfer_ring_duration_ms?: number;
+        };
+        TransferOptionWarmTransfer: {
+            /** @enum {string} */
+            type: "warm_transfer";
+            show_transferee_as_caller?: boolean;
+            /** @description Milliseconds to wait for human detection before treating the transfer as failed. */
+            agent_detection_timeout_ms?: number;
+            transfer_ring_duration_ms?: number;
+            /** @enum {string} */
+            on_hold_music?: "none" | "relaxing_sound" | "uplifting_beats" | "ringtone";
+            public_handoff_option?: components["schemas"]["WarmTransferHandoffOption"];
+            private_handoff_option?: components["schemas"]["WarmTransferHandoffOption"];
+            ivr_option?: components["schemas"]["WarmTransferPrompt"];
+            opt_out_human_detection?: boolean;
+            /** @default true */
+            enable_bridge_audio_cue: boolean;
+        };
+        WarmTransferHandoffOption: components["schemas"]["WarmTransferPrompt"] | components["schemas"]["WarmTransferStaticMessage"];
+        WarmTransferPrompt: {
+            /** @enum {string} */
+            type: "prompt";
+            prompt: string;
+        };
+        WarmTransferStaticMessage: {
+            /** @enum {string} */
+            type: "static_message";
+            message: string;
+        };
+        TransferOptionAgenticWarmTransfer: {
+            /** @enum {string} */
+            type: "agentic_warm_transfer";
+            show_transferee_as_caller?: boolean;
+            /** @enum {string} */
+            on_hold_music?: "none" | "relaxing_sound" | "uplifting_beats" | "ringtone";
+            transfer_ring_duration_ms?: number;
+            public_handoff_option?: components["schemas"]["WarmTransferHandoffOption"];
+            agentic_transfer_config: {
+                transfer_agent: {
+                    agent_id: string;
+                    /** @default 0 */
+                    agent_version: number;
+                };
+                /** @default 30000 */
+                transfer_timeout_ms: number;
+                /**
+                 * @default cancel_transfer
+                 * @enum {string}
+                 */
+                action_on_timeout: "cancel_transfer" | "bridge_transfer";
+            };
+            /** @default true */
+            enable_bridge_audio_cue: boolean;
+        };
+        EndCallTool: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "EndCallTool";
+            name: string;
+            description?: string;
+            speak_during_execution?: boolean;
+            execution_message_description?: string;
+            /** @enum {string} */
+            execution_message_type?: "prompt" | "static_text";
+        };
+        BridgeTransferTool: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "BridgeTransferTool";
+            /** @default bridge_transfer */
+            name: string;
+            description?: string;
+        };
+        CancelTransferTool: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "CancelTransferTool";
+            /** @default cancel_transfer */
+            name: string;
+            description?: string;
+        };
+        CustomFunctionTool: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "CustomFunctionTool";
+            name: string;
+            description?: string;
+            /** Format: uri */
+            url?: string;
+            /** @enum {string} */
+            method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+            headers?: {
+                [key: string]: string;
+            };
+            parameters?: {
+                [key: string]: unknown;
+            };
+        };
+        Tool: {
+            name: string;
+            description?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Tool";
+        };
+        LlmState: {
+            name: string;
+            state_prompt?: string;
+            edges?: components["schemas"]["LlmStateEdge"][];
+            tools?: components["schemas"]["LlmTool"][];
+        };
+        LlmStateEdge: {
+            destination_state_name: string;
+            description: string;
+        };
+        McpConnection: {
+            name: string;
+            /** Format: uri */
+            url: string;
+            headers?: {
+                [key: string]: string;
+            };
+            query_params?: {
+                [key: string]: string;
+            };
+            timeout_ms?: number;
+        };
+        Llm: components["schemas"]["LlmSummary"] & ({
+            model?: string;
+            s2s_model?: string | null;
+            general_prompt?: string | null;
+            begin_message?: string | null;
+            responsiveness?: string | null;
+            general_tools?: components["schemas"]["LlmTool"][];
+            states?: components["schemas"]["LlmState"][];
+            starting_state?: string | null;
+            /** Format: date-time */
+            updated_at?: string | null;
+        } & {
+            [key: string]: unknown;
+        });
+        UpdateLlmRequest: {
+            workspaceId: number;
+            general_prompt?: string | null;
+            begin_message?: string | null;
+            responsiveness?: string;
+            model?: string;
+            /** @description Speech-to-speech model. Set either `model` or `s2s_model`, not both. */
+            s2s_model?: string | null;
+            /** @enum {string} */
+            start_speaker?: "user" | "agent";
+            begin_after_user_silence_ms?: number | null;
+            model_temperature?: number;
+            model_high_priority?: boolean;
+            tool_call_strict_mode?: boolean;
+            knowledge_base_ids?: string[];
+            kb_config?: {
+                [key: string]: unknown;
+            };
+            general_tools?: components["schemas"]["LlmTool"][];
+            states?: components["schemas"]["LlmState"][];
+            starting_state?: string | null;
+            default_dynamic_variables?: {
+                [key: string]: string;
+            };
+            mcps?: components["schemas"]["McpConnection"][];
+            /** @description Optional LLM version number when included in the update body. To target an existing version, use the `version` query parameter. */
+            version?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        AgentSummary: {
+            agent_id: string;
+            agent_name?: string;
+            version: number;
+        };
+        CreateAgentRequest: {
+            workspaceId: number;
+            agent_name: string;
+            voice_id: string;
+            voice_model?: components["schemas"]["VoiceModel"];
+            fallback_voice_ids?: string[] | null;
+            /** @default en-US */
+            language: string;
+            response_engine: components["schemas"]["ResponseEngine"];
+            /** Format: uri */
+            webhook_url?: string | null;
+            webhook_events?: string[];
+            webhook_timeout_ms?: number;
+            response_threshold?: number;
+            interruption_sensitivity?: number;
+            ambient_sound?: string;
+            ambient_sound_volume?: number;
+            responsiveness?: number;
+            enable_dynamic_responsiveness?: boolean;
+            voice_temperature?: number;
+            voice_speed?: number;
+            enable_dynamic_voice_speed?: boolean;
+            volume?: number;
+            voice_emotion?: string | null;
+            /** @description Enables expressive voice tags for supported voices. */
+            enable_expressive_mode?: boolean;
+            expressive_emotion_tags?: string[];
+            expressive_mode_prompt?: string | null;
+            /** @enum {string} */
+            denoising_mode?: "noise-cancellation" | "noise-and-background-speech-cancellation";
+            /** @enum {string} */
+            stt_mode?: "fast" | "accurate" | "custom";
+            custom_stt_config?: components["schemas"]["CustomSttConfig"];
+            /** @enum {string} */
+            vocab_specialization?: "general" | "medical";
+            boosted_keywords?: string[];
+            handbook_config?: {
+                [key: string]: unknown;
+            };
+            max_call_duration_ms?: number;
+            end_call_after_silence_ms?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * @description Voice synthesis model for the selected voice. When omitted or set to auto for an ElevenLabs voice, new agents default to `eleven_turbo_v2`.
+         * @enum {string|null}
+         */
+        VoiceModel: "eleven_turbo_v2" | "eleven_flash_v2" | "eleven_turbo_v2_5" | "eleven_flash_v2_5" | "eleven_multilingual_v2" | "eleven_v3" | "sonic-3" | "sonic-3-latest" | "sonic-3.5" | "tts-1" | "gpt-4o-mini-tts" | "speech-02-turbo" | "speech-2.8-turbo" | "s1" | "s2-pro" | "s2.1-pro" | "auto" | null;
+        ResponseEngine: {
+            type: string;
+            llm_id?: string;
+        };
+        CustomSttConfig: ({
+            /**
+             * @description Realtime transcription provider used when stt_mode is custom.
+             * @enum {string}
+             */
+            provider?: "deepgram" | "azure" | "soniox" | "assemblyai";
+            /** @description Endpointing delay in milliseconds for the selected provider. */
+            endpointing_ms?: number;
+        } & {
+            [key: string]: unknown;
+        }) | null;
+        Agent: components["schemas"]["AgentSummary"] & ({
+            voice_id?: string;
+            voice_model?: components["schemas"]["VoiceModel"];
+            fallback_voice_ids?: string[] | null;
+            language?: string | null;
+            response_engine?: components["schemas"]["ResponseEngine"];
+            /** Format: uri */
+            webhook_url?: string | null;
+            webhook_events?: string[];
+            webhook_timeout_ms?: number | null;
+            response_threshold?: number | null;
+            interruption_sensitivity?: number | null;
+            ambient_sound?: string | null;
+            ambient_sound_volume?: number | null;
+            responsiveness?: number | null;
+            enable_dynamic_responsiveness?: boolean | null;
+            voice_temperature?: number | null;
+            voice_speed?: number | null;
+            enable_dynamic_voice_speed?: boolean | null;
+            volume?: number | null;
+            voice_emotion?: string | null;
+            enable_expressive_mode?: boolean | null;
+            expressive_emotion_tags?: string[] | null;
+            expressive_mode_prompt?: string | null;
+            denoising_mode?: string | null;
+            /** @enum {string|null} */
+            stt_mode?: "fast" | "accurate" | "custom" | null;
+            custom_stt_config?: components["schemas"]["CustomSttConfig"];
+            vocab_specialization?: string | null;
+            boosted_keywords?: string[] | null;
+            handbook_config?: {
+                [key: string]: unknown;
+            } | null;
+            max_call_duration_ms?: number | null;
+            end_call_after_silence_ms?: number | null;
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            updated_at?: string | null;
+        } & {
+            [key: string]: unknown;
+        });
+        UpdateAgentRequest: {
+            workspaceId: number;
+            agent_name?: string;
+            voice_id?: string;
+            voice_model?: components["schemas"]["VoiceModel"];
+            fallback_voice_ids?: string[] | null;
+            language?: string;
+            response_engine?: components["schemas"]["ResponseEngine"];
+            interruption_sensitivity?: number;
+            max_call_duration_ms?: number;
+            responsiveness?: number;
+            enable_dynamic_responsiveness?: boolean;
+            voice_temperature?: number;
+            voice_speed?: number;
+            enable_dynamic_voice_speed?: boolean;
+            volume?: number;
+            voice_emotion?: string | null;
+            enable_expressive_mode?: boolean;
+            expressive_emotion_tags?: string[];
+            expressive_mode_prompt?: string | null;
+            /** @enum {string} */
+            denoising_mode?: "noise-cancellation" | "noise-and-background-speech-cancellation";
+            /** @enum {string} */
+            stt_mode?: "fast" | "accurate" | "custom";
+            custom_stt_config?: components["schemas"]["CustomSttConfig"];
+            /** @enum {string} */
+            vocab_specialization?: "general" | "medical";
+            boosted_keywords?: string[];
+            handbook_config?: {
+                [key: string]: unknown;
+            };
+            end_call_after_silence_ms?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        AgentVersion: {
+            agent_id: string;
+            version: number;
+            base_version?: number | null;
+            is_published?: boolean;
+            version_title?: string | null;
+            version_description?: string | null;
+            /** Format: date-time */
+            updated_at?: string;
+        };
+        CreateAgentVersionRequest: {
+            workspaceId: number;
+            /** @description Existing version used as the base for the new draft. */
+            baseVersion: number;
+        };
+        PublishAgentVersionRequest: {
+            workspaceId: number;
+            /** @description Optional title stored on the published version. */
+            versionTitle?: string;
+            /** @description Optional description stored on the published version. */
+            versionDescription?: string;
+        };
+        ChatAgentListResponse: components["schemas"]["ChatAgentSummary"][] | components["schemas"]["ChatAgentListEnvelope"];
+        ChatAgentSummary: components["schemas"]["ChatAgentVersion"] & {
+            agent_name?: string;
+            response_engine?: components["schemas"]["ChatResponseEngine"];
+            auto_close_message?: string | null;
+            is_public?: boolean | null;
+        };
+        ChatAgentVersion: {
+            agent_id: string;
+            version: number;
+            base_version?: number | null;
+            is_published?: boolean;
+            version_title?: string | null;
+            version_description?: string | null;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        ChatResponseEngine: {
+            /** @enum {string} */
+            type: "uponai-llm" | "uponai-custom-llm";
+            llm_id?: string | null;
+        };
+        ChatAgentListEnvelope: {
+            data?: components["schemas"]["ChatAgentSummary"][];
+            pagination_key?: string | null;
+            pagination_key_version?: number | null;
+        };
+        CreateChatAgentRequest: {
+            workspaceId: number;
+            agent_name: string;
+            response_engine: components["schemas"]["ChatResponseEngine"];
+            auto_close_message?: string | null;
+            end_chat_after_silence_ms?: number;
+            timezone?: string;
+            /** Format: uri */
+            webhook_url?: string | null;
+            webhook_events?: string[];
+            webhook_timeout_ms?: number;
+            /** @enum {string} */
+            data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only";
+            data_storage_retention_days?: number;
+            post_chat_analysis_data?: components["schemas"]["ChatAgentAnalysisField"][];
+            post_chat_analysis_model?: string;
+            pii_config?: {
+                [key: string]: unknown;
+            };
+            guardrail_config?: {
+                [key: string]: unknown;
+            };
+            handbook_config?: {
+                [key: string]: unknown;
+            };
+            is_public?: boolean;
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+        };
+        ChatAgentAnalysisField: {
+            /** @example chat_summary */
+            type: string;
+            /** @example summary */
+            name: string;
+            /** @example Short summary of the completed chat. */
+            description?: string | null;
+            prompt?: string | null;
+        };
+        ChatAgent: components["schemas"]["ChatAgentSummary"] & {
+            end_chat_after_silence_ms?: number | null;
+            timezone?: string | null;
+            /** Format: uri */
+            webhook_url?: string | null;
+            webhook_events?: string[];
+            webhook_timeout_ms?: number | null;
+            /** @enum {string|null} */
+            data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only" | null;
+            data_storage_retention_days?: number | null;
+            post_chat_analysis_data?: components["schemas"]["ChatAgentAnalysisField"][];
+            post_chat_analysis_model?: string | null;
+            pii_config?: {
+                [key: string]: unknown;
+            } | null;
+            guardrail_config?: {
+                [key: string]: unknown;
+            } | null;
+            handbook_config?: {
+                [key: string]: unknown;
+            } | null;
+            override_agent_id?: string | null;
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        UpdateChatAgentRequest: {
+            workspaceId: number;
+            agent_name?: string;
+            response_engine?: components["schemas"]["ChatResponseEngine"];
+            auto_close_message?: string | null;
+            end_chat_after_silence_ms?: number;
+            timezone?: string;
+            /** Format: uri */
+            webhook_url?: string | null;
+            webhook_events?: string[];
+            webhook_timeout_ms?: number;
+            /** @enum {string} */
+            data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only";
+            data_storage_retention_days?: number;
+            post_chat_analysis_data?: components["schemas"]["ChatAgentAnalysisField"][];
+            post_chat_analysis_model?: string;
+            pii_config?: {
+                [key: string]: unknown;
+            };
+            guardrail_config?: {
+                [key: string]: unknown;
+            };
+            handbook_config?: {
+                [key: string]: unknown;
+            };
+            is_public?: boolean;
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+        };
+        ChatAgentVersionListResponse: components["schemas"]["ChatAgentVersion"][] | {
+            data?: components["schemas"]["ChatAgentVersion"][];
+        };
+        ChatListResponse: components["schemas"]["Chat"][] | components["schemas"]["ChatListEnvelope"];
+        Chat: {
+            chatId: string;
+            agentId: string;
+            version?: number | null;
+            status: string;
+            /** @example web_chat */
+            type?: string | null;
+            metadata?: {
+                [key: string]: unknown;
+            } | null;
+            customAttributes?: {
+                [key: string]: unknown;
+            };
+            /** Format: date-time */
+            startedAt?: string | null;
+            /** Format: date-time */
+            endedAt?: string | null;
+            transcript?: string | null;
+            messages: components["schemas"]["ChatMessage"][];
+            chatCost?: {
+                [key: string]: unknown;
+            } | null;
+            chatAnalysis?: {
+                [key: string]: unknown;
+            } | null;
+            collectedDynamicVariables?: {
+                [key: string]: unknown;
+            };
+            uponai_dynamic_variables?: {
+                [key: string]: unknown;
+            };
+            overrideDynamicVariables?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        ChatMessage: {
+            /** @example assistant */
+            role: string;
+            /** @example I can help with pricing and onboarding. */
+            content?: string | null;
+            name?: string | null;
+            tool_calls?: {
+                [key: string]: unknown;
+            }[];
+        };
+        ChatListEnvelope: {
+            data?: components["schemas"]["Chat"][];
+            pagination_key?: string | null;
+        };
+        CreateChatRequest: {
+            workspaceId: number;
+            agent_id: string;
+            metadata?: {
+                [key: string]: unknown;
+            };
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+        };
+        CreateOutboundSmsChatRequest: components["schemas"]["CreateChatRequest"] & {
+            /** @example +14155550100 */
+            from_number: string;
+            /** @example +14155550199 */
+            to_number: string;
+        };
+        UpdateChatRequest: {
+            workspaceId: number;
+            metadata?: {
+                [key: string]: unknown;
+            };
+            custom_attributes?: {
+                [key: string]: unknown;
+            };
+            override_dynamic_variables?: {
+                [key: string]: unknown;
+            };
+        };
+        CreateChatCompletionRequest: {
+            workspaceId: number;
+            content: string;
+        };
+        ChatCompletionResponse: {
+            messages: components["schemas"]["ChatMessage"][];
+        };
+        ChatWidgetConfig: {
+            id: number;
+            /**
+             * @description Public key used by the embeddable browser script.
+             * @example upon_widget_7d41a8d0c84f4d1fbf8ad4f1
+             */
+            publicKey: string;
+            workspaceId: number;
+            /**
+             * @description Chat agent that powers this widget.
+             * @example chat_agent_01hzk4q6dr3n0d4qzpw9z6gth6
+             */
+            agentId: string;
+            /** @description Optional fixed chat agent version. Null uses the latest published version. */
+            agentVersion?: number | null;
+            /** @example How can we help? */
+            title: string;
+            /** Format: uri */
+            logoUrl?: string | null;
+            /** @example #071a3e */
+            themeColor: string;
+            /** @example #2563eb */
+            componentColor: string;
+            /** @example Need help? */
+            fabText?: string;
+            /** @example Support */
+            botName?: string;
+            /** @example Questions? We are here. */
+            popupMessage?: string | null;
+            showAiPopup?: boolean;
+            /** @description Seconds to wait before showing the popup prompt. */
+            showAiPopupTime?: number;
+            autoOpen?: boolean;
+            /** @description Website origins allowed to load and use this widget. Empty allows any origin; use exact origins such as https://example.com for production embeds. */
+            allowedOrigins?: string[];
+            metadata?: {
+                [key: string]: unknown;
+            };
+            isEnabled?: boolean;
+            /**
+             * @description Complete script tag to paste into a website.
+             * @example <script src="https://api.upon-ai.com/js/upon-chat-widget.js" data-public-key="upon_widget_7d41a8d0c84f4d1fbf8ad4f1" async></script>
+             */
+            embedScript: string;
+        };
+        CreateChatWidgetRequest: {
+            workspaceId: number;
+            /** @description Chat agent that powers the widget. */
+            agentId: string;
+            agentVersion?: number | null;
+            /** @default Chat */
+            title: string;
+            /** Format: uri */
+            logoUrl?: string | null;
+            /**
+             * @description Shorthand that sets both themeColor and componentColor when specific colors are omitted.
+             * @example #2563eb
+             */
+            color?: string;
+            /** @default #071a3e */
+            themeColor: string;
+            /** @default #3E6AEF */
+            componentColor: string;
+            /** @default Need support? */
+            fabText: string;
+            /** @default AI Assistant */
+            botName: string;
+            popupMessage?: string | null;
+            /** @default true */
+            showAiPopup: boolean;
+            /** @default 5 */
+            showAiPopupTime: number;
+            /** @default false */
+            autoOpen: boolean;
+            allowedOrigins?: string[];
+            metadata?: {
+                [key: string]: unknown;
+            };
+        };
+        UpdateChatWidgetRequest: {
+            /** @description Chat agent that powers the widget. */
+            agentId?: string;
+            agentVersion?: number | null;
+            title?: string;
+            /** Format: uri */
+            logoUrl?: string | null;
+            /** @description Shorthand that sets both themeColor and componentColor when specific colors are omitted. */
+            color?: string;
+            themeColor?: string;
+            componentColor?: string;
+            fabText?: string;
+            botName?: string;
+            popupMessage?: string | null;
+            showAiPopup?: boolean;
+            showAiPopupTime?: number;
+            autoOpen?: boolean;
+            allowedOrigins?: string[];
+            metadata?: {
+                [key: string]: unknown;
+            };
+            isEnabled?: boolean;
+        };
+        ConversationFlowSummary: {
+            conversation_flow_id: string;
+            version: number;
+            start_speaker?: string | null;
+        };
+        CreateConversationFlowRequest: {
+            workspaceId: number;
+            global_prompt?: string;
+            start_speaker: string;
+            model_choice?: components["schemas"]["ModelChoice"];
+            nodes: components["schemas"]["ConversationNode"][];
+        };
+        ModelChoice: {
+            type: string;
+            model?: string;
+        };
+        ConversationNode: {
+            id: string;
+            type: string;
+            instruction?: components["schemas"]["Instruction"];
+            edges?: components["schemas"]["ConversationEdge"][];
+        };
+        Instruction: {
+            type: string;
+            text?: string;
+        };
+        ConversationEdge: {
+            id: string;
+            transition_condition: {
+                type: string;
+                prompt?: string;
+            };
+            destination_node_id: string;
+        };
+        ConversationFlow: components["schemas"]["ConversationFlowSummary"] & {
+            workspaceId?: number | null;
+            global_prompt?: string | null;
+            start_speaker?: string | null;
+            model_choice?: components["schemas"]["ModelChoice"];
+            nodes?: components["schemas"]["ConversationNode"][];
+        };
+        UpdateConversationFlowRequest: {
+            workspaceId: number;
+            global_prompt?: string;
+            model_choice?: components["schemas"]["ModelChoice"];
+            nodes?: components["schemas"]["ConversationNode"][];
+        };
+        KnowledgeBaseSummary: {
+            /** @example knowledge_base_17c5db1600cea2b4 */
+            knowledgeBaseId: string;
+            /** @example Customer Support FAQ */
+            name: string;
+            /**
+             * @example processing
+             * @enum {string}
+             */
+            status: "pending" | "processing" | "ready" | "failed";
+        };
+        CreateKnowledgeBaseRequest: {
+            workspaceId: number;
+            name: string;
+            /** @example Grounding material for customer support. */
+            description?: string;
+            /**
+             * @description Automatically refresh URL-based sources on the provider cadence.
+             * @example false
+             */
+            enableAutoRefresh?: boolean;
+            /** @example 2000 */
+            maxChunkSize?: number;
+            /** @example 400 */
+            minChunkSize?: number;
+            sources?: components["schemas"]["KnowledgeBaseSourceInput"][];
+        };
+        KnowledgeBaseSourceInput: {
+            /** @enum {string} */
+            type: "text" | "url" | "document";
+            /** @example We issue refunds within 30 days of purchase. */
+            text?: string;
+            /**
+             * @description Optional display title for text sources. If omitted, one is generated automatically.
+             * @example Refund Policy
+             */
+            title?: string;
+            /**
+             * Format: uri
+             * @example https://example.com/help/refunds
+             */
+            url?: string;
+            /** @example handbook.pdf */
+            filename?: string;
+            /** @example application/pdf */
+            contentType?: string;
+            /**
+             * @description Base64-encoded file contents for document sources.
+             * @example JVBERi0xLjQKJcfs...
+             */
+            base64?: string;
+        };
+        KnowledgeBase: components["schemas"]["KnowledgeBaseSummary"] & {
+            /** @example Grounding material for support agents. */
+            description?: string | null;
+            sources?: components["schemas"]["KnowledgeBaseSource"][];
+            /** @example 58 */
+            workspaceId?: number | null;
+            /** @example false */
+            enableAutoRefresh?: boolean;
+            /** @example 1773937556128 */
+            lastRefreshedTimestamp?: number | null;
+            /** @example 2000 */
+            maxChunkSize?: number | null;
+            /** @example 400 */
+            minChunkSize?: number | null;
+            /**
+             * Format: date-time
+             * @example 2026-03-19T13:25:56.128Z
+             */
+            createdAt?: string | null;
+            /**
+             * Format: date-time
+             * @example 2026-03-19T13:26:12.512Z
+             */
+            updatedAt?: string | null;
+        };
+        KnowledgeBaseSource: components["schemas"]["KnowledgeBaseSourceDocument"] | components["schemas"]["KnowledgeBaseSourceText"] | components["schemas"]["KnowledgeBaseSourceUrl"];
+        KnowledgeBaseSourceDocument: {
+            /** @example kb_source_35e085a611328bd3 */
+            source_id: string;
+            /**
+             * @example document
+             * @enum {string}
+             */
+            type: "document";
+            /** @example benefits-guide.pdf */
+            filename?: string | null;
+            /** @example https://cdn.example.com/knowledge-bases/benefits-guide.pdf */
+            file_url?: string | null;
+            /** @example 482311 */
+            file_size?: number | null;
+        };
+        KnowledgeBaseSourceText: {
+            /** @example kb_source_41f4dfd2f142bf07 */
+            source_id: string;
+            /**
+             * @example text
+             * @enum {string}
+             */
+            type: "text";
+            /** @example Refund Policy */
+            title?: string | null;
+            /** @example https://cdn.example.com/knowledge-bases/refund-policy.txt */
+            content_url?: string | null;
+        };
+        KnowledgeBaseSourceUrl: {
+            /** @example kb_source_803751f5c87eab66 */
+            source_id: string;
+            /**
+             * @example url
+             * @enum {string}
+             */
+            type: "url";
+            /**
+             * Format: uri
+             * @example https://metro-ride.com/careers/
+             */
+            url?: string;
+        };
+        AddKnowledgeBaseSourcesRequest: {
+            /** @example 58 */
+            workspaceId: number;
+            sources: components["schemas"]["KnowledgeBaseSourceInput"][];
+        };
+        Voice: {
+            voiceId: string;
+            name: string;
+            gender?: string;
+            language?: string;
+            accent?: string;
+            description?: string;
+            provider?: string | null;
+            /** Format: uri */
+            previewUrl?: string;
+            /** Format: uri */
+            playbackOverrideUrl?: string | null;
+            tags?: string[];
+            /** Format: date-time */
+            createdAt?: string | null;
+            /** Format: date-time */
+            updatedAt?: string | null;
+        };
+        SearchCommunityVoiceRequest: {
+            workspaceId: number;
+            /** @enum {string} */
+            voiceProvider?: "elevenlabs" | "cartesia" | "minimax";
+            searchQuery: string;
+        };
+        SearchCommunityVoiceResponse: {
+            voices: components["schemas"]["SearchCommunityVoiceItem"][];
+        };
+        SearchCommunityVoiceItem: {
+            providerVoiceId?: string;
+            name?: string;
+            description?: string | null;
+            publicUserId?: string | null;
+            /** @enum {string|null} */
+            voiceProvider?: "elevenlabs" | "cartesia" | "minimax" | null;
+        };
+        AddCommunityVoiceRequest: {
+            workspaceId: number;
+            /**
+             * @default elevenlabs
+             * @enum {string}
+             */
+            voiceProvider: "elevenlabs" | "cartesia" | "minimax";
+            providerVoiceId: string;
+            voiceName: string;
+            publicUserId?: string | null;
+        };
+        CloneVoiceRequest: {
+            workspaceId: number;
+            /**
+             * @default elevenlabs
+             * @enum {string}
+             */
+            voiceProvider: "elevenlabs" | "cartesia" | "minimax";
+            voiceName: string;
+            files: string[];
+        };
+        TestCaseDefinition: components["schemas"]["TestCaseDefinitionInput"] & {
+            test_case_definition_id: string;
+            type?: string;
+            creation_timestamp?: number;
+            user_modified_timestamp?: number;
+        };
+        TestCaseDefinitionInput: {
+            name?: string;
+            response_engine?: components["schemas"]["TestResponseEngine"];
+            user_prompt?: string;
+            metrics?: string[];
+            dynamic_variables?: {
+                [key: string]: string;
+            };
+            tool_mocks?: {
+                [key: string]: unknown;
+            }[];
+            llm_model?: string | null;
+        };
+        TestResponseEngine: {
+            /** @enum {string} */
+            type: "llm" | "conversation-flow";
+            llm_id?: string | null;
+            conversation_flow_id?: string | null;
+            version?: number | null;
+        };
+        CreateTestCaseDefinitionRequest: components["schemas"]["TestCaseDefinitionInput"] & {
+            workspaceId: number;
+        };
+        BatchTest: {
+            test_case_batch_job_id: string;
+            /** @enum {string} */
+            status: "in_progress" | "complete";
+            response_engine?: components["schemas"]["TestResponseEngine"];
+            pass_count?: number;
+            fail_count?: number;
+            error_count?: number;
+            total_count?: number;
+            creation_timestamp?: number;
+            user_modified_timestamp?: number;
+        };
+        CreateBatchTestRequest: {
+            workspaceId: number;
+            response_engine: components["schemas"]["TestResponseEngine"];
+            test_case_definition_ids: string[];
+        };
+        UpdateTestCaseDefinitionRequest: components["schemas"]["TestCaseDefinitionInput"] & {
+            workspaceId: number;
+        };
+        TestRun: {
+            test_case_job_id: string;
+            status: string;
+            test_case_definition_id?: string;
+            test_case_definition_snapshot?: components["schemas"]["TestCaseDefinition"];
+            transcript_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            result_explanation?: string | null;
+            creation_timestamp?: number;
+            user_modified_timestamp?: number;
+        };
+        Concurrency: {
+            maxConcurrent: number;
+            currentUsage: number;
+            purchasedConcurrency?: number;
+            concurrencyPurchaseLimit?: number;
+        };
+        WorkspaceSummary: {
+            id: number;
+            name: string;
+            accountSid?: string | null;
+            accountPath?: string | null;
+            nativeTransferEnabled: boolean;
+        };
+        /** @description Unknown top-level fields return HTTP 400 before a call is created. Supply dynamic variables using the documented field, with string values only. */
+        CreatePhoneCallRequest: {
+            /** @description Unique agent identifier. The owning workspace is inferred from this value. */
+            agentId: string;
+            /** @description Optional backward-compatible workspace hint. If supplied, it must match the workspace that owns agentId. */
+            workspaceId?: number;
+            /** @description Caller identifier. For native-transfer workspaces this may be an imported number, extension, or platform-side pseudo DID when ignoreE164Validation is enabled. */
+            fromNumber: string;
+            /** @description Destination identifier to dial. Standard phone calls should use E.164; native-transfer workspaces can also use configured extensions or pseudo numbers when ignoreE164Validation is enabled. */
+            toNumber: string;
+            customerName?: string;
+            carrierName?: string;
+            trunkName?: string;
+            /** @description Optional SIP From display-name override. The selected fromNumber remains the actual caller ID/user part for native-transfer calls. */
+            overrideCid?: string;
+            /**
+             * @description Native-transfer only. Format applied to the caller ID before the outbound leg is dialed.
+             * @enum {string}
+             */
+            callerIdFormat?: "10-digit" | "11-digit" | "e164";
+            /**
+             * @description Native-transfer only. Format applied to the destination number before the outbound leg is dialed.
+             * @enum {string}
+             */
+            toNumberFormat?: "10-digit" | "11-digit" | "e164";
+            /** @description Native-transfer only. Overrides the agent version for this specific call. */
+            overrideAgentVersion?: number;
+            agentOverride?: components["schemas"]["CallAgentOverrideRequest"];
+            /** @description Optional custom caller identifier used when fromNumber is set to custom. This may be a configured non-E.164 identifier on supported trunk-based workspaces. */
+            customFromNumber?: string;
+            /**
+             * Format: uri
+             * @description Per-call destination for branded call_started, call_ended, and call_analyzed events.
+             */
+            customStatusHookUrl?: string;
+            metadata?: {
+                [key: string]: string;
+            };
+            /** @description Native-transfer only. Additional SIP headers merged into the outbound call request. */
+            customSipHeaders?: {
+                [key: string]: string;
+            };
+            /** @description Native-transfer only. Disables E.164 validation so imported pseudo DIDs, extensions, and other custom telephony identifiers can be used. The platform may also enable this automatically when needed on supported workspaces. */
+            ignoreE164Validation?: boolean;
+            /** @description Dynamic variables with string values only (including empty strings). CamelCase variable containers are not supported. */
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+            /** @description Alias for overrideAgentVersion. */
+            override_agent_version?: number;
+            agent_override?: components["schemas"]["CallAgentOverrideRequest"];
+            /** @description Alias for customSipHeaders. */
+            custom_sip_headers?: {
+                [key: string]: string;
+            };
+            /** @description Alias for ignoreE164Validation. */
+            ignore_e164_validation?: boolean;
+        };
+        CallAgentOverrideRequest: {
+            agent?: components["schemas"]["CallAgentConfigOverride"];
+            llm?: components["schemas"]["CallLlmOverride"];
+            conversationFlow?: components["schemas"]["CallConversationFlowOverride"];
+        };
+        CallAgentConfigOverride: {
+            agentName?: string;
+            versionDescription?: string;
+            voiceId?: string;
+            responseEngine?: {
+                [key: string]: unknown;
+            };
+            responseThreshold?: number;
+            interruptionSensitivity?: string;
+            ambientSound?: string;
+            responsiveness?: string;
+            maxCallDurationMs?: number;
+            beginMessageDelayMs?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        CallLlmOverride: {
+            model?: string;
+            s2sModel?: string;
+            modelTemperature?: number;
+            modelHighPriority?: boolean;
+            toolCallStrictMode?: boolean;
+            knowledgeBaseIds?: string[];
+            kbConfig?: {
+                [key: string]: unknown;
+            };
+            /** @enum {string} */
+            startSpeaker?: "user" | "agent";
+            beginAfterUserSilenceMs?: number;
+            beginMessage?: string;
+        } & {
+            [key: string]: unknown;
+        };
+        CallConversationFlowOverride: {
+            modelChoice?: components["schemas"]["ModelChoice"];
+            modelTemperature?: number;
+            toolCallStrictMode?: boolean;
+            knowledgeBaseIds?: string[];
+            kbConfig?: {
+                [key: string]: unknown;
+            };
+            /** @enum {string} */
+            startSpeaker?: "user" | "agent";
+            beginAfterUserSilenceMs?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        CreatePhoneCallResponse: {
+            success?: boolean;
+            call_sid?: string;
+            call?: components["schemas"]["CallDetail"];
+        };
+        CallDetail: {
+            success?: boolean;
+            call?: components["schemas"]["CallRecord"];
+        } & {
+            [key: string]: unknown;
+        };
+        CallRecord: {
+            callId?: string;
+            callType?: string;
+            status?: string;
+            agentId?: string;
+            agentVersion?: number;
+            metadata?: {
+                [key: string]: string;
+            };
+            optOutSensitiveDataStorage?: boolean;
+            accessToken?: string | null;
+            /** Format: date-time */
+            expiresAt?: string | null;
+            /** Format: uri */
+            webCallUrl?: string | null;
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+        };
+        CreateWebCallRequest: {
+            /** @description Optional backward-compatible workspace hint. If supplied, it must match the workspace that owns agentId. */
+            workspaceId?: number;
+            /** @description Unique agent identifier. The owning workspace is inferred from this value. */
+            agentId: string;
+            agentVersion?: number;
+            metadata?: {
+                [key: string]: string;
+            };
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+        };
+        WebCall: {
+            callId: string;
+            callType?: string;
+            status: string;
+            agentId?: string;
+            agentVersion?: number;
+            metadata?: {
+                [key: string]: string;
+            };
+            optOutSensitiveDataStorage?: boolean;
+            accessToken?: string | null;
+            /** Format: date-time */
+            expiresAt?: string | null;
+            /** Format: uri */
+            webCallUrl?: string | null;
+            uponai_dynamic_variables?: {
+                [key: string]: string;
+            };
+        };
+        CallList: {
+            success: boolean;
+            calls: components["schemas"]["CallRecord"][];
+            total?: number;
+            pages?: number;
+            currentPage?: number;
+        };
+        V3ListCallsRequest: {
+            /** @description Optional branded extension to scope results to one accessible workspace. */
+            workspaceId?: number;
+            filter_criteria?: components["schemas"]["CallFilter"];
+            /**
+             * @description Sort calls by start timestamp.
+             * @default descending
+             * @enum {string}
+             */
+            sort_order: "ascending" | "descending";
+            /**
+             * @description Maximum number of calls to return.
+             * @default 50
+             */
+            limit: number;
+            /**
+             * @description Number of records to skip for pagination.
+             * @default 0
+             */
+            skip: number;
+            /** @description Pagination key from the previous response. */
+            pagination_key?: string;
+            /**
+             * @description Whether to include the total count of matching calls.
+             * @default false
+             */
+            include_total: boolean;
+        };
+        /** @description Filter criteria for calls. All provided conditions are combined with AND. */
+        CallFilter: {
+            /** @description Agent filters are combined with OR. */
+            agent?: components["schemas"]["AgentFilter"][];
+            call_id?: components["schemas"]["StringFilter"] | components["schemas"]["EnumFilter"];
+            batch_call_id?: components["schemas"]["StringFilter"];
+            call_status?: components["schemas"]["EnumFilter"];
+            in_voicemail?: components["schemas"]["BooleanFilter"];
+            disconnection_reason?: components["schemas"]["EnumFilter"];
+            from_number?: components["schemas"]["StringFilter"];
+            to_number?: components["schemas"]["StringFilter"];
+            call_type?: components["schemas"]["EnumFilter"];
+            direction?: components["schemas"]["EnumFilter"];
+            user_sentiment?: components["schemas"]["EnumFilter"];
+            data_storage_setting?: components["schemas"]["EnumFilter"];
+            call_successful?: components["schemas"]["BooleanFilter"];
+            start_timestamp?: components["schemas"]["NumberFilter"] | components["schemas"]["RangeFilter"];
+            end_timestamp?: components["schemas"]["NumberFilter"] | components["schemas"]["RangeFilter"];
+            duration_ms?: components["schemas"]["NumberFilter"] | components["schemas"]["RangeFilter"];
+            combined_cost?: components["schemas"]["NumberFilter"] | components["schemas"]["RangeFilter"];
+        };
+        AgentFilter: {
+            agent_id: string;
+            version?: number[];
+        };
+        StringFilter: {
+            /** @enum {string} */
+            type: "string";
+            /**
+             * @description Equal, not equal, starts with, ends with, or contains.
+             * @enum {string}
+             */
+            op: "eq" | "ne" | "sw" | "ew" | "co";
+            value: string;
+        };
+        EnumFilter: {
+            /** @enum {string} */
+            type: "enum";
+            /** @enum {string} */
+            op: "in";
+            value: string[];
+        };
+        BooleanFilter: {
+            /** @enum {string} */
+            type: "boolean";
+            /** @enum {string} */
+            op: "eq";
+            value: boolean;
+        };
+        NumberFilter: {
+            /** @enum {string} */
+            type: "number";
+            /** @enum {string} */
+            op: "eq" | "ne" | "gt" | "ge" | "lt" | "le";
+            value: number;
+        };
+        RangeFilter: {
+            /** @enum {string} */
+            type: "range";
+            /** @enum {string} */
+            op: "bt";
+            value: number[];
+        };
+        V3ListCallsResponse: {
+            items: components["schemas"]["V3CallResponse"][];
+            /** @description Pagination key for the next page, or null when no more results are available. */
+            pagination_key: string | null;
+            /** @description Whether more results are available. */
+            has_more: boolean;
+            /** @description Total number of matching calls. Present only when include_total is true. */
+            total?: number;
+        };
+        V3CallResponse: components["schemas"]["V3WebCallResponse"] | components["schemas"]["V3PhoneCallResponse"];
+        V3WebCallResponse: components["schemas"]["V3CallBase"] & {
+            /** @enum {string} */
+            call_type?: "web_call";
+            access_token?: string | null;
+        };
+        V3CallBase: {
+            call_id?: string;
+            agent_id?: string;
+            agent_name?: string | null;
+            agent_version?: number | null;
+            call_status?: string | null;
+            /** @description Start timestamp in milliseconds since epoch. */
+            start_timestamp?: number | null;
+            /** @description End timestamp in milliseconds since epoch. */
+            end_timestamp?: number | null;
+            duration_ms?: number | null;
+            disconnection_reason?: string | null;
+            metadata?: {
+                [key: string]: unknown;
+            };
+            transcript?: string | null;
+            transcript_object?: {
+                [key: string]: unknown;
+            } | null;
+            transcript_with_tool_calls?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Format: uri */
+            recording_url?: string | null;
+            /** Format: uri */
+            public_log_url?: string | null;
+            call_analysis?: {
+                [key: string]: unknown;
+            };
+            call_cost?: {
+                [key: string]: unknown;
+            };
+            /** @enum {string|null} */
+            data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only" | null;
+        };
+        V3PhoneCallResponse: components["schemas"]["V3CallBase"] & {
+            /** @enum {string} */
+            call_type?: "phone_call";
+            from_number?: string | null;
+            to_number?: string | null;
+            direction?: string | null;
+        };
+        CallHistoryList: {
+            success: boolean;
+            calls: components["schemas"]["CallHistoryRecord"][];
+            pagination: {
+                page?: number;
+                limit?: number;
+                total?: number;
+                pages?: number;
+            };
+            filters: components["schemas"]["CallHistoryFilters"];
+        };
+        CallHistoryRecord: {
+            callSid: string;
+            callStatus?: string | null;
+            agentId?: string | null;
+            agentVersion?: number | null;
+            agentName?: string | null;
+            workspaceId: number;
+            workspaceName?: string | null;
+            fromNumber?: string | null;
+            toNumber?: string | null;
+            direction?: string | null;
+            customerName?: string | null;
+            duration?: number | null;
+            /** Format: date-time */
+            startedAt?: string | null;
+            /** Format: date-time */
+            createdAt?: string | null;
+            /** Format: date-time */
+            updatedAt?: string | null;
+            /** Format: uri */
+            recordingUrl?: string | null;
+            sentiment?: string | null;
+            summary?: string | null;
+            voiceModel?: string | null;
+            llmModel?: string | null;
+            telecommunicationsProvider?: string | null;
+            carrierSid?: string | null;
+            carrierName?: string | null;
+            archived: boolean;
+            costs?: components["schemas"]["CallHistoryCosts"];
+        };
+        CallHistoryCosts: {
+            voice?: number | null;
+            llm?: number | null;
+            voiceMarkup?: number | null;
+            llmMarkup?: number | null;
+            gross?: number | null;
+            markup?: number | null;
+            total?: number | null;
+            markupRate?: number | null;
+        };
+        CallHistoryFilters: {
+            workspaceId?: number;
+            agentId?: string | null;
+            agentVersion?: number | null;
+            status?: string | null;
+            /** Format: date-time */
+            fromDate?: string | null;
+            /** Format: date-time */
+            toDate?: string | null;
+            search?: string | null;
+            includeArchived?: boolean;
+            includeChildCalls?: boolean;
+        };
+        UpdateCallRequest: {
+            /** @description Optional backward-compatible fallback. Required only when the call cannot be resolved from stored call data. */
+            workspaceId?: number;
+            metadata?: {
+                [key: string]: string;
+            };
+            optOutSensitiveDataStorage?: boolean;
+        };
+        CallActionWorkspaceRequest: {
+            /** @description Optional backward-compatible fallback. Required only when the call cannot be resolved from stored call data. */
+            workspaceId?: number;
+        };
+        EndLiveCallResponse: {
+            success: boolean;
+            callId: string;
+            /** @example ended */
+            status: string;
+            call?: components["schemas"]["CallRecord"];
+        };
+        UpdateLiveCallRequest: components["schemas"]["CallActionWorkspaceRequest"] & {
+            fieldsToOverride?: components["schemas"]["UpdateLiveCallFields"];
+            fields_to_override?: components["schemas"]["UpdateLiveCallFields"];
+            callControl?: components["schemas"]["LiveCallControl"];
+            call_control?: components["schemas"]["LiveCallControl"];
+            listen?: components["schemas"]["LiveCallListenControl"];
+        };
+        UpdateLiveCallFields: {
+            /** @description Delta of dynamic variable overrides. Set to null to remove existing overrides. */
+            dynamicVariables?: {
+                [key: string]: string;
+            } | null;
+            /** @description Snake_case alias for dynamicVariables. */
+            override_dynamic_variables?: {
+                [key: string]: string;
+            } | null;
+            /** @description Metadata persisted to the call record. Maximum size is 50KB. */
+            metadata?: {
+                [key: string]: unknown;
+            };
+            /**
+             * @description Data storage setting for this call. More restrictive settings may not be relaxed during a live call.
+             * @enum {string}
+             */
+            dataStorageSetting?: "everything" | "everything_except_pii" | "basic_attributes_only";
+            /**
+             * @description Snake_case alias for dataStorageSetting.
+             * @enum {string}
+             */
+            data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only";
+        };
+        LiveCallControl: {
+            /** @description When true, requests that the live agent generate a response when appropriate. If the agent is speaking, the current response may be interrupted depending on the agent interruption settings. If the user is speaking, the request is ignored so the agent does not talk over them. */
+            triggerResponse?: boolean;
+            /** @description Snake_case alias for triggerResponse. */
+            trigger_response?: boolean;
+            /** @description Non-empty text injected into the live call context for the next agent response. */
+            additionalContext?: string;
+            /** @description Snake_case alias for additionalContext. */
+            additional_context?: string;
+            listen?: components["schemas"]["LiveCallListenControl"];
+        };
+        LiveCallListenControl: {
+            /**
+             * @description Start or stop a listen-only audio stream for the live call.
+             * @enum {string}
+             */
+            action: "start" | "stop";
+            /**
+             * Format: uri
+             * @description WebSocket URL that will receive the live call audio stream. Required when action is start.
+             */
+            url?: string;
+            /**
+             * @description Audio channel mix for the stream.
+             * @default mixed
+             * @enum {string}
+             */
+            mixType: "mono" | "mixed" | "stereo";
+            /**
+             * @description Sample rate for the stream.
+             * @default 8000
+             * @enum {integer}
+             */
+            sampleRate: 8000 | 16000 | 24000 | 48000;
+            /**
+             * @description Keep the stream listen-only.
+             * @default true
+             */
+            disableBidirectionalAudio: boolean;
+            /** @description Optional WebSocket authentication payload. */
+            wsAuth?: {
+                [key: string]: unknown;
+            };
+            /** @description Optional metadata delivered with the stream setup. */
+            metadata?: {
+                [key: string]: unknown;
+            };
+        };
+        UpdateLiveCallResponse: {
+            success: boolean;
+            callId: string;
+            result?: {
+                [key: string]: unknown;
+            };
+            listen?: {
+                [key: string]: unknown;
+            } | null;
+            call?: components["schemas"]["CallRecord"];
+        };
+        RerunCallAnalysisResponse: {
+            success: boolean;
+            callId: string;
+            call?: components["schemas"]["CallRecord"];
+        };
+    };
+    responses: never;
+    parameters: {
+        /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+        WorkspaceIdQuery: number;
+        /** @description Maximum number of records to return. */
+        LimitQuery: number;
+        /** @description Identifier to continue pagination. */
+        PaginationKeyQuery: string;
+        /** @description Version paired with the pagination key. */
+        PaginationKeyVersionQuery: number;
+        /** @description LLM identifier. */
+        LlmIdPath: string;
+        /** @description Specific version to retrieve or update. */
+        VersionQuery: number;
+        /** @description Agent identifier. */
+        AgentIdPath: string;
+        /** @description Specific agent version. */
+        VersionPath: number;
+        /** @description Sort direction for chat listings. */
+        SortOrderQuery: "ascending" | "descending";
+        /** @description Chat identifier. */
+        ChatIdPath: string;
+        /** @description Chat widget configuration identifier. */
+        WidgetIdPath: number;
+        /** @description Conversation flow identifier. */
+        ConversationFlowIdPath: string;
+        /** @description Knowledge base identifier. */
+        KnowledgeBaseIdPath: string;
+        /** @description Knowledge base source identifier. */
+        SourceIdPath: string;
+        /** @description Voice identifier. */
+        VoiceIdPath: string;
+        /** @description Response engine type used by an existing test case definition. */
+        TestCaseDefinitionTypeQuery: string;
+        /** @description LLM identifier filter. */
+        LlmIdQuery: string;
+        /** @description Conversation flow identifier filter. */
+        ConversationFlowIdQuery: string;
+        /** @description Test run batch identifier. */
+        TestCaseBatchJobIdPath: string;
+        /** @description Test case definition identifier. */
+        TestCaseDefinitionIdPath: string;
+        /** @description Test run job identifier. */
+        TestCaseJobIdPath: string;
+        /** @description Optional workspace identifier filter. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+        WorkspaceIdQueryOptional: number;
+        /** @description Filter call listings to a specific agent. */
+        AgentIdQuery: string;
+        /** @description Filter calls by status. */
+        StatusQuery: string;
+        /** @description Inclusive start date for call listing filter. */
+        FromDateQuery: string;
+        /** @description Inclusive end date for call listing filter. */
+        ToDateQuery: string;
+        PageQuery: number;
+        /** @description Page size for list endpoints. */
+        LimitQueryDefault20: number;
+        /** @description Filter call history to a specific persisted agent version captured at call time. */
+        AgentVersionQuery: number;
+        /** @description Search by call SID, phone number, platform call ID, customer name, or agent name. */
+        SearchQuery: string;
+        /** @description When true, include archived calls in the response. */
+        IncludeArchivedQuery: boolean;
+        /** @description When true, include child calls linked to transfer or split-call workflows. */
+        IncludeChildCallsQuery: boolean;
+        /** @description Call identifier or SID. */
+        CallIdPath: string;
+    };
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
+}
+export type $defs = Record<string, never>;
+export interface operations {
+    listLlms: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+                /** @description Version paired with the pagination key. */
+                paginationKeyVersion?: components["parameters"]["PaginationKeyVersionQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description LLM configurations visible to the workspace. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LlmSummary"][];
+                };
+            };
+        };
+    };
+    createLlm: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLlmRequest"];
+            };
+        };
+        responses: {
+            /** @description Newly created LLM configuration. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Llm"];
+                };
+            };
+        };
+    };
+    getLlm: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description LLM identifier. */
+                llmId: components["parameters"]["LlmIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description LLM configuration details. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Llm"];
+                };
+            };
+        };
+    };
+    deleteLlm: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description LLM identifier. */
+                llmId: components["parameters"]["LlmIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description LLM deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateLlm: {
+        parameters: {
+            query?: {
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description LLM identifier. */
+                llmId: components["parameters"]["LlmIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLlmRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated LLM configuration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Llm"];
+                };
+            };
+        };
+    };
+    listAgents: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+                /** @description Version paired with the pagination key. */
+                paginationKeyVersion?: components["parameters"]["PaginationKeyVersionQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Agent summary list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentSummary"][];
+                };
+            };
+        };
+    };
+    createAgent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAgentRequest"];
+            };
+        };
+        responses: {
+            /** @description Newly created agent. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Agent"];
+                };
+            };
+        };
+    };
+    getAgent: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Agent configuration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Agent"];
+                };
+            };
+        };
+    };
+    deleteAgent: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Agent deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateAgent: {
+        parameters: {
+            query?: {
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAgentRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated agent. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Agent"];
+                };
+            };
+        };
+    };
+    listAgentVersions: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Agent version history. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentVersion"][];
+                };
+            };
+        };
+    };
+    createAgentDraftVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAgentVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Draft version created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Agent"];
+                };
+            };
+        };
+    };
+    publishAgentVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublishAgentVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Published agent version. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Agent"];
+                };
+            };
+        };
+    };
+    deleteAgentVersion: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Agent version deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listChatAgents: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+                /** @description Version paired with the pagination key. */
+                paginationKeyVersion?: components["parameters"]["PaginationKeyVersionQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat agent summary list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgentListResponse"];
+                };
+            };
+        };
+    };
+    createChatAgent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateChatAgentRequest"];
+            };
+        };
+        responses: {
+            /** @description Newly created chat agent. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgent"];
+                };
+            };
+        };
+    };
+    getChatAgent: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat agent configuration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgent"];
+                };
+            };
+        };
+    };
+    deleteChatAgent: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat agent deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateChatAgent: {
+        parameters: {
+            query?: {
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateChatAgentRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated chat agent. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgent"];
+                };
+            };
+        };
+    };
+    listChatAgentVersions: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat agent version history. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgentVersionListResponse"];
+                };
+            };
+        };
+    };
+    createChatAgentDraftVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateAgentVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Draft version created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgent"];
+                };
+            };
+        };
+    };
+    publishChatAgentVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublishAgentVersionRequest"];
+            };
+        };
+        responses: {
+            /** @description Published chat agent version. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgent"];
+                };
+            };
+        };
+    };
+    deleteChatAgentVersion: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Specific agent version. */
+                version: components["parameters"]["VersionPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat agent version deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    publishChatAgentVersionFiltered: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    workspaceId: number;
+                    version: number;
+                    versionTitle?: string;
+                    versionDescription?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Published chat agent. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatAgent"];
+                };
+            };
+        };
+    };
+    listChats: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Sort direction for chat listings. */
+                sortOrder?: components["parameters"]["SortOrderQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat session list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatListResponse"];
+                };
+            };
+        };
+    };
+    createChat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Chat created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Chat"];
+                };
+            };
+        };
+    };
+    createOutboundSmsChat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateOutboundSmsChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Outbound SMS chat created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Chat"];
+                };
+            };
+        };
+    };
+    getChat: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat details. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Chat"];
+                };
+            };
+        };
+    };
+    updateChat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated chat session. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Chat"];
+                };
+            };
+        };
+    };
+    createChatCompletion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateChatCompletionRequest"];
+            };
+        };
+        responses: {
+            /** @description Chat completion messages. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatCompletionResponse"];
+                };
+            };
+        };
+    };
+    endChat: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat identifier. */
+                chatId: components["parameters"]["ChatIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    workspaceId: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Chat ended. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listChatWidgets: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat widget configurations. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatWidgetConfig"][];
+                };
+            };
+        };
+    };
+    createChatWidget: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateChatWidgetRequest"];
+            };
+        };
+        responses: {
+            /** @description Chat widget created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatWidgetConfig"];
+                };
+            };
+        };
+    };
+    getChatWidget: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat widget configuration identifier. */
+                widgetId: components["parameters"]["WidgetIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat widget configuration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatWidgetConfig"];
+                };
+            };
+        };
+    };
+    updateChatWidget: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat widget configuration identifier. */
+                widgetId: components["parameters"]["WidgetIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateChatWidgetRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated chat widget. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatWidgetConfig"];
+                };
+            };
+        };
+    };
+    regenerateWidgetKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Chat widget configuration identifier. */
+                widgetId: components["parameters"]["WidgetIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Chat widget with a new public key. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatWidgetConfig"];
+                };
+            };
+        };
+    };
+    listConversationFlows: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+                /** @description Version paired with the pagination key. */
+                paginationKeyVersion?: components["parameters"]["PaginationKeyVersionQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Conversation flow summaries. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationFlowSummary"][];
+                };
+            };
+        };
+    };
+    createConversationFlow: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateConversationFlowRequest"];
+            };
+        };
+        responses: {
+            /** @description Newly created conversation flow. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationFlow"];
+                };
+            };
+        };
+    };
+    getConversationFlow: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Conversation flow identifier. */
+                conversationFlowId: components["parameters"]["ConversationFlowIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Conversation flow details. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationFlow"];
+                };
+            };
+        };
+    };
+    deleteConversationFlow: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Conversation flow identifier. */
+                conversationFlowId: components["parameters"]["ConversationFlowIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Conversation flow deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateConversationFlow: {
+        parameters: {
+            query?: {
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Conversation flow identifier. */
+                conversationFlowId: components["parameters"]["ConversationFlowIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateConversationFlowRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated conversation flow. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationFlow"];
+                };
+            };
+        };
+    };
+    listKnowledgeBases: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Knowledge base summaries. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBaseSummary"][];
+                };
+            };
+        };
+    };
+    createKnowledgeBase: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateKnowledgeBaseRequest"];
+            };
+        };
+        responses: {
+            /** @description Newly created knowledge base. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"];
+                };
+            };
+        };
+    };
+    getKnowledgeBase: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Knowledge base details. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"];
+                };
+            };
+        };
+    };
+    deleteKnowledgeBase: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Knowledge base deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    addKnowledgeBaseSources: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddKnowledgeBaseSourcesRequest"];
+            };
+        };
+        responses: {
+            /** @description Knowledge base with updated source list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"];
+                };
+            };
+        };
+    };
+    deleteKnowledgeBaseSource: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Knowledge base identifier. */
+                knowledgeBaseId: components["parameters"]["KnowledgeBaseIdPath"];
+                /** @description Knowledge base source identifier. */
+                sourceId: components["parameters"]["SourceIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Knowledge base with updated source list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"];
+                };
+            };
+        };
+    };
+    listVoices: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Voice catalog. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Voice"][];
+                };
+            };
+        };
+    };
+    searchCommunityVoices: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SearchCommunityVoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description Matching community voices. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchCommunityVoiceResponse"];
+                };
+            };
+        };
+    };
+    addCommunityVoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddCommunityVoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description Community voice added. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Voice"];
+                };
+            };
+        };
+    };
+    cloneVoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["CloneVoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description Cloned voice metadata. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Voice"];
+                };
+            };
+        };
+    };
+    getVoice: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Voice identifier. */
+                voiceId: components["parameters"]["VoiceIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Voice metadata. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Voice"];
+                };
+            };
+        };
+    };
+    streamVoiceSample: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Voice identifier. */
+                voiceId: components["parameters"]["VoiceIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Voice sample stream. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "audio/mpeg": string;
+                };
+            };
+        };
+    };
+    listTestCaseDefinitions: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Response engine type used by an existing test case definition. */
+                type: components["parameters"]["TestCaseDefinitionTypeQuery"];
+                /** @description LLM identifier filter. */
+                llmId?: components["parameters"]["LlmIdQuery"];
+                /** @description Conversation flow identifier filter. */
+                conversationFlowId?: components["parameters"]["ConversationFlowIdQuery"];
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Test case definitions. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestCaseDefinition"][];
+                };
+            };
+        };
+    };
+    createTestCaseDefinition: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTestCaseDefinitionRequest"];
+            };
+        };
+        responses: {
+            /** @description Created test case definition. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestCaseDefinition"];
+                };
+            };
+        };
+    };
+    listBatchTests: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Response engine type used by an existing test case definition. */
+                type: components["parameters"]["TestCaseDefinitionTypeQuery"];
+                /** @description LLM identifier filter. */
+                llmId?: components["parameters"]["LlmIdQuery"];
+                /** @description Conversation flow identifier filter. */
+                conversationFlowId?: components["parameters"]["ConversationFlowIdQuery"];
+                /** @description Specific version to retrieve or update. */
+                version?: components["parameters"]["VersionQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Batch test jobs. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BatchTest"][];
+                };
+            };
+        };
+    };
+    createBatchTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBatchTestRequest"];
+            };
+        };
+        responses: {
+            /** @description Created batch test job. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BatchTest"];
+                };
+            };
+        };
+    };
+    getBatchTest: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Test run batch identifier. */
+                testCaseBatchJobId: components["parameters"]["TestCaseBatchJobIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Batch test job. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BatchTest"];
+                };
+            };
+        };
+    };
+    getTestCaseDefinition: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Test case definition identifier. */
+                testCaseDefinitionId: components["parameters"]["TestCaseDefinitionIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Test case definition. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestCaseDefinition"];
+                };
+            };
+        };
+    };
+    updateTestCaseDefinition: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Test case definition identifier. */
+                testCaseDefinitionId: components["parameters"]["TestCaseDefinitionIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTestCaseDefinitionRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated test case definition. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestCaseDefinition"];
+                };
+            };
+        };
+    };
+    deleteTestCaseDefinition: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Test case definition identifier. */
+                testCaseDefinitionId: components["parameters"]["TestCaseDefinitionIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Test case definition deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getTestRun: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Test run job identifier. */
+                testCaseJobId: components["parameters"]["TestCaseJobIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Test run payload. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestRun"];
+                };
+            };
+        };
+    };
+    listTestRunsByBatch: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Maximum number of records to return. */
+                limit?: components["parameters"]["LimitQuery"];
+                /** @description Identifier to continue pagination. */
+                paginationKey?: components["parameters"]["PaginationKeyQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Test run batch identifier. */
+                testCaseBatchJobId: components["parameters"]["TestCaseBatchJobIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Batch test runs. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestRun"][];
+                };
+            };
+        };
+    };
+    getConcurrency: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Concurrency snapshot. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Concurrency"];
+                };
+            };
+        };
+    };
+    listWorkspaces: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Workspaces visible to the authenticated token. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        workspaces: components["schemas"]["WorkspaceSummary"][];
+                    };
+                };
+            };
+        };
+    };
+    createPhoneCall: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePhoneCallRequest"];
+            };
+        };
+        responses: {
+            /** @description Call initiation response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreatePhoneCallResponse"];
+                };
+            };
+            /** @description Invalid request. Unknown fields, invalid dynamic variable values, or conflicting dynamic variable objects are rejected before dialing. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                        unknownFields?: string[];
+                        dynamicVariablesField?: string;
+                        field?: string;
+                        invalidKeys?: string[];
+                    };
+                };
+            };
+        };
+    };
+    createWebCall: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWebCallRequest"];
+            };
+        };
+        responses: {
+            /** @description Web call created. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WebCall"];
+                };
+            };
+        };
+    };
+    listCalls: {
+        parameters: {
+            query?: {
+                /** @description Optional workspace identifier filter. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId?: components["parameters"]["WorkspaceIdQueryOptional"];
+                /** @description Filter call listings to a specific agent. */
+                agentId?: components["parameters"]["AgentIdQuery"];
+                /** @description Filter calls by status. */
+                status?: components["parameters"]["StatusQuery"];
+                /** @description Inclusive start date for call listing filter. */
+                fromDate?: components["parameters"]["FromDateQuery"];
+                /** @description Inclusive end date for call listing filter. */
+                toDate?: components["parameters"]["ToDateQuery"];
+                page?: components["parameters"]["PageQuery"];
+                /** @description Page size for list endpoints. */
+                limit?: components["parameters"]["LimitQueryDefault20"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated call list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallList"];
+                };
+            };
+        };
+    };
+    listCallsFiltered: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["V3ListCallsRequest"];
+            };
+        };
+        responses: {
+            /** @description Calls matching the provided filters. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["V3ListCallsResponse"];
+                };
+            };
+            /** @description Invalid filter or pagination request. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    fetchCallHistory: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Filter call listings to a specific agent. */
+                agentId?: components["parameters"]["AgentIdQuery"];
+                /** @description Filter call history to a specific persisted agent version captured at call time. */
+                agentVersion?: components["parameters"]["AgentVersionQuery"];
+                /** @description Filter calls by status. */
+                status?: components["parameters"]["StatusQuery"];
+                /** @description Search by call SID, phone number, platform call ID, customer name, or agent name. */
+                search?: components["parameters"]["SearchQuery"];
+                /** @description Inclusive start date for call listing filter. */
+                fromDate?: components["parameters"]["FromDateQuery"];
+                /** @description Inclusive end date for call listing filter. */
+                toDate?: components["parameters"]["ToDateQuery"];
+                page?: components["parameters"]["PageQuery"];
+                /** @description Page size for list endpoints. */
+                limit?: components["parameters"]["LimitQueryDefault20"];
+                /** @description When true, include archived calls in the response. */
+                includeArchived?: components["parameters"]["IncludeArchivedQuery"];
+                /** @description When true, include child calls linked to transfer or split-call workflows. */
+                includeChildCalls?: components["parameters"]["IncludeChildCallsQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated call history. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallHistoryList"];
+                };
+            };
+        };
+    };
+    getCall: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Call details. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallDetail"];
+                };
+            };
+        };
+    };
+    updateCall: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCallRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated call record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CallRecord"];
+                };
+            };
+        };
+    };
+    endLiveCall: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CallActionWorkspaceRequest"];
+            };
+        };
+        responses: {
+            /** @description Live call ended. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EndLiveCallResponse"];
+                };
+            };
+            /** @description The call is no longer live. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateLiveCall: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLiveCallRequest"];
+            };
+        };
+        responses: {
+            /** @description Live call updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpdateLiveCallResponse"];
+                };
+            };
+            /** @description The call is no longer live. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    rerunCallAnalysis: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Call identifier or SID. */
+                callId: components["parameters"]["CallIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CallActionWorkspaceRequest"];
+            };
+        };
+        responses: {
+            /** @description Call analysis rerun started or completed. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RerunCallAnalysisResponse"];
+                };
+            };
+        };
+    };
+}
