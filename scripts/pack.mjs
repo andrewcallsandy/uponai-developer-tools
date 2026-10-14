@@ -2,7 +2,9 @@ import fs from 'node:fs';import os from 'node:os';import path from 'node:path';i
 fs.mkdirSync('artifacts',{recursive:true});
 const artifacts=[];
 for(const name of ['sdk','mcp-server']){
- const result=JSON.parse(execFileSync('npm',['pack','--workspace','@upon-ai/'+name,'--pack-destination','artifacts','--json','--ignore-scripts'],{encoding:'utf8'}))[0];
+ const packed=JSON.parse(execFileSync('npm',['pack','--workspace','@upon-ai/'+name,'--pack-destination','artifacts','--json','--ignore-scripts'],{encoding:'utf8'}));
+ const result=Array.isArray(packed)?packed[0]:packed['@upon-ai/'+name];
+ if(!result?.filename||!Array.isArray(result.files))throw Error('Unsupported npm pack report');
  if(result.files.some(f=>!(/^(dist\/|README.md$|LICENSE$|package.json$)/.test(f.path))))throw Error('Unexpected packaged file');
  artifacts.push(path.resolve('artifacts',result.filename));
 }
