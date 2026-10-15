@@ -3,7 +3,7 @@
 `@upon-ai/sdk` and `@upon-ai/mcp-server`, owned by UponAI and licensed under MIT.
 
 ```sh
-npm install @upon-ai/sdk@0.1.0
+npm install @upon-ai/sdk@0.1.1
 ```
 
 [SDK guide](https://docs.uponai.com/sdk/overview/) ·

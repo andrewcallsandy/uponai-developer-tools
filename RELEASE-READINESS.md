@@ -1,56 +1,42 @@
-# Release readiness — 2026-10-14
+# Release verification — 2026-10-14
 
-Status: SDK and MCP 0.1.0 are public on npm under the latest tag. Clean registry installation and authenticated production read checks passed. Version 0.1.1 is prepared for the first trusted-publishing release.
+SDK and MCP **0.1.1** are published under the `latest` npm tag through GitHub
+trusted publishing, with provenance. Both trusted connections have completed a
+successful publish. [Successful release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/38660092822).
 
-- Packages: @upon-ai/sdk 0.1.0 and @upon-ai/mcp-server 0.1.0.
-- License: MIT, copyright UponAI.
+- Packages: `@upon-ai/sdk@0.1.1`, `@upon-ai/mcp-server@0.1.1`.
+- MIT license, copyright UponAI.
 - Public contract SHA-256: `2dde3cce47c07123e8f88de2f6553c1ce527467ab364d0600e4a919fe2873654`.
-- Generated SDK: 75 explicitly approved public operations.
-- MCP: workspace discovery plus 18 curated read tools; three writes separately opt-in.
-- Tests: 14 passed, including SDK failures/limits and real MCP protocol/HTTP boundaries.
-- Consumer TypeScript checks passed, including rejected invalid inputs.
-- Both packed tarballs installed together in an empty consumer directory; ESM and
-  CommonJS dynamic imports passed and the MCP executable was present.
-- Package metadata, declarations, branding and credential-pattern checks passed.
-- npm audit: zero known vulnerabilities across package dependencies at this check.
-- Application public projection/internal-route separation: six focused tests passed.
-- GitHub main CI passed, including builds, protocol tests and clean packed-package installation.
-- npm identity uponaiadmin and owner role in upon-ai verified with read-only requests.
-  Bootstrap uploads were accepted from the IP-allowed server. The token cannot
-  publish from GitHub-hosted runners or configure trusted publishers.
+- 75 typed public SDK operations; MCP workspace discovery plus 18 curated read
+  tools. Three optional writes remain disabled by default.
+- CI passed 17 tests, consumer type checks, clean packed-package installation,
+  package content checks, dependency audit, and production contract equality.
+- A fresh npm installation verified package exports and the MCP executable.
+  `npm audit signatures` verified 97 registry signatures and 13 attestations,
+  including provenance for both UponAI packages.
+- The initial SDK upload was accepted before npm exposed its metadata. Recovery
+  verified the existing SDK SHA-512 against the rebuilt artifact before publishing
+  MCP. The publisher now waits for processing and supports explicit, integrity-bound
+  partial-release resume. npm 12 integrity-output parsing has regression coverage.
 
-Artifacts are in `artifacts/`; `pack-report.json` records consumer checks.
+Authenticated production workspace discovery and agent listing passed through
+both SDK and real MCP stdio using the 0.1.0 registry installation. Invalid API
+credentials were rejected and MCP rejected a workspace outside its allowlist.
+Zero production writes were performed. The 0.1.1 release changes packaging/version
+metadata, not API behavior. Live checks do not establish all 75 operations or all
+server-side authorization boundaries. The temporary customer-token file was
+removed; the owner should revoke the shared token in the dashboard.
 
-## Remaining release gates
+## Ongoing operation
 
-1. Public repository: `andrewcallsandy/uponai-developer-tools`. Private docs source:
-   `andrewcallsandy/uponai-admin-public-api`. The npm-release environment is
-   restricted to main, requires owner review, and holds the bootstrap NPM_TOKEN.
-   GitHub main CI passed. Configure npm trusted publishers
-   after the initial package publication.
-2. Production public-contract deployment verified. The production endpoint
-   https://api.upon-ai.com/openapi.json now returns 200 and matches the package
-   contract after the owner deployed the API. This gate passed on 2026-10-14.
-3. Authenticated production read checks passed for workspace discovery and agent
-   listing through the SDK and a real MCP stdio client in workspace 1. Invalid
-   credentials were rejected and MCP rejected a workspace outside its configured
-   allowlist. Zero writes were performed. This does not establish server-side
-   isolation across all operations or validate all 75 methods. Reproduce with
-   `node scripts/verify-live-readonly.mjs <protected-token-file> <workspace-id>`.
-4. Clean registry installation passed for both packages. Repeated authenticated
-   SDK and MCP read checks passed from that installation. The temporary customer
-   token file was removed; the owner should revoke the shared token in the dashboard.
-   Configure both npm trusted publishers with Allow npm publish (stage-only is
-   incompatible with publish.yml). The bootstrap release has no GitHub provenance.
-   Verify the prepared 0.1.1 OIDC release before retiring the npm bootstrap token.
-5. Public docs now rebuild and deploy on main pushes, check for API-contract
-   changes every 15 minutes, and refresh the assistant after deployment. Package
-   versioning and npm releases remain reviewed releases; API changes do not
-   automatically publish npm packages. Configure trusted publishing after bootstrap.
+GitHub environment `npm-release` restricts releases to main and requires owner
+review. Publishing uses OIDC only. The bootstrap GitHub secret and protected local
+npm-token file were removed. npm rejected token revocation with HTTP 403; the
+owner must revoke the old bootstrap token in their signed-in npm account.
 
-The public docs site is independent of internal app docs. The internal renderer,
-helpers and links remain; canonical raw-spec download requires login. Public
-projection excludes admin operations and privileged context headers. Documentation
-filtering is not a substitute for runtime API authorization.
+Public docs deploy independently on main pushes, check for approved API changes
+every 15 minutes, and reindex the assistant after deployment. SDK/MCP versioning
+and npm releases remain reviewed operations. Internal API docs are unchanged;
+public schemas exclude admin operations and privileged override headers.
 
-See RELEASING.md for exact npm/GitHub setup and ongoing release procedure.
+See RELEASING.md for the release and partial-recovery procedure.

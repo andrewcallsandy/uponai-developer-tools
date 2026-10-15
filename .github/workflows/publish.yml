@@ -11,10 +11,6 @@ on:
         description: Resume a reviewed partial release only when existing artifact integrity matches
         type: boolean
         default: false
-      bootstrap:
-        description: Use the temporary npm token for initial package creation
-        type: boolean
-        default: false
 permissions:
   contents: read
 concurrency:
@@ -42,25 +38,7 @@ jobs:
       - run: npm audit --audit-level=high
       - run: npm run pack:release
       - run: node scripts/verify-live-contract.mjs
-      - name: Configure temporary bootstrap authentication
-        if: inputs.bootstrap
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        shell: bash
-        run: |
-          test -n "$NODE_AUTH_TOKEN"
-          umask 077
-          printf '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}\n' > "$RUNNER_TEMP/uponai-npmrc"
-      - name: Publish with temporary token
-        if: inputs.bootstrap
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/uponai-npmrc
-          RELEASE_CHANNEL: ${{ inputs.channel }}
-          RESUME_RELEASE: ${{ inputs.resume }}
-        run: node scripts/publish.mjs "$RELEASE_CHANNEL"
       - name: Publish with npm trusted publishing
-        if: ${{ !inputs.bootstrap }}
         env:
           RELEASE_CHANNEL: ${{ inputs.channel }}
           RESUME_RELEASE: ${{ inputs.resume }}
