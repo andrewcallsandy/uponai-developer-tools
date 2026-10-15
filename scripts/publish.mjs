@@ -12,7 +12,7 @@ for(const name of ['sdk','mcp-server']){
 }
 for(const name of ['sdk','mcp-server']){
  const p=JSON.parse(fs.readFileSync(`packages/${name}/package.json`));
- execFileSync('npm',['publish',`artifacts/upon-ai-${name}-${p.version}.tgz`,'--access','public','--provenance','--tag',tag],{stdio:'inherit'});
+ execFileSync('npm',['publish',`./artifacts/upon-ai-${name}-${p.version}.tgz`,'--access','public','--provenance','--tag',tag],{stdio:'inherit'});
  // Let registry visibility settle before publishing a dependent package.
  let ready=false;for(let i=0;i<6;i++){try{execFileSync('npm',['view',`${p.name}@${p.version}`,'dist.integrity'],{stdio:'pipe'});ready=true;break;}catch{await new Promise(r=>setTimeout(r,3000));}}
  if(!ready)throw Error('Published package is not visible yet; stop and inspect registry');
