@@ -3,10 +3,10 @@
 Typed Node.js client for the UponAI customer API. MIT © 2026 UponAI.
 Requires Node >=22.14. ESM package; CommonJS consumers can use dynamic `import()`.
 
-**Release candidate: not published yet.** After publication:
+## Install
 
 ```sh
-npm install @upon-ai/sdk
+npm install @upon-ai/sdk@0.1.0
 ```
 
 ```ts

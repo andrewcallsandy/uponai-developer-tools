@@ -1,11 +1,11 @@
 # @upon-ai/mcp-server
 
 UponAI customer API tools for Model Context Protocol clients. MIT © 2026 UponAI.
-Requires Node >=22.14. **Release candidate: not published yet.**
+Requires Node >=22.14.
 
 ## Local stdio
 
-After publication, configure your MCP client with:
+Configure your MCP client with:
 
 ```json
 {
@@ -23,8 +23,8 @@ After publication, configure your MCP client with:
 ```
 
 Use your MCP client's secret store for the credential. Do not commit populated
-configuration. Before publication, use `node packages/mcp-server/dist/cli.js`
-from the built source checkout instead.
+configuration. For local source development, use `node packages/mcp-server/dist/cli.js`
+from the built checkout.
 
 The token is validated through workspace discovery before MCP initialization.
 Without `UPONAI_WORKSPACE_IDS`, only workspace discovery is available. With an
