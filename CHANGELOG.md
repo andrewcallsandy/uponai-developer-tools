@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.1.1 — unreleased
+## 0.1.1 — 2026-10-14
 
-- Prepared for GitHub Actions with npm trusted publishing and build provenance.
+- Published through GitHub Actions with npm trusted publishing and build provenance.
 - No API or runtime behavior changes from 0.1.0.
 
 ## 0.1.0 — 2026-10-14
