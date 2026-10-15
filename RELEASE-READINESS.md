@@ -1,6 +1,6 @@
 # Release readiness — 2026-10-14
 
-Status: validated release candidates with authenticated production read checks; initial npm publication awaiting the GitHub owner-review gate.
+Status: authenticated production checks passed. npm accepted both 0.1.0 bootstrap uploads; registry visibility and clean registry installation are being verified.
 
 - Packages: @upon-ai/sdk 0.1.0 and @upon-ai/mcp-server 0.1.0.
 - License: MIT, copyright UponAI.
@@ -16,7 +16,8 @@ Status: validated release candidates with authenticated production read checks; 
 - Application public projection/internal-route separation: six focused tests passed.
 - GitHub main CI passed, including builds, protocol tests and clean packed-package installation.
 - npm identity uponaiadmin and owner role in upon-ai verified with read-only requests.
-  No registry writes were performed; token publishing rights remain untested.
+  Bootstrap uploads were accepted from the IP-allowed server. The token cannot
+  publish from GitHub-hosted runners or configure trusted publishers.
 
 Artifacts are in `artifacts/`; `pack-report.json` records consumer checks.
 
@@ -36,8 +37,9 @@ Artifacts are in `artifacts/`; `pack-report.json` records consumer checks.
    allowlist. Zero writes were performed. This does not establish server-side
    isolation across all operations or validate all 75 methods. Reproduce with
    `node scripts/verify-live-readonly.mjs <protected-token-file> <workspace-id>`.
-4. Approve initial npm publication, verify registry installation, then configure
-   trusted publishers for both packages and retire the bootstrap token.
+4. Complete registry-install verification and configure npm trusted publishers
+   through the signed-in owner account. The bootstrap release has no GitHub
+   provenance. Verify a subsequent OIDC release before retiring the token.
 5. Public docs now rebuild and deploy on main pushes, check for API-contract
    changes every 15 minutes, and refresh the assistant after deployment. Package
    versioning and npm releases remain reviewed releases; API changes do not

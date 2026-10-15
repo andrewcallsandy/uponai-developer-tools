@@ -1,7 +1,14 @@
 # UponAI developer tools
 
-Release candidates for `@upon-ai/sdk` and `@upon-ai/mcp-server`, owned by UponAI
-and licensed under MIT. These packages are not yet published.
+`@upon-ai/sdk` and `@upon-ai/mcp-server`, owned by UponAI and licensed under MIT.
+
+```sh
+npm install @upon-ai/sdk@0.1.0
+```
+
+[SDK guide](https://docs.uponai.com/sdk/overview/) ·
+[MCP setup](https://docs.uponai.com/mcp/overview/) ·
+[Interactive API](https://docs.uponai.com/api/list-agents/)
 
 This independent release repository consumes the reviewed customer OpenAPI
 contract. Internal application docs remain in the application repository.
