@@ -1,6 +1,6 @@
 {
   "name": "@upon-ai/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Typed customer API client for UponAI",
   "license": "MIT",
   "type": "module",
