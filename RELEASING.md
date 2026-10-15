@@ -1,48 +1,32 @@
 # UponAI package releases
 
-The release candidates are `@upon-ai/sdk` and `@upon-ai/mcp-server`, under MIT,
-Copyright (c) 2026 UponAI. Neither package has been published by this work.
-The protected token authenticates as uponaiadmin, an owner of the npm organization
-upon-ai (verified 2026-10-14). Read-only checks do not prove publish permission or
-that the token meets npm two-factor requirements.
+Packages: `@upon-ai/sdk` and `@upon-ai/mcp-server`, MIT, copyright UponAI.
+Public source: `andrewcallsandy/uponai-developer-tools`. Public docs are hosted
+from the separate private `andrewcallsandy/uponai-admin-public-api` repository.
 
-## Configured GitHub setup
+## Initial release and trusted-publisher setup
 
-The public repository is `andrewcallsandy/uponai-developer-tools`. Package metadata
-points to it. Environment `npm-release` is restricted to main, requires review
-by andrewcallsandy, and contains the encrypted bootstrap `NPM_TOKEN` secret.
-The docs source is separate and private: `andrewcallsandy/uponai-admin-public-api`.
-No npm publish workflow has been dispatched.
+The 0.1.0 bootstrap uploads were accepted by npm on 2026-10-14 from the authorized
+server. The granular token is IP-restricted to that server, so GitHub-hosted
+runners cannot use it. These initial packages do not carry GitHub provenance.
+Do not loosen token IP restrictions just to use the bootstrap workflow.
 
-## Setup and initial publication procedure
+Future releases use the protected `publish.yml` GitHub workflow with
+`bootstrap=false`, npm OIDC, and provenance. Environment `npm-release` is
+restricted to main and requires owner review. Main requires package CI.
 
-1. Create `andrewcallsandy/uponai-developer-tools` and confirm its visibility.
-   Public provenance requires an appropriate public source repository.
-2. Run `node scripts/set-repository.mjs andrewcallsandy/uponai-developer-tools` to set package provenance metadata.
-3. Commit and push the reviewed files only after owner authorization.
-4. Create the GitHub environment `npm-release`, restrict it to the default branch,
-   and require a release reviewer. Protect that branch with CI and code review.
-5. For initial package creation only, store the existing protected token as the
-   environment secret `NPM_TOKEN`. From this server, after creating the repository:
+The owner must configure a Trusted Publisher in npm Settings for **each** package:
 
-   ```bash
-   gh secret set NPM_TOKEN --repo andrewcallsandy/uponai-developer-tools --env npm-release < /home/ubuntu/.config/uponai/npm-token
-   ```
+- Provider: GitHub Actions
+- Organization/user: `andrewcallsandy`
+- Repository: `uponai-developer-tools`
+- Workflow filename: `publish.yml`
+- Environment: `npm-release`
 
-   Never put the token in a command argument, committed .npmrc, browser bundle,
-   issue, or chat. The granular token needs package publishing rights for the
-   upon-ai scope and must satisfy npm's current 2FA policy.
-6. Release the filtered public API through the application's authorized release
-   process. Run an isolated customer-workspace integration check. Internal admin
-   documentation stays in the application; it is not an SDK generation input.
-7. After release approval, run **Publish reviewed packages** from the default
-   branch with channel `next` and bootstrap enabled. The workflow validates,
-   packs, tests clean installations, checks production contract equality, then
-   publishes SDK before MCP with public access and provenance.
-8. In npm package settings for BOTH packages, configure Trusted Publishing:
-   exact GitHub owner/repository, workflow `publish.yml`, environment `npm-release`.
-   Subsequent releases use bootstrap=false. Remove the temporary GitHub secret
-   and revoke the bootstrap token once OIDC publication is verified.
+npm rejected programmatic trust setup with the bootstrap token because tokens
+that bypass 2FA cannot perform that action. Use the signed-in npm account.
+After a successful OIDC release, remove the GitHub `NPM_TOKEN` environment secret
+and revoke the temporary bootstrap token. Never store credentials in source or logs.
 
 ## Each release
 
@@ -67,8 +51,10 @@ or supersede the partial release under a reviewed recovery change, then verify
 both packages. Never silently skip an existing version.
 
 Update public guides with actual released versions, publish docs, then refresh
-and activate the DocsGPT index. Automatic cross-repository delivery is pending
-remote repository creation and production API promotion; no polling service is active.
+and activate the DocsGPT index. Docs deploy automatically on main pushes, check for approved production API
+changes every 15 minutes, and refresh the assistant after deployment. Package
+version bumps and npm releases remain reviewed operations; API changes do not
+automatically publish new package versions.
 
 References: [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/),
 [npm scoped publishing](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages/).
