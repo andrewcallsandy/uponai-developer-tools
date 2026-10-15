@@ -1,6 +1,6 @@
 # Release readiness — 2026-10-14
 
-Status: locally validated release candidates; not published or live-integrated.
+Status: validated release candidates with authenticated production read checks; initial npm publication awaiting the GitHub owner-review gate.
 
 - Packages: @upon-ai/sdk 0.1.0 and @upon-ai/mcp-server 0.1.0.
 - License: MIT, copyright UponAI.
@@ -14,7 +14,7 @@ Status: locally validated release candidates; not published or live-integrated.
 - Package metadata, declarations, branding and credential-pattern checks passed.
 - npm audit: zero known vulnerabilities across package dependencies at this check.
 - Application public projection/internal-route separation: six focused tests passed.
-- GitHub workflow YAML parsed locally; workflows have not run on GitHub.
+- GitHub main CI passed, including builds, protocol tests and clean packed-package installation.
 - npm identity uponaiadmin and owner role in upon-ai verified with read-only requests.
   No registry writes were performed; token publishing rights remain untested.
 
@@ -25,17 +25,23 @@ Artifacts are in `artifacts/`; `pack-report.json` records consumer checks.
 1. Public repository: `andrewcallsandy/uponai-developer-tools`. Private docs source:
    `andrewcallsandy/uponai-admin-public-api`. The npm-release environment is
    restricted to main, requires owner review, and holds the bootstrap NPM_TOKEN.
-   Verify GitHub CI after the initial push. Configure npm trusted publishers
+   GitHub main CI passed. Configure npm trusted publishers
    after the initial package publication.
-2. Deploy the approved application public-contract route. The production endpoint
-   https://api.upon-ai.com/openapi.json currently returns 404; the release check
-   correctly blocks publication. No application deployment was performed.
-3. Validate representative operations and denied cross-workspace access with an
-   isolated customer API credential. Mock tests do not establish live isolation.
+2. Production public-contract deployment verified. The production endpoint
+   https://api.upon-ai.com/openapi.json now returns 200 and matches the package
+   contract after the owner deployed the API. This gate passed on 2026-10-14.
+3. Authenticated production read checks passed for workspace discovery and agent
+   listing through the SDK and a real MCP stdio client in workspace 1. Invalid
+   credentials were rejected and MCP rejected a workspace outside its configured
+   allowlist. Zero writes were performed. This does not establish server-side
+   isolation across all operations or validate all 75 methods. Reproduce with
+   `node scripts/verify-live-readonly.mjs <protected-token-file> <workspace-id>`.
 4. Approve initial npm publication, verify registry installation, then configure
    trusted publishers for both packages and retire the bootstrap token.
-5. Connect API promotion to docs contract sync, package release PRs, and assistant
-   refresh after repository identities and deployment access are configured.
+5. Public docs now rebuild and deploy on main pushes, check for API-contract
+   changes every 15 minutes, and refresh the assistant after deployment. Package
+   versioning and npm releases remain reviewed releases; API changes do not
+   automatically publish npm packages. Configure trusted publishing after bootstrap.
 
 The public docs site is independent of internal app docs. The internal renderer,
 helpers and links remain; canonical raw-spec download requires login. Public
