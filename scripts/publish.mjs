@@ -1,10 +1,10 @@
 import fs from 'node:fs';import {execFileSync} from 'node:child_process';import {createHash} from 'node:crypto';
-import {shouldPublish} from './release-state.mjs';
+import {shouldPublish,parseRegistryIntegrity} from './release-state.mjs';
 const tag=process.argv[2];if(!['next','latest'].includes(tag))throw Error('Choose next or latest');
 const resume=process.env.RESUME_RELEASE==='true';
 if(process.env.GITHUB_ACTIONS!=='true'||!process.env.GITHUB_REPOSITORY)throw Error('Publishing requires the protected GitHub workflow');
 function integrityAtRegistry(pkg){
- try{return JSON.parse(execFileSync('npm',['view',`${pkg.name}@${pkg.version}`,'dist.integrity','--json','--registry=https://registry.npmjs.org'],{encoding:'utf8',stdio:'pipe'}));}
+ try{return parseRegistryIntegrity(JSON.parse(execFileSync('npm',['view',`${pkg.name}@${pkg.version}`,'dist.integrity','--json','--registry=https://registry.npmjs.org'],{encoding:'utf8',stdio:'pipe'})));}
  catch(e){if(String(e.stderr).includes('E404'))return null;throw Error('Cannot verify registry state');}
 }
 const packages=['sdk','mcp-server'].map(name=>{
