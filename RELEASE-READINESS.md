@@ -1,6 +1,6 @@
 # Release readiness — 2026-10-14
 
-Status: authenticated production checks passed. npm accepted both 0.1.0 bootstrap uploads; registry visibility and clean registry installation are being verified.
+Status: SDK and MCP 0.1.0 are public on npm under the latest tag. Clean registry installation and authenticated production read checks passed. Version 0.1.1 is prepared for the first trusted-publishing release.
 
 - Packages: @upon-ai/sdk 0.1.0 and @upon-ai/mcp-server 0.1.0.
 - License: MIT, copyright UponAI.
@@ -37,9 +37,12 @@ Artifacts are in `artifacts/`; `pack-report.json` records consumer checks.
    allowlist. Zero writes were performed. This does not establish server-side
    isolation across all operations or validate all 75 methods. Reproduce with
    `node scripts/verify-live-readonly.mjs <protected-token-file> <workspace-id>`.
-4. Complete registry-install verification and configure npm trusted publishers
-   through the signed-in owner account. The bootstrap release has no GitHub
-   provenance. Verify a subsequent OIDC release before retiring the token.
+4. Clean registry installation passed for both packages. Repeated authenticated
+   SDK and MCP read checks passed from that installation. The temporary customer
+   token file was removed; the owner should revoke the shared token in the dashboard.
+   Configure both npm trusted publishers with Allow npm publish (stage-only is
+   incompatible with publish.yml). The bootstrap release has no GitHub provenance.
+   Verify the prepared 0.1.1 OIDC release before retiring the npm bootstrap token.
 5. Public docs now rebuild and deploy on main pushes, check for API-contract
    changes every 15 minutes, and refresh the assistant after deployment. Package
    versioning and npm releases remain reviewed releases; API changes do not
