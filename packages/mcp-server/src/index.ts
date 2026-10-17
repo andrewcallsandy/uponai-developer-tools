@@ -3,17 +3,20 @@ import { z } from 'zod';
 import { UponAI, UponAIError } from '@upon-ai/sdk';
 import { catalog } from './catalog.js';
 export interface McpOptions { api: UponAI; workspaceIds?: readonly number[]; enabledWrites?: readonly string[]; }
-const writable=['createPhoneCall','endLiveCall','rerunCallAnalysis'];
-const safeFields=new Set(['id','name','agent_id','agent_name','llm_id','model','version','is_published','chat_id','chat_status','call_id','call_type','call_status','direction','duration_ms','start_timestamp','end_timestamp','creation_timestamp','last_modification_timestamp','workspace_id','workspaceId','knowledge_base_id','knowledge_base_name','status','voice_id','voice_name','gender','accent','language','conversation_flow_id','conversation_flow_name','concurrency','current_concurrency','concurrency_limit','active_calls','max_concurrency','success','callId','total','page','limit','totalPages','has_more','pagination_key','paginationKey','paginationKeyVersion','next_cursor']);
-const containers=new Set(['data','items','agents','llms','chats','calls','workspaces','knowledge_bases','voices','conversation_flows','versions','pagination']);
+const writable=['createPhoneCall','endLiveCall','rerunCallAnalysis','estimateVoiceSimulationSession','launchVoiceSimulationSession','cancelVoiceSimulationSession','stopVoiceSimulationImprovementRun','pauseVoiceSimulationSchedule'];
+const safeFields=new Set(['id','name','agent_id','agent_name','llm_id','model','version','is_published','chat_id','chat_status','call_id','call_type','call_status','direction','duration_ms','start_timestamp','end_timestamp','creation_timestamp','last_modification_timestamp','workspace_id','workspaceId','knowledge_base_id','knowledge_base_name','status','voice_id','voice_name','gender','accent','language','conversation_flow_id','conversation_flow_name','concurrency','current_concurrency','concurrency_limit','active_calls','max_concurrency','success','callId','total','page','limit','totalPages','has_more','pagination_key','paginationKey','paginationKeyVersion','next_cursor','project_id','session_id','source_agent_id','draft_revision','draft_fingerprint','scenario_id','score','outcome','error_code','created_at','completed_at','cancel_requested_at','enabled','workspace_enabled','provider_allowed','per_run_price','monthly_price','currency','max_concurrent_runs','max_session_runs','run_count','maximum_surcharge','max_audio_seconds','revision','key','provider','passed','failed','inconclusive','errors','cancelled','pending','counterpart','ai','max_auto_calls','max_auto_ai','max_calls','max_ai','calls_used','ai_used','iteration','max_surcharge','surcharge_reserved','approval_version','phase','reason','current_session_id','max_cycles','cycles_started','pending_calls','next_run_at','last_campaign_id','new_scenarios','ai_model','cadence','timezone','time','weekday','month_day','call_threshold','combination','automation_mode']);
+const containers=new Set(['data','items','agents','llms','chats','calls','workspaces','knowledge_bases','voices','conversation_flows','versions','pagination','projects','scenarios','sessions','runs','estimate','voice_options','model_options','defaults','test_counts','improvement_runs','schedule']);
 /** Intentional lossy projection: no prompts, transcripts, configuration blobs or credentials. */
-export function projectResult(value:unknown,depth=0):unknown {
+export function projectResult(value:unknown,depth=0,schedule=false):unknown {
  if(depth>6)return null;
  if(Array.isArray(value))return value.slice(0,100).map(v=>projectResult(v,depth+1));
  if(value&&typeof value==='object'){
   const output:Record<string,unknown>={};
   for(const [key,v]of Object.entries(value)){
-   if(containers.has(key)&&(Array.isArray(v)||(v&&typeof v==='object')))output[key]=projectResult(v,depth+1);
+   if(key==='change_scope'&&Array.isArray(v))output[key]=v.filter(x=>['prompts','tools','flow','settings','analysis','knowledge','webhooks'].includes(x));
+   else if(['counterpart','ai'].includes(key)&&Array.isArray(v))output[key]=v.filter(x=>typeof x==='string').slice(0,100).map(x=>x.slice(0,200));
+   else if(key==='config'&&schedule&&v&&typeof v==='object')output[key]=projectResult(v,depth+1);
+   else if(containers.has(key)&&(Array.isArray(v)||(v&&typeof v==='object')))output[key]=projectResult(v,depth+1,key==='schedule');
    else if(safeFields.has(key)&&(v===null||['string','number','boolean'].includes(typeof v)))output[key]=typeof v==='string'?v.slice(0,300):v;
   }return output;
  }return null;
@@ -57,6 +60,24 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
   });
  }
  for(const operation of options.enabledWrites||[]){
+  if(operation==='pauseVoiceSimulationSchedule') {
+   server.registerTool(operation,{description:'Pause future scheduled improvement cycles. Current work continues until explicitly stopped. Requires confirmation.',inputSchema:z.object({workspaceId:positive,projectId:z.string().uuid(),confirm:z.literal(true)}).strict(),annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:true}},async(input:any)=>run(operation,{query:{workspaceId:input.workspaceId},path:{projectId:input.projectId}}));
+   continue;
+  }
+  if(operation==='stopVoiceSimulationImprovementRun') {
+   server.registerTool(operation,{description:'Stop automatic improvement work and request cancellation of active simulation calls. Incurred usage remains billable. Requires explicit confirmation.',inputSchema:z.object({workspaceId:positive,id:z.string().uuid(),confirm:z.literal(true)}).strict(),annotations:{readOnlyHint:false,destructiveHint:true,idempotentHint:true,openWorldHint:true}},async(input:any)=>run(operation,{query:{workspaceId:input.workspaceId},path:{id:input.id},body:{}}));
+   continue;
+  }
+  if(operation.includes('VoiceSimulation')) {
+   const cancel=operation==='cancelVoiceSimulationSession';
+   const launch=operation==='launchVoiceSimulationSession';
+   const shape:Record<string,z.ZodTypeAny>=cancel?{workspaceId:positive,sessionId:identifier,confirm:z.literal(true)}:{workspaceId:positive,projectId:identifier,scenario_ids:z.array(z.string().uuid()).min(1).max(100),repetitions:z.number().int().min(1).max(10).optional(),...(launch?{max_surcharge:z.number().finite().nonnegative(),idempotency_key:z.string().min(1).max(128),confirm:z.literal(true)}:{})};
+   server.registerTool(operation,{description:cancel?'Cancel an isolated voice simulation session.':launch?'Launch real voice simulations using saved scenarios. Voice usage and the accepted surcharge may be billed. Requires an estimate, explicit confirmation, and an idempotency key.':'Estimate the run surcharge for saved voice simulation scenarios. Voice usage and monthly access are billed separately.',inputSchema:z.object(shape).strict(),annotations:{readOnlyHint:!launch&&!cancel,destructiveHint:launch||cancel,idempotentHint:true,openWorldHint:true}},async(input:any)=>{
+    const {workspaceId,projectId,sessionId,confirm,...body}=input;
+    return run(operation,{query:{workspaceId},path:cancel?{sessionId}:{projectId},body});
+   });
+   continue;
+  }
   const shape:Record<string,z.ZodTypeAny>=operation==='createPhoneCall'?{workspaceId:positive,agentId:identifier,fromNumber:z.string().regex(/^\+[1-9]\d{6,14}$/),toNumber:z.string().regex(/^\+[1-9]\d{6,14}$/),confirm:z.literal(true)}:{workspaceId:positive,callId:identifier,confirm:z.literal(true)};
   server.registerTool(operation,{description:operation==='createPhoneCall'?'Place a real outbound call. Requires explicit operator enablement and confirmation.':'Change a call: '+operation+'. Requires explicit operator enablement and confirmation.',inputSchema:z.object(shape).strict(),annotations:{readOnlyHint:false,destructiveHint:true,idempotentHint:false,openWorldHint:true}},async(input:any)=>{
    const {workspaceId,callId,confirm,...fields}=input;

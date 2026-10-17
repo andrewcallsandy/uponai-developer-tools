@@ -13,3 +13,20 @@ client.request('/api/admin');
 client.getAgent({path:{agentId:'a'},query:{workspaceId:1},headers:{'X-Actor-Type':'admin'}});
 const result:Promise<OperationOutput<'getAgent'>>=client.getAgent({path:{agentId:'a'},query:{workspaceId:1}});
 void result;
+
+client.launchVoiceSimulationSession({path:{projectId:'project'},query:{workspaceId:1},body:{scenario_ids:['scenario'],max_surcharge:1,idempotency_key:'session-key'}});
+const recording:Promise<Blob>=client.getVoiceSimulationRecording({path:{sessionId:'session',runId:'run'},query:{workspaceId:1}});
+void recording;
+// @ts-expect-error A launch requires an accepted surcharge limit and idempotency key.
+client.launchVoiceSimulationSession({path:{projectId:'project'},query:{workspaceId:1},body:{scenario_ids:['scenario']}});
+
+client.createVoiceSimulationProject({query:{workspaceId:1},body:{name:"Copied suite",source_agent_id:"agent",copy_project_id:"project"}});
+client.approveVoiceSimulationImprovementRun({query:{workspaceId:1},path:{id:'run'},body:{confirm:true,review_fingerprint:'reviewed',max_calls:6,max_ai:12,max_surcharge:0,ai_model:'configured/model'}});
+
+client.createVoiceSimulationProject({query:{workspaceId:1},body:{name:'Manual suite',source_agent_id:'agent',automation_mode:'manual'}});
+const mode:Promise<'automated'|'manual'>=client.updateVoiceSimulationProject({path:{projectId:'project'},query:{workspaceId:1},body:{automation_mode:'automated'}}).then(p=>p.automation_mode);
+void mode;
+// @ts-expect-error Automation mode must be automated or manual.
+client.updateVoiceSimulationProject({path:{projectId:'project'},query:{workspaceId:1},body:{automation_mode:'paused'}});
+// @ts-expect-error Updating a project requires an automation mode.
+client.updateVoiceSimulationProject({path:{projectId:'project'},query:{workspaceId:1},body:{}});

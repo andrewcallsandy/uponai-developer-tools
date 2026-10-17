@@ -28,9 +28,9 @@ from the built checkout.
 
 The token is validated through workspace discovery before MCP initialization.
 Without `UPONAI_WORKSPACE_IDS`, only workspace discovery is available. With an
-explicit comma-separated allowlist, 18 summary-only read tools become available
+explicit comma-separated allowlist, 28 summary-only read tools become available
 for agents, LLMs, chats, conversation flows, knowledge bases, voices, concurrency
-and calls. Tools never accept an arbitrary path, method, authentication header,
+calls and voice simulations. Tools never accept an arbitrary path, method, authentication header,
 privileged context, or API origin.
 
 Raw configuration, prompts, transcripts, recordings, signed URLs and secret fields
@@ -40,13 +40,15 @@ Upstream API authorization still applies to every request.
 ## Optional write capabilities
 
 Writes are off by default. An operator can set `UPONAI_MCP_WRITE_OPERATIONS` to a
-comma-separated subset of `createPhoneCall,endLiveCall,rerunCallAnalysis`.
+comma-separated subset of `createPhoneCall,endLiveCall,rerunCallAnalysis,estimateVoiceSimulationSession,launchVoiceSimulationSession,cancelVoiceSimulationSession,stopVoiceSimulationImprovementRun,pauseVoiceSimulationSchedule`.
 Each write also requires a `confirm: true` argument and an allowed workspace.
 The confirmation argument is an extra safeguard, not proof of human approval;
 configure your MCP client's approval controls before enabling writes. These tools
 can incur charges or affect live calls. Phone-call creation accepts E.164 numbers
 and a deliberately small request schema. Other writes remain available through
-the SDK only.
+the SDK only. Simulation launch requires a bounded scenario selection, an accepted
+surcharge limit and an idempotency key. Voice usage and monthly access are charged
+separately from the run surcharge.
 
 ## Self-hosted Streamable HTTP
 
@@ -71,3 +73,14 @@ separate instances/credentials for separate principals; do not use it as a
 multi-customer gateway. A production hosted endpoint is not deployed by npm install.
 
 All diagnostics go to stderr so stdio protocol output remains clean.
+
+Self-improving runs can be monitored with `listVoiceSimulationImprovementRuns`
+and `getVoiceSimulationImprovementRun`. Summaries include status, cycle number,
+call/IQ usage, approved limits and the pause reason, but omit prompts, criteria,
+review fingerprints and event payloads. `stopVoiceSimulationImprovementRun` is
+an optional write requiring `confirm: true`. Budget approval and automatic-draft
+consent stay in the complete UI/SDK review flow; summary-only tools cannot approve
+an unseen suite. Project summaries include `automation_mode` (`automated` or
+`manual`); creating projects and changing their mode with
+`updateVoiceSimulationProject` remain SDK/UI operations. IVR speech credentials are configured through Brand Management,
+never through MCP.

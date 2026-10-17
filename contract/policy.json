@@ -450,6 +450,216 @@
       "path": "/api/v1/calls/{callId}/analysis/rerun",
       "method": "put",
       "operationId": "rerunCallAnalysis"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/templates",
+      "path": "/api/v1/voice-simulations/templates",
+      "method": "get",
+      "operationId": "listVoiceSimulationTemplates"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/settings",
+      "path": "/api/v1/voice-simulations/settings",
+      "method": "get",
+      "operationId": "getVoiceSimulationSettings"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/agents",
+      "path": "/api/v1/voice-simulations/agents",
+      "method": "get",
+      "operationId": "listVoiceSimulationSourceAgents"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects",
+      "path": "/api/v1/voice-simulations/projects",
+      "method": "get",
+      "operationId": "listVoiceSimulationProjects"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects",
+      "path": "/api/v1/voice-simulations/projects",
+      "method": "post",
+      "operationId": "createVoiceSimulationProject"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}",
+      "path": "/api/v1/voice-simulations/projects/{projectId}",
+      "method": "get",
+      "operationId": "getVoiceSimulationProject"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}",
+      "path": "/api/v1/voice-simulations/projects/{projectId}",
+      "method": "patch",
+      "operationId": "updateVoiceSimulationProject"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/scenarios",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios",
+      "method": "get",
+      "operationId": "listVoiceSimulationScenarios"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/scenarios",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios",
+      "method": "post",
+      "operationId": "createVoiceSimulationScenario"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/scenarios/{scenarioId}",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}",
+      "method": "put",
+      "operationId": "updateVoiceSimulationScenario"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/generate-scenarios",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/generate-scenarios",
+      "method": "post",
+      "operationId": "generateVoiceSimulationScenarios"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/estimate",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/estimate",
+      "method": "post",
+      "operationId": "estimateVoiceSimulationSession"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/sessions",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/sessions",
+      "method": "post",
+      "operationId": "launchVoiceSimulationSession"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/sessions",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/sessions",
+      "method": "get",
+      "operationId": "listVoiceSimulationSessions"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/sessions/{sessionId}",
+      "path": "/api/v1/voice-simulations/sessions/{sessionId}",
+      "method": "get",
+      "operationId": "getVoiceSimulationSession"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/sessions/{sessionId}/cancel",
+      "path": "/api/v1/voice-simulations/sessions/{sessionId}/cancel",
+      "method": "post",
+      "operationId": "cancelVoiceSimulationSession"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/sessions/{sessionId}/improvements",
+      "path": "/api/v1/voice-simulations/sessions/{sessionId}/improvements",
+      "method": "post",
+      "operationId": "proposeVoiceSimulationImprovement"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvements/{improvementId}/apply",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvements/{improvementId}/apply",
+      "method": "post",
+      "operationId": "applyVoiceSimulationImprovement"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/voice-simulations/sessions/{sessionId}/runs/{runId}/recording",
+      "operationId": "getVoiceSimulationRecording",
+      "sourcePath": "/api/voice-simulations/sessions/{sessionId}/runs/{runId}/recording"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/archive",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/archive",
+      "method": "post",
+      "operationId": "archiveVoiceSimulationProject"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/scenarios/{scenarioId}/archive",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}/archive",
+      "method": "post",
+      "operationId": "archiveVoiceSimulationScenario"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvements",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvements",
+      "method": "get",
+      "operationId": "listVoiceSimulationImprovements"
+    },
+    {
+      "path": "/api/v1/voice-simulations/speech/voices",
+      "method": "get",
+      "operationId": "listVoiceSimulationSpeechVoices",
+      "sourcePath": "/api/voice-simulations/speech/voices"
+    },
+    {
+      "path": "/api/v1/voice-simulations/ivr/audio",
+      "method": "post",
+      "operationId": "generateVoiceSimulationIvrAudio",
+      "sourcePath": "/api/voice-simulations/ivr/audio"
+    },
+    {
+      "path": "/api/v1/voice-simulations/audio/{audioId}",
+      "method": "get",
+      "operationId": "getVoiceSimulationIvrAudio",
+      "sourcePath": "/api/voice-simulations/audio/{audioId}"
+    },
+    {
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-runs",
+      "method": "post",
+      "operationId": "createVoiceSimulationImprovementRun",
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvement-runs"
+    },
+    {
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-runs",
+      "method": "get",
+      "operationId": "listVoiceSimulationImprovementRuns",
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvement-runs"
+    },
+    {
+      "path": "/api/v1/voice-simulations/improvement-runs/{id}",
+      "method": "get",
+      "operationId": "getVoiceSimulationImprovementRun",
+      "sourcePath": "/api/voice-simulations/improvement-runs/{id}"
+    },
+    {
+      "path": "/api/v1/voice-simulations/improvement-runs/{id}/generate",
+      "method": "post",
+      "operationId": "generateVoiceSimulationImprovementScenarios",
+      "sourcePath": "/api/voice-simulations/improvement-runs/{id}/generate"
+    },
+    {
+      "path": "/api/v1/voice-simulations/improvement-runs/{id}/approve",
+      "method": "post",
+      "operationId": "approveVoiceSimulationImprovementRun",
+      "sourcePath": "/api/voice-simulations/improvement-runs/{id}/approve"
+    },
+    {
+      "path": "/api/v1/voice-simulations/improvement-runs/{id}/stop",
+      "method": "post",
+      "operationId": "stopVoiceSimulationImprovementRun",
+      "sourcePath": "/api/voice-simulations/improvement-runs/{id}/stop"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/improvement-runs/{id}",
+      "path": "/api/v1/voice-simulations/improvement-runs/{id}",
+      "method": "patch",
+      "operationId": "updateVoiceSimulationImprovementRun"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvement-schedule",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule",
+      "method": "get",
+      "operationId": "getVoiceSimulationSchedule"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvement-schedule",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule",
+      "method": "put",
+      "operationId": "saveVoiceSimulationSchedule"
+    },
+    {
+      "sourcePath": "/api/voice-simulations/projects/{projectId}/improvement-schedule/pause",
+      "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule/pause",
+      "method": "post",
+      "operationId": "pauseVoiceSimulationSchedule"
     }
   ],
   "components": {
@@ -614,7 +824,28 @@
       "CallAgentConfigOverride",
       "CallLlmOverride",
       "CallConversationFlowOverride",
-      "WorkspaceSummary"
+      "WorkspaceSummary",
+      "VoiceSimulationScenarioDefinition",
+      "VoiceSimulationScenario",
+      "VoiceSimulationProject",
+      "VoiceSimulationSettings",
+      "VoiceSimulationEstimate",
+      "VoiceSimulationRun",
+      "VoiceSimulationReport",
+      "VoiceSimulationSession",
+      "VoiceSimulationLaunchInput",
+      "VoiceSimulationImprovement",
+      "VoiceSimulationError",
+      "VoiceSimulationIvr",
+      "VoiceSimulationImprovementBudget",
+      "VoiceSimulationImprovementRun",
+      "VoiceSimulationScheduleTrigger",
+      "VoiceSimulationScheduleApproval",
+      "VoiceSimulationSchedule",
+      "VoiceSimulationScheduleResponse",
+      "VoiceSimulationChangeScope",
+      "VoiceSimulationHostedFunction",
+      "VoiceSimulationDraftPatch"
     ]
   },
   "tags": [
@@ -630,7 +861,8 @@
     "Batch Tests",
     "Test Runs",
     "Account",
-    "Calls"
+    "Calls",
+    "Voice Simulations"
   ],
   "families": [
     "llms",
@@ -645,6 +877,7 @@
     "test-runs",
     "concurrency",
     "workspaces",
-    "calls"
+    "calls",
+    "voice-simulations"
   ]
 }

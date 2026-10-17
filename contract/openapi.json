@@ -17,6 +17,10 @@
   ],
   "tags": [
     {
+      "name": "Voice Simulations",
+      "description": "Native real-audio testing, scoring and iterative agent improvement."
+    },
+    {
       "name": "LLM Models",
       "description": "Manage reusable large language model configurations for agents."
     },
@@ -3632,6 +3636,4436 @@
           }
         },
         "operationId": "rerunCallAnalysis",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/templates": {
+      "get": {
+        "summary": "List voice simulation templates",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "templates": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "string"
+                          },
+                          "scenario": {
+                            "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationTemplates",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/settings": {
+      "get": {
+        "summary": "Get voice simulation access and prices",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationSettings"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getVoiceSimulationSettings",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/agents": {
+      "get": {
+        "summary": "List editable simulation source agents",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "agent_id": {
+                            "type": "string"
+                          },
+                          "agent_name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationSourceAgents",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects": {
+      "get": {
+        "summary": "List voice simulation projects",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "projects": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceSimulationProject"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationProjects",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a voice simulation project",
+        "description": "Requires workspace access. Optionally copy an accessible, active project in the same workspace using copy_project_id. Copies its simulation draft and active scenarios including IVR recordings; source_agent_id must match the original. Histories, sessions, improvements and budget approvals are not copied. Creation is atomic and does not launch calls.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 5000
+                  },
+                  "source_agent_id": {
+                    "type": "string"
+                  },
+                  "copy_project_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Optional existing project to duplicate within the same workspace."
+                  },
+                  "automation_mode": {
+                    "type": "string",
+                    "enum": [
+                      "automated",
+                      "manual"
+                    ],
+                    "default": "automated",
+                    "description": "How the project runs. A copy keeps the original's mode unless this is set."
+                  }
+                },
+                "required": [
+                  "name",
+                  "source_agent_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationProject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "createVoiceSimulationProject",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}": {
+      "get": {
+        "summary": "Get a voice simulation project",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationProject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getVoiceSimulationProject",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update a voice simulation project",
+        "description": "Requires workspace access and edit access to the source agent. Converts the project between automated and manual. Switching to manual returns 409 AUTOMATION_ACTIVE while an improvement run is running or paused, or its schedule is enabled; stop or pause it first. Manual projects reject new improvement runs and schedules with 409 PROJECT_MANUAL.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "automation_mode": {
+                    "type": "string",
+                    "enum": [
+                      "automated",
+                      "manual"
+                    ]
+                  }
+                },
+                "required": [
+                  "automation_mode"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationProject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateVoiceSimulationProject",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/scenarios": {
+      "get": {
+        "summary": "List project scenarios",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "scenarios": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceSimulationScenario"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationScenarios",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a voice simulation scenario",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "definition": {
+                    "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+                  }
+                },
+                "required": [
+                  "definition"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationScenario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "createVoiceSimulationScenario",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}": {
+      "put": {
+        "summary": "Update a voice simulation scenario",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "scenarioId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "definition": {
+                    "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "definition",
+                  "revision"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationScenario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateVoiceSimulationScenario",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/generate-scenarios": {
+      "post": {
+        "summary": "Generate scenarios with Agent IQ",
+        "description": "Agent IQ drafts scenarios for review. This does not save scenarios or launch calls. Omit `instruction` to let Agent IQ recommend the highest-value suite from the agent's prompt, tools and up to 20 recent real calls (last 90 days, contact details removed). Requires Agent IQ access and uses the workspace Agent IQ pricing.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ai_model": {
+                    "type": "string",
+                    "description": "Allowed Agent IQ model key from workspace model_options."
+                  },
+                  "instruction": {
+                    "type": "string",
+                    "maxLength": 12000,
+                    "description": "What to test. Omit or leave empty to let Agent IQ recommend scenarios."
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "use_call_history": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Include recent real calls as evidence."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "scenarios": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+                      }
+                    },
+                    "context": {
+                      "type": "object",
+                      "properties": {
+                        "calls_reviewed": {
+                          "type": "integer"
+                        },
+                        "recommended": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "generateVoiceSimulationScenarios",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/estimate": {
+      "post": {
+        "summary": "Estimate a simulation session",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scenario_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                  },
+                  "repetitions": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  }
+                },
+                "required": [
+                  "scenario_ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationEstimate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "estimateVoiceSimulationSession",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/sessions": {
+      "post": {
+        "summary": "Launch a voice simulation session",
+        "description": "Queues real audio conversations using isolated test copies. Review the estimate and supply the accepted maximum surcharge. Reuse the same idempotency_key only for an identical request. Voice usage and monthly access are separate from the surcharge. Registration is not proof of a completed audio run.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceSimulationLaunchInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "launchVoiceSimulationSession",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "List simulation sessions",
+        "description": "Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sessions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceSimulationSession"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationSessions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/sessions/{sessionId}": {
+      "get": {
+        "summary": "Get a simulation session and report",
+        "description": "Returns run status, criterion scores and transcript evidence. Outcomes distinguish pass, fail, infrastructure error and inconclusive evidence.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getVoiceSimulationSession",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/sessions/{sessionId}/cancel": {
+      "post": {
+        "summary": "Cancel a voice simulation session",
+        "description": "Requests asynchronous cancellation. Remains available after the feature is disabled. Already connected runs may incur usage charges.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "cancelVoiceSimulationSession",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/sessions/{sessionId}/improvements": {
+      "post": {
+        "summary": "Propose a simulation improvement",
+        "description": "Agent IQ proposes changes within change_scope based on the tested draft and session evidence. The default is prompts only. Expanded proposals include structured configuration diffs and hosted-function tests. This does not modify the source agent or apply the draft. Requires Agent IQ access.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "change_scope": {
+                    "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+                  },
+                  "ai_model": {
+                    "type": "string",
+                    "description": "Allowed Agent IQ model key from workspace model_options."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovement"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "proposeVoiceSimulationImprovement",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/improvements/{improvementId}/apply": {
+      "post": {
+        "summary": "Apply an improvement to a simulation draft",
+        "description": "Applies the reviewed configuration and hosted-function handlers to future simulation copies only. The source agent and production assignments are unchanged. Stale draft revisions are rejected.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "improvementId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "confirm": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "required": [
+                  "confirm"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "draft_revision": {
+                      "type": "integer"
+                    },
+                    "applied": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "applyVoiceSimulationImprovement",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/sessions/{sessionId}/runs/{runId}/recording": {
+      "get": {
+        "summary": "Get a voice simulation recording",
+        "description": "Stream the tested agent audio recording when retained by the workspace. Requires access to the session and source agent.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audio recording",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recording unavailable"
+          }
+        },
+        "operationId": "getVoiceSimulationRecording",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/archive": {
+      "post": {
+        "summary": "Archive a voice simulation project",
+        "description": "Archives the resource while retaining existing session evidence. Project archival also requests cancellation of active sessions.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "archived": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        },
+        "operationId": "archiveVoiceSimulationProject",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}/archive": {
+      "post": {
+        "summary": "Archive a voice simulation scenario",
+        "description": "Archives the resource while retaining existing session evidence. Project archival also requests cancellation of active sessions.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "scenarioId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "archived": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        },
+        "operationId": "archiveVoiceSimulationScenario",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/improvements": {
+      "get": {
+        "summary": "List voice simulation improvement history",
+        "description": "Returns reviewed and pending prompt proposals without modifying the original agent.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "improvements": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceSimulationImprovement"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        },
+        "operationId": "listVoiceSimulationImprovements",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/speech/voices": {
+      "get": {
+        "summary": "List voices for IVR recordings",
+        "description": "Lists voices using the workspace brand speech account. Provider-owned workspaces require an enabled provider grant and their own speech key. Keys are never returned.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cartesia",
+                "elevenlabs"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "voices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationSpeechVoices",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/ivr/audio": {
+      "post": {
+        "summary": "Generate recordings for IVR prompts",
+        "description": "Generates speech for announcement and menu nodes using the configured brand account. May incur speech-provider charges. Identical workspace/text/voice/model requests reuse cached assets. Partial failures return complete=false and per-node errors; review before saving the returned graph.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ivr": {
+                    "$ref": "#/components/schemas/VoiceSimulationIvr"
+                  },
+                  "provider": {
+                    "type": "string",
+                    "enum": [
+                      "cartesia",
+                      "elevenlabs"
+                    ]
+                  },
+                  "voice_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ivr",
+                  "provider"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ivr": {
+                      "$ref": "#/components/schemas/VoiceSimulationIvr"
+                    },
+                    "complete": {
+                      "type": "boolean"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "node_id": {
+                            "type": "string"
+                          },
+                          "error": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "ivr",
+                    "complete",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "generateVoiceSimulationIvrAudio",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/audio/{audioId}": {
+      "get": {
+        "summary": "Download an IVR recording",
+        "description": "Returns a workspace-scoped generated recording. Requires workspace access.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "audioId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getVoiceSimulationIvrAudio",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/improvement-runs": {
+      "post": {
+        "summary": "Create a self-improving run",
+        "description": "Creates an awaiting-approval draft. Does not launch calls. Only one active improvement run per project. AI generation can consume the configured interaction budget before call approval.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "max_calls": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Total simulation runs allowed, including prior reserved calls; workspace cap may be lower."
+                  },
+                  "max_ai": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 200,
+                    "description": "Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower."
+                  },
+                  "max_surcharge": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Maximum cumulative per-run surcharges. Voice usage, Agent IQ pricing and monthly access remain separate."
+                  },
+                  "scenario_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "maxItems": 100
+                  },
+                  "ai_model": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "createVoiceSimulationImprovementRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "List self-improving runs",
+        "description": "Returns up to 50 recent improvement runs for this project.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "improvement_runs": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "listVoiceSimulationImprovementRuns",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/improvement-runs/{id}": {
+      "get": {
+        "summary": "Review a self-improving run",
+        "description": "Returns counters, selected scenarios, review fingerprint and the latest 100 activity events. Review the actual scenarios and draft before approval.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getVoiceSimulationImprovementRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Choose scenarios before improvement approval",
+        "description": "Owner only, while awaiting approval and no generation is in progress. Updates the selected suite without resetting consumed AI usage. Approved suites cannot be changed; stop and create a new run instead.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "scenario_ids"
+                ],
+                "properties": {
+                  "scenario_ids": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateVoiceSimulationImprovementRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/improvement-runs/{id}/generate": {
+      "post": {
+        "summary": "Generate and save an improvement test suite",
+        "description": "Owner only, before approval. Reserves one Agent IQ interaction and saves the generated scenarios for review. Replaces this draft run selection. Does not launch calls.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instruction": {
+                    "type": "string",
+                    "maxLength": 12000
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  }
+                },
+                "required": [
+                  "instruction"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "generateVoiceSimulationImprovementScenarios",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/improvement-runs/{id}/approve": {
+      "post": {
+        "summary": "Approve or renew an improvement budget",
+        "description": "Owner approval starts real calls and automatic Agent IQ changes to the isolated simulation draft. Present the complete selected suite and budget to the user first. Submit the fingerprint from that review. Calls, AI interactions and surcharges accumulate across renewals. The full approved suite is frozen; changes require a new improvement run. Errors, missing evidence and insufficient budget pause the loop.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "change_scope": {
+                    "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+                  },
+                  "ai_model": {
+                    "type": "string",
+                    "description": "Allowed Agent IQ model key for future improvement steps (provider/model). Saved atomically with approval. Omit to retain the run model, or resolve the workspace default for an older run without a model. May be changed when approving a draft or renewing a paused run; scenario scoring and counterpart models are unchanged."
+                  },
+                  "max_calls": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Total simulation runs allowed, including prior reserved calls; workspace cap may be lower."
+                  },
+                  "max_ai": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 200,
+                    "description": "Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower."
+                  },
+                  "max_surcharge": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Maximum cumulative per-run surcharges. Voice usage, Agent IQ pricing and monthly access remain separate."
+                  },
+                  "confirm": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "review_fingerprint": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "confirm",
+                  "review_fingerprint",
+                  "max_calls",
+                  "max_ai",
+                  "max_surcharge"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "approveVoiceSimulationImprovementRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/improvement-runs/{id}/stop": {
+      "post": {
+        "summary": "Stop a self-improving run",
+        "description": "Stops future work and requests cancellation of active sessions. In-flight calls may take time to end; already incurred usage remains billable.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationImprovementRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Feature disabled or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found in this workspace.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, price or idempotency conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Voice configuration or fixture unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Workspace queue limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature setup or service unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "stopVoiceSimulationImprovementRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule": {
+      "get": {
+        "summary": "Get recurring improvement policy",
+        "description": "Returns the policy, remaining cycle allowance, next time trigger and unconsumed completed-call count.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recurring policy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationScheduleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getVoiceSimulationSchedule",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Approve or renew recurring improvement cycles",
+        "description": "Explicit owner approval is required. The reviewed run supplies the fixed regression suite; an unstarted reviewed run is converted to the schedule. Each cycle uses its own approved budgets. Fresh tests can be preauthorized. Only isolated simulation drafts change; original agents require manual review. Reapproval resets the cycle allowance but retains consumed-call history. Active scheduled cycles must finish or be stopped before renewal.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceSimulationScheduleApproval"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recurring policy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationScheduleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "saveVoiceSimulationSchedule",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule/pause": {
+      "post": {
+        "summary": "Pause future improvement cycles",
+        "description": "Owner only. Stops future scheduling without cancelling the current cycle. Use the improvement-run stop operation to cancel current work.",
+        "tags": [
+          "Voice Simulations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recurring policy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationScheduleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Invalid request, unavailable feature or access denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceSimulationError"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "pauseVoiceSimulationSchedule",
         "security": [
           {
             "bearerAuth": []
@@ -8610,6 +13044,1837 @@
           "success",
           "callId"
         ]
+      },
+      "VoiceSimulationScenarioDefinition": {
+        "type": "object",
+        "properties": {
+          "counterpart_model": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Allowed voice model for the simulated counterpart; omitted means workspace default."
+          },
+          "judge_model": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Allowed Agent IQ model key for scoring; omitted means workspace default."
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "persona": {
+            "type": "string",
+            "maxLength": 12000
+          },
+          "instructions": {
+            "type": "string",
+            "maxLength": 16000
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "agent_dials",
+              "sim_dials"
+            ],
+            "default": "sim_dials"
+          },
+          "max_duration_seconds": {
+            "type": "integer",
+            "minimum": 60,
+            "maximum": 900,
+            "default": 180
+          },
+          "pass_threshold": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "default": 80
+          },
+          "rationale": {
+            "type": "string",
+            "maxLength": 600,
+            "description": "Why Agent IQ recommended this scenario. Optional."
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "prompt",
+              "call_history",
+              "request"
+            ],
+            "description": "What the recommendation was based on. Present only with a rationale."
+          },
+          "criteria": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                },
+                "required": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "description"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 20
+          },
+          "agent_variables": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "maxProperties": 100
+          },
+          "counterpart_variables": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "maxProperties": 100
+          },
+          "voice_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tool_mocks": {
+            "type": "object",
+            "additionalProperties": true,
+            "maxProperties": 100
+          },
+          "ivr": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "entry": {
+                    "type": "string"
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "say",
+                            "menu",
+                            "hold",
+                            "bridge",
+                            "hangup"
+                          ]
+                        },
+                        "prompt": {
+                          "type": "string"
+                        },
+                        "next": {
+                          "type": "string"
+                        },
+                        "seconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 120
+                        },
+                        "routes": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "failure": {
+                          "type": "string"
+                        },
+                        "timeout_seconds": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 30
+                        },
+                        "retry_limit": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 3
+                        },
+                        "audio_id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "description": "Workspace recording whose stored text must exactly match prompt; regenerate after editing."
+                        },
+                        "position": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 6000
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 6000
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type"
+                      ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 40
+                  },
+                  "required_nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "entry",
+                  "nodes"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "persona",
+          "instructions",
+          "criteria"
+        ]
+      },
+      "VoiceSimulationError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "VoiceSimulationSettings": {
+        "type": "object",
+        "properties": {
+          "voice_options": {
+            "type": "array",
+            "description": "Imported English accent voices for simulation counterparts. The library is provisioned automatically by the simulation UI or first run; refresh settings after provisioning. Source-agent voices remain unchanged.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string",
+                  "enum": [
+                    "cartesia",
+                    "elevenlabs"
+                  ]
+                },
+                "accent": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string",
+                  "enum": [
+                    "en"
+                  ]
+                },
+                "voice_id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "model_options": {
+            "type": "object",
+            "properties": {
+              "counterpart": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ai": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "defaults": {
+                "type": "object",
+                "properties": {
+                  "counterpart": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "ai": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "workspace_enabled": {
+            "type": "boolean"
+          },
+          "provider_allowed": {
+            "type": "boolean"
+          },
+          "per_run_price": {
+            "type": "number"
+          },
+          "monthly_price": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "max_concurrent_runs": {
+            "type": "integer"
+          },
+          "max_session_runs": {
+            "type": "integer"
+          },
+          "can_manage": {
+            "type": "boolean"
+          },
+          "max_auto_calls": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "max_auto_ai": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "speech": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "providers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "provider": {
+                      "type": "string",
+                      "enum": [
+                        "cartesia",
+                        "elevenlabs"
+                      ]
+                    },
+                    "configured": {
+                      "type": "boolean"
+                    },
+                    "voice_id": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "enabled",
+          "per_run_price",
+          "monthly_price",
+          "currency"
+        ]
+      },
+      "VoiceSimulationProject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "source_agent_id": {
+            "type": "string"
+          },
+          "draft_revision": {
+            "type": "integer"
+          },
+          "draft_patch": {
+            "$ref": "#/components/schemas/VoiceSimulationDraftPatch"
+          },
+          "baseline_fingerprint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "created_by": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "archived_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "automation_mode": {
+            "type": "string",
+            "enum": [
+              "automated",
+              "manual"
+            ],
+            "description": "automated lets Agent IQ draft, run and improve the suite through improvement runs and schedules. manual runs selected scenarios once with no automatic draft changes."
+          }
+        },
+        "required": [
+          "id",
+          "workspace_id",
+          "name",
+          "source_agent_id",
+          "draft_revision",
+          "automation_mode"
+        ]
+      },
+      "VoiceSimulationDraftPatch": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "general_prompt": {
+                "type": "string"
+              },
+              "global_prompt": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "version",
+              "engine",
+              "agent",
+              "functions"
+            ],
+            "properties": {
+              "version": {
+                "type": "integer",
+                "enum": [
+                  2
+                ]
+              },
+              "engine": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Approved prompt, tool, graph, knowledge and engine behavior fields. Arrays replace the complete field. Protected existing values use opaque references and cannot be moved."
+              },
+              "agent": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Approved voice behavior and analysis fields. Publication, assignments and platform event callbacks cannot be changed."
+              },
+              "functions": {
+                "type": "object",
+                "maxProperties": 12,
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/VoiceSimulationHostedFunction"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "VoiceSimulationHostedFunction": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "description",
+          "code",
+          "input_schema",
+          "tests"
+        ],
+        "properties": {
+          "connectors": {
+            "type": "object",
+            "maxProperties": 3,
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Map local aliases to existing custom-tool names. A handler requests a connector with {$request:{connector:alias,args:{...}}}, then reads context.responses[alias]. Simulations return fixtures. Accepted endpoints use the reviewed HTTPS connection with credentials retained server-side. Each connector runs at most once per invocation."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 20000,
+            "description": "Synchronous JavaScript function expression accepting input and context and returning JSON. No network, filesystem, modules or host credentials. context.fixture is available only during simulation."
+          },
+          "input_schema": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "tests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+              "type": "object",
+              "required": [
+                "input",
+                "expected"
+              ],
+              "properties": {
+                "input": {},
+                "expected": {},
+                "fixture": {},
+                "connector_results": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "VoiceSimulationScenario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "type": "integer"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "definition": {
+            "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "name",
+          "revision",
+          "definition"
+        ]
+      },
+      "VoiceSimulationEstimate": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "run_count": {
+            "type": "integer"
+          },
+          "per_run_price": {
+            "type": "number"
+          },
+          "maximum_surcharge": {
+            "type": "number"
+          },
+          "monthly_price": {
+            "type": "number"
+          },
+          "max_audio_seconds": {
+            "type": "integer"
+          },
+          "billing_description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_count",
+          "maximum_surcharge",
+          "currency"
+        ]
+      },
+      "VoiceSimulationLaunchInput": {
+        "type": "object",
+        "properties": {
+          "scenario_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "repetitions": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 1
+          },
+          "max_surcharge": {
+            "type": "number",
+            "minimum": 0
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "scenario_ids",
+          "max_surcharge",
+          "idempotency_key"
+        ]
+      },
+      "VoiceSimulationSession": {
+        "type": "object",
+        "properties": {
+          "draft_fingerprint": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "pass",
+              "fail",
+              "inconclusive",
+              "error",
+              "cancelled",
+              null
+            ],
+            "description": "Null while active. Pass requires all runs to pass; failed criteria take precedence over errors, cancellations and inconclusive evidence."
+          },
+          "test_counts": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "passed": {
+                "type": "integer"
+              },
+              "failed": {
+                "type": "integer"
+              },
+              "inconclusive": {
+                "type": "integer"
+              },
+              "errors": {
+                "type": "integer"
+              },
+              "cancelled": {
+                "type": "integer"
+              },
+              "pending": {
+                "type": "integer"
+              }
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "type": "integer"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "completed",
+              "cancelled",
+              "failed"
+            ]
+          },
+          "cancel_requested_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "estimate": {
+            "$ref": "#/components/schemas/VoiceSimulationEstimate"
+          },
+          "runs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoiceSimulationRun"
+            }
+          },
+          "campaign_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Automatic improvement run that owns this session, if any."
+          }
+        },
+        "required": [
+          "id",
+          "workspace_id",
+          "project_id",
+          "status"
+        ]
+      },
+      "VoiceSimulationRun": {
+        "type": "object",
+        "properties": {
+          "scenario_fingerprint": {
+            "type": "string",
+            "description": "Fingerprint of the tested scenario definition."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scenario_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "preparing",
+              "dialing",
+              "running",
+              "scoring",
+              "completed",
+              "failed",
+              "cancelled"
+            ]
+          },
+          "outcome": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "pass",
+              "fail",
+              "error",
+              "inconclusive",
+              null
+            ]
+          },
+          "error_code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "started_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VoiceSimulationReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
+      },
+      "VoiceSimulationReport": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string"
+          },
+          "score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "criteria": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "weight": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "inconclusive"
+                  ]
+                },
+                "explanation": {
+                  "type": "string"
+                },
+                "turn_indexes": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                "evidence_refs": {
+                  "type": "array",
+                  "description": "Validated references to observed IVR or tool events, call duration, or termination evidence. Array references use zero-based indexes.",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^(?:(?:ivr_inputs|ivr_visited_nodes|tool_captures|tool_invocations):(0|[1-9]\\d*)|duration_seconds|call_end_reason)$"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "description"
+              ]
+            }
+          },
+          "ivr_checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "node_id": {
+                  "type": "string"
+                },
+                "passed": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "target_connected": {
+                "type": "boolean"
+              },
+              "counterpart_connected": {
+                "type": "boolean"
+              },
+              "transcript": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "agent",
+                        "user"
+                      ]
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "ivr_visited_nodes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tool_captures": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "tool": {
+                      "type": "string"
+                    },
+                    "args": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "result": {}
+                  }
+                }
+              },
+              "duration_seconds": {
+                "type": "number"
+              },
+              "recording_available": {
+                "type": "boolean"
+              },
+              "collected_variables": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "analysis": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": true
+              },
+              "ivr_inputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "node_id": {
+                      "type": "string"
+                    },
+                    "digits": {
+                      "type": "string"
+                    },
+                    "matched": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "tool_invocations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Observed invocation names only; an invocation alone does not prove that an external action succeeded."
+              },
+              "call_end_reason": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "agent_hangup",
+                  "user_hangup",
+                  "max_duration_reached",
+                  "inactivity",
+                  null
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "outcome",
+          "summary"
+        ]
+      },
+      "VoiceSimulationChangeScope": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "default": [
+          "prompts"
+        ],
+        "items": {
+          "type": "string",
+          "enum": [
+            "prompts",
+            "tools",
+            "flow",
+            "settings",
+            "analysis",
+            "knowledge",
+            "webhooks"
+          ]
+        },
+        "description": "Approved categories for simulation draft changes. Existing approvals retain prompts-only scope until explicitly renewed."
+      },
+      "VoiceSimulationImprovement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "applied_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "can_accept": {
+            "type": "boolean",
+            "description": "For expanded proposals, true only when the applied current draft has passed the complete current suite and has not already been accepted. Saving still rechecks source drift and permissions."
+          },
+          "tested_session_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "proposal": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "integer",
+                "enum": [
+                  2
+                ],
+                "description": "Present for expanded configuration proposals; absent for legacy prompt proposals."
+              },
+              "change_scope": {
+                "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+              },
+              "patch": {
+                "$ref": "#/components/schemas/VoiceSimulationDraftPatch"
+              },
+              "draft_fingerprint": {
+                "type": "string"
+              },
+              "changes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "section": {
+                      "type": "string"
+                    },
+                    "field": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "before": {},
+                    "after": {}
+                  }
+                }
+              },
+              "function_tests": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "fingerprint": {
+                      "type": "string"
+                    },
+                    "passed": {
+                      "type": "boolean"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    }
+                  }
+                }
+              },
+              "summary": {
+                "type": "string"
+              },
+              "reasons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "field": {
+                "type": "string",
+                "enum": [
+                  "general_prompt",
+                  "global_prompt"
+                ]
+              },
+              "before": {
+                "type": "string"
+              },
+              "after": {
+                "type": "string"
+              },
+              "draft_revision": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "summary",
+              "reasons",
+              "draft_revision"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "proposal"
+        ]
+      },
+      "VoiceSimulationIvr": {
+        "type": "object",
+        "properties": {
+          "entry": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "say",
+                    "menu",
+                    "hold",
+                    "bridge",
+                    "hangup"
+                  ]
+                },
+                "prompt": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": "string"
+                },
+                "seconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 120
+                },
+                "routes": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "failure": {
+                  "type": "string"
+                },
+                "timeout_seconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "retry_limit": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 3
+                },
+                "audio_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "Workspace recording whose stored text must exactly match prompt; regenerate after editing."
+                },
+                "position": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 6000
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 6000
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "type"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 40
+          },
+          "required_nodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "entry",
+          "nodes"
+        ]
+      },
+      "VoiceSimulationImprovementRun": {
+        "type": "object",
+        "properties": {
+          "change_scope": {
+            "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+          },
+          "schedule_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Recurring policy that created this cycle, if any."
+          },
+          "schedule_cycle": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Monotonic cycle number across renewals of the same policy."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "type": "integer"
+          },
+          "created_by": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "awaiting_approval",
+              "running",
+              "paused",
+              "passed",
+              "cancelled",
+              "failed"
+            ]
+          },
+          "phase": {
+            "type": "string"
+          },
+          "scenario_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "approved_revision": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "max_calls": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Total simulation runs allowed, including prior reserved calls; workspace cap may be lower."
+          },
+          "max_ai": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "description": "Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower."
+          },
+          "max_surcharge": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "calls_used": {
+            "type": "integer"
+          },
+          "ai_used": {
+            "type": "integer"
+          },
+          "iteration": {
+            "type": "integer"
+          },
+          "current_session_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "surcharge_reserved": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "ai_model": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "approval_version": {
+            "type": "integer"
+          },
+          "approved_by": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "approved_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "scenarios": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "revision": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "definition": {
+                  "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+                }
+              },
+              "required": [
+                "id",
+                "revision",
+                "name",
+                "definition"
+              ]
+            }
+          },
+          "approved_scenarios": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "revision": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "definition": {
+                  "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+                }
+              },
+              "required": [
+                "id",
+                "revision",
+                "name",
+                "definition"
+              ]
+            }
+          },
+          "review_fingerprint": {
+            "type": "string",
+            "description": "GET returns a token binding the reviewed scenario revisions and draft revision. Submit the token the user actually reviewed when approving; never refresh it silently."
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "integer"
+                  ]
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "payload": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "workspace_id",
+          "status",
+          "max_calls",
+          "max_ai",
+          "calls_used",
+          "ai_used",
+          "iteration",
+          "approval_version"
+        ]
+      },
+      "VoiceSimulationScheduleResponse": {
+        "type": "object",
+        "required": [
+          "schedule"
+        ],
+        "properties": {
+          "schedule": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/VoiceSimulationSchedule"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "VoiceSimulationSchedule": {
+        "type": "object",
+        "properties": {
+          "change_scope": {
+            "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workspace_id": {
+            "type": "integer"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_by": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "enabled",
+              "paused",
+              "exhausted"
+            ]
+          },
+          "config": {
+            "$ref": "#/components/schemas/VoiceSimulationScheduleTrigger"
+          },
+          "scenario_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "max_calls": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "max_ai": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "max_surcharge": {
+            "type": "string",
+            "description": "Decimal surcharge allowance per cycle."
+          },
+          "max_cycles": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 366
+          },
+          "cycles_started": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 366
+          },
+          "ai_model": {
+            "type": "string"
+          },
+          "new_scenarios": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "expected_draft_revision": {
+            "type": "integer"
+          },
+          "pending_calls": {
+            "type": "integer"
+          },
+          "next_run_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "last_campaign_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "calls_after": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "next_check_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "VoiceSimulationScheduleTrigger": {
+        "type": "object",
+        "description": "Time is interpreted in the IANA timezone. Monthly dates clamp to month end. Either starts on either trigger; both waits for the time and call threshold. Calls only requires a threshold.",
+        "properties": {
+          "cadence": {
+            "type": "string",
+            "enum": [
+              "none",
+              "daily",
+              "weekly",
+              "monthly"
+            ]
+          },
+          "timezone": {
+            "type": "string",
+            "default": "UTC"
+          },
+          "time": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+            "default": "09:00"
+          },
+          "weekday": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6,
+            "description": "Sunday=0, Monday=1."
+          },
+          "month_day": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31
+          },
+          "call_threshold": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "combination": {
+            "type": "string",
+            "enum": [
+              "either",
+              "both"
+            ],
+            "default": "either"
+          }
+        }
+      },
+      "VoiceSimulationScheduleApproval": {
+        "type": "object",
+        "required": [
+          "confirm",
+          "improvement_run_id",
+          "review_fingerprint",
+          "trigger",
+          "max_calls",
+          "max_ai",
+          "max_surcharge",
+          "max_cycles",
+          "ai_model"
+        ],
+        "properties": {
+          "change_scope": {
+            "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+          },
+          "confirm": {
+            "type": "boolean",
+            "const": true
+          },
+          "improvement_run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "review_fingerprint": {
+            "type": "string"
+          },
+          "trigger": {
+            "$ref": "#/components/schemas/VoiceSimulationScheduleTrigger"
+          },
+          "max_calls": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "max_ai": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "max_surcharge": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Per-cycle run surcharge allowance. Voice usage, AI charges and monthly access remain additional."
+          },
+          "max_cycles": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 366
+          },
+          "ai_model": {
+            "type": "string",
+            "description": "An allowed Agent IQ model key."
+          },
+          "new_scenarios": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "default": 0,
+            "description": "Automatically generate this many new tests from recent real calls each cycle, in addition to the fixed approved suite."
+          }
+        }
       }
     }
   }

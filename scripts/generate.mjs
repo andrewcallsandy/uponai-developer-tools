@@ -17,13 +17,13 @@ for(const {path,method,operationId} of actual){
  const content=op.requestBody?.content||{},media=Object.keys(content)[0];
  metadata[operationId]={path,method,summary:op.summary,parameters:params,bodyRequired:!!op.requestBody?.required,bodyType:media||null,bodySchema:media?content[media].schema:null};
 }
-fs.writeFileSync('packages/sdk/src/schema.ts',astToString(await openapiTS(spec)));
+fs.writeFileSync('packages/sdk/src/schema.ts',astToString(await openapiTS(spec,{defaultNonNullable:false})));
 fs.writeFileSync('packages/sdk/src/metadata.ts','// Generated from the approved public contract.\nexport const metadata = '+JSON.stringify(metadata,null,2)+' as const;\n');
 const lines=actual.map(({operationId:id})=>`  ${id}(args: OperationInput<'${id}'>${metadata[id].parameters.some(p=>p.required)||metadata[id].bodyRequired?'':' = {}'}, options?: RequestOptions): Promise<OperationOutput<'${id}'>> { return this.execute('${id}', args, options); }`);
 fs.writeFileSync('packages/sdk/src/index.ts',`// Generated; edit the generator, not this file.\nimport { ClientCore } from './client.js';\nimport type { OperationInput, OperationOutput, RequestOptions } from './types.js';\nexport * from './types.js';\nexport * from './errors.js';\nexport type { paths, components, operations } from './schema.js';\nexport { publicContractSha256 } from './version.js';\nexport class UponAI extends ClientCore {\n${lines.join('\n')}\n}\n`);
 fs.writeFileSync('packages/sdk/src/version.ts',`export const publicContractSha256 = '${crypto.createHash('sha256').update(fs.readFileSync('contract/openapi.json')).digest('hex')}';\n`);
 console.log(`Generated ${actual.length} public SDK methods`);
-const readOperations=['listLlms','getLlm','listAgents','getAgent','listAgentVersions','listChatAgents','getChatAgent','listChatAgentVersions','listChats','getChat','listConversationFlows','getConversationFlow','listKnowledgeBases','getKnowledgeBase','listVoices','getVoice','getConcurrency','listCalls'];
+const readOperations=['listLlms','getLlm','listAgents','getAgent','listAgentVersions','listChatAgents','getChatAgent','listChatAgentVersions','listChats','getChat','listConversationFlows','getConversationFlow','listKnowledgeBases','getKnowledgeBase','listVoices','getVoice','getConcurrency','listCalls','getVoiceSimulationSettings','listVoiceSimulationSourceAgents','listVoiceSimulationProjects','getVoiceSimulationProject','listVoiceSimulationScenarios','listVoiceSimulationSessions','getVoiceSimulationSession','listVoiceSimulationImprovementRuns','getVoiceSimulationImprovementRun','getVoiceSimulationSchedule'];
 const catalog=Object.fromEntries(readOperations.map(id=>{
  const entry=metadata[id];if(entry?.method!=='get'||!entry.parameters.some(p=>p.name==='workspaceId'&&p.in==='query'))throw Error('Unscoped MCP read operation');
  return [id,{summary:entry.summary,parameters:entry.parameters.map(({name,in:location,required,schema})=>({name,in:location,required,schema}))}];
