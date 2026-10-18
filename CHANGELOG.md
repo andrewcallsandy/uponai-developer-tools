@@ -15,18 +15,18 @@
 
 - recurring voice improvement schedule read/approve/pause SDK methods,
 calendar and call-count trigger types, scoped MCP schedule summaries, and an
-explicitly enabled pause tool. 
+explicitly enabled pause tool.
 
 - voice simulation projects expose `automation_mode` (`automated` or
 `manual`); creation accepts it and the new `updateVoiceSimulationProject` SDK
 method switches it. MCP project summaries include the mode; mode changes are not
-an MCP write capability. 
+an MCP write capability.
 
 - version-2 voice simulation draft/proposal types, approved improvement
 categories, hosted-handler definitions and example-test evidence, and session
 configuration fingerprints. MCP summaries include fingerprints and approved
 categories; handler code, configuration and endpoint-management writes remain
-excluded. 
+excluded.
 
 
 ## 0.1.1 — 2026-10-14
@@ -44,4 +44,3 @@ excluded.
 Authenticated SDK and MCP read checks passed. Initial bootstrap uploads were
 accepted by npm from the authorized server; GitHub release assets were installed
 and live-tested. The bootstrap artifacts have no GitHub build provenance.
-
