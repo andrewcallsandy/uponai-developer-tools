@@ -2138,5 +2138,1244 @@ export const metadata = {
     "bodySchema": {
       "$ref": "#/components/schemas/CallActionWorkspaceRequest"
     }
+  },
+  "listVoiceSimulationTemplates": {
+    "path": "/api/v1/voice-simulations/templates",
+    "method": "get",
+    "summary": "List voice simulation templates",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "getVoiceSimulationSettings": {
+    "path": "/api/v1/voice-simulations/settings",
+    "method": "get",
+    "summary": "Get voice simulation access and prices",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listVoiceSimulationSourceAgents": {
+    "path": "/api/v1/voice-simulations/agents",
+    "method": "get",
+    "summary": "List editable simulation source agents",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listVoiceSimulationProjects": {
+    "path": "/api/v1/voice-simulations/projects",
+    "method": "get",
+    "summary": "List voice simulation projects",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "createVoiceSimulationProject": {
+    "path": "/api/v1/voice-simulations/projects",
+    "method": "post",
+    "summary": "Create a voice simulation project",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "source_agent_id": {
+          "type": "string"
+        },
+        "copy_project_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Optional existing project to duplicate within the same workspace."
+        },
+        "automation_mode": {
+          "type": "string",
+          "enum": [
+            "automated",
+            "manual"
+          ],
+          "default": "automated",
+          "description": "How the project runs. A copy keeps the original's mode unless this is set."
+        }
+      },
+      "required": [
+        "name",
+        "source_agent_id"
+      ]
+    }
+  },
+  "getVoiceSimulationProject": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}",
+    "method": "get",
+    "summary": "Get a voice simulation project",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateVoiceSimulationProject": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}",
+    "method": "patch",
+    "summary": "Update a voice simulation project",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "automation_mode": {
+          "type": "string",
+          "enum": [
+            "automated",
+            "manual"
+          ]
+        }
+      },
+      "required": [
+        "automation_mode"
+      ]
+    }
+  },
+  "listVoiceSimulationScenarios": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios",
+    "method": "get",
+    "summary": "List project scenarios",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "createVoiceSimulationScenario": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios",
+    "method": "post",
+    "summary": "Create a voice simulation scenario",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+        }
+      },
+      "required": [
+        "definition"
+      ]
+    }
+  },
+  "updateVoiceSimulationScenario": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}",
+    "method": "put",
+    "summary": "Update a voice simulation scenario",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      {
+        "in": "path",
+        "name": "scenarioId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "$ref": "#/components/schemas/VoiceSimulationScenarioDefinition"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "definition",
+        "revision"
+      ]
+    }
+  },
+  "generateVoiceSimulationScenarios": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/generate-scenarios",
+    "method": "post",
+    "summary": "Generate scenarios with Agent IQ",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "ai_model": {
+          "type": "string",
+          "description": "Allowed Agent IQ model key from workspace model_options."
+        },
+        "instruction": {
+          "type": "string",
+          "maxLength": 12000,
+          "description": "What to test. Omit or leave empty to let Agent IQ recommend scenarios."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "use_call_history": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include recent real calls as evidence."
+        }
+      }
+    }
+  },
+  "estimateVoiceSimulationSession": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/estimate",
+    "method": "post",
+    "summary": "Estimate a simulation session",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "repetitions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      },
+      "required": [
+        "scenario_ids"
+      ]
+    }
+  },
+  "listVoiceSimulationSessions": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/sessions",
+    "method": "get",
+    "summary": "List simulation sessions",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "launchVoiceSimulationSession": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/sessions",
+    "method": "post",
+    "summary": "Launch a voice simulation session",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "$ref": "#/components/schemas/VoiceSimulationLaunchInput"
+    }
+  },
+  "getVoiceSimulationSession": {
+    "path": "/api/v1/voice-simulations/sessions/{sessionId}",
+    "method": "get",
+    "summary": "Get a simulation session and report",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "sessionId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "cancelVoiceSimulationSession": {
+    "path": "/api/v1/voice-simulations/sessions/{sessionId}/cancel",
+    "method": "post",
+    "summary": "Cancel a voice simulation session",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "sessionId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "proposeVoiceSimulationImprovement": {
+    "path": "/api/v1/voice-simulations/sessions/{sessionId}/improvements",
+    "method": "post",
+    "summary": "Propose a simulation improvement",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "sessionId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "change_scope": {
+          "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+        },
+        "ai_model": {
+          "type": "string",
+          "description": "Allowed Agent IQ model key from workspace model_options."
+        }
+      }
+    }
+  },
+  "applyVoiceSimulationImprovement": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvements/{improvementId}/apply",
+    "method": "post",
+    "summary": "Apply an improvement to a simulation draft",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      {
+        "in": "path",
+        "name": "improvementId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "confirm": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "confirm"
+      ]
+    }
+  },
+  "getVoiceSimulationRecording": {
+    "path": "/api/v1/voice-simulations/sessions/{sessionId}/runs/{runId}/recording",
+    "method": "get",
+    "summary": "Get a voice simulation recording",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "sessionId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      {
+        "name": "runId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "archiveVoiceSimulationProject": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/archive",
+    "method": "post",
+    "summary": "Archive a voice simulation project",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "archiveVoiceSimulationScenario": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}/archive",
+    "method": "post",
+    "summary": "Archive a voice simulation scenario",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      {
+        "name": "scenarioId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listVoiceSimulationImprovements": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvements",
+    "method": "get",
+    "summary": "List voice simulation improvement history",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "in": "path",
+        "name": "projectId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listVoiceSimulationSpeechVoices": {
+    "path": "/api/v1/voice-simulations/speech/voices",
+    "method": "get",
+    "summary": "List voices for IVR recordings",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "provider",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "cartesia",
+            "elevenlabs"
+          ]
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "generateVoiceSimulationIvrAudio": {
+    "path": "/api/v1/voice-simulations/ivr/audio",
+    "method": "post",
+    "summary": "Generate recordings for IVR prompts",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "ivr": {
+          "$ref": "#/components/schemas/VoiceSimulationIvr"
+        },
+        "provider": {
+          "type": "string",
+          "enum": [
+            "cartesia",
+            "elevenlabs"
+          ]
+        },
+        "voice_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ivr",
+        "provider"
+      ]
+    }
+  },
+  "getVoiceSimulationIvrAudio": {
+    "path": "/api/v1/voice-simulations/audio/{audioId}",
+    "method": "get",
+    "summary": "Download an IVR recording",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "audioId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listVoiceSimulationImprovementRuns": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-runs",
+    "method": "get",
+    "summary": "List self-improving runs",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "createVoiceSimulationImprovementRun": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-runs",
+    "method": "post",
+    "summary": "Create a self-improving run",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "max_calls": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Total simulation runs allowed, including prior reserved calls; workspace cap may be lower."
+        },
+        "max_ai": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower."
+        },
+        "max_surcharge": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum cumulative per-run surcharges. Voice usage, Agent IQ pricing and monthly access remain separate."
+        },
+        "scenario_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "maxItems": 100
+        },
+        "ai_model": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "getVoiceSimulationImprovementRun": {
+    "path": "/api/v1/voice-simulations/improvement-runs/{id}",
+    "method": "get",
+    "summary": "Review a self-improving run",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateVoiceSimulationImprovementRun": {
+    "path": "/api/v1/voice-simulations/improvement-runs/{id}",
+    "method": "patch",
+    "summary": "Choose scenarios before improvement approval",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "required": [
+        "scenario_ids"
+      ],
+      "properties": {
+        "scenario_ids": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    }
+  },
+  "generateVoiceSimulationImprovementScenarios": {
+    "path": "/api/v1/voice-simulations/improvement-runs/{id}/generate",
+    "method": "post",
+    "summary": "Generate and save an improvement test suite",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "instruction": {
+          "type": "string",
+          "maxLength": 12000
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      },
+      "required": [
+        "instruction"
+      ]
+    }
+  },
+  "approveVoiceSimulationImprovementRun": {
+    "path": "/api/v1/voice-simulations/improvement-runs/{id}/approve",
+    "method": "post",
+    "summary": "Approve or renew an improvement budget",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "change_scope": {
+          "$ref": "#/components/schemas/VoiceSimulationChangeScope"
+        },
+        "ai_model": {
+          "type": "string",
+          "description": "Allowed Agent IQ model key for future improvement steps (provider/model). Saved atomically with approval. Omit to retain the run model, or resolve the workspace default for an older run without a model. May be changed when approving a draft or renewing a paused run; scenario scoring and counterpart models are unchanged."
+        },
+        "max_calls": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Total simulation runs allowed, including prior reserved calls; workspace cap may be lower."
+        },
+        "max_ai": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower."
+        },
+        "max_surcharge": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum cumulative per-run surcharges. Voice usage, Agent IQ pricing and monthly access remain separate."
+        },
+        "confirm": {
+          "type": "boolean",
+          "const": true
+        },
+        "review_fingerprint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "confirm",
+        "review_fingerprint",
+        "max_calls",
+        "max_ai",
+        "max_surcharge"
+      ]
+    }
+  },
+  "stopVoiceSimulationImprovementRun": {
+    "path": "/api/v1/voice-simulations/improvement-runs/{id}/stop",
+    "method": "post",
+    "summary": "Stop a self-improving run",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "getVoiceSimulationSchedule": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule",
+    "method": "get",
+    "summary": "Get recurring improvement policy",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "saveVoiceSimulationSchedule": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule",
+    "method": "put",
+    "summary": "Approve or renew recurring improvement cycles",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "$ref": "#/components/schemas/VoiceSimulationScheduleApproval"
+    }
+  },
+  "pauseVoiceSimulationSchedule": {
+    "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule/pause",
+    "method": "post",
+    "summary": "Pause future improvement cycles",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
   }
 } as const;

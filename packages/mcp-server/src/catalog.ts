@@ -536,5 +536,198 @@ export const catalog: Record<string, {summary:string;parameters:Array<{name:stri
         }
       }
     ]
+  },
+  "getVoiceSimulationSettings": {
+    "summary": "Get voice simulation access and prices",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    ]
+  },
+  "listVoiceSimulationSourceAgents": {
+    "summary": "List editable simulation source agents",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    ]
+  },
+  "listVoiceSimulationProjects": {
+    "summary": "List voice simulation projects",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    ]
+  },
+  "getVoiceSimulationProject": {
+    "summary": "Get a voice simulation project",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
+  },
+  "listVoiceSimulationScenarios": {
+    "summary": "List project scenarios",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
+  },
+  "listVoiceSimulationSessions": {
+    "summary": "List simulation sessions",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
+  },
+  "getVoiceSimulationSession": {
+    "summary": "Get a simulation session and report",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "sessionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
+  },
+  "listVoiceSimulationImprovementRuns": {
+    "summary": "List self-improving runs",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
+  },
+  "getVoiceSimulationImprovementRun": {
+    "summary": "Review a self-improving run",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
+  },
+  "getVoiceSimulationSchedule": {
+    "summary": "Get recurring improvement policy",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "projectId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ]
   }
 };

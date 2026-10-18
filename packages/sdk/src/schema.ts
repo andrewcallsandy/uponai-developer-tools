@@ -1198,6 +1198,594 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/voice-simulations/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List voice simulation templates
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["listVoiceSimulationTemplates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get voice simulation access and prices
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["getVoiceSimulationSettings"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List editable simulation source agents
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["listVoiceSimulationSourceAgents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List voice simulation projects
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["listVoiceSimulationProjects"];
+        put?: never;
+        /**
+         * Create a voice simulation project
+         * @description Requires workspace access. Optionally copy an accessible, active project in the same workspace using copy_project_id. Copies its simulation draft and active scenarios including IVR recordings; source_agent_id must match the original. Histories, sessions, improvements and budget approvals are not copied. Creation is atomic and does not launch calls.
+         */
+        post: operations["createVoiceSimulationProject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a voice simulation project
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["getVoiceSimulationProject"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update a voice simulation project
+         * @description Requires workspace access and edit access to the source agent. Converts the project between automated and manual. Switching to manual returns 409 AUTOMATION_ACTIVE while an improvement run is running or paused, or its schedule is enabled; stop or pause it first. Manual projects reject new improvement runs and schedules with 409 PROJECT_MANUAL.
+         */
+        patch: operations["updateVoiceSimulationProject"];
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/scenarios": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List project scenarios
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["listVoiceSimulationScenarios"];
+        put?: never;
+        /**
+         * Create a voice simulation scenario
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        post: operations["createVoiceSimulationScenario"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update a voice simulation scenario
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        put: operations["updateVoiceSimulationScenario"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/generate-scenarios": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate scenarios with Agent IQ
+         * @description Agent IQ drafts scenarios for review. This does not save scenarios or launch calls. Omit `instruction` to let Agent IQ recommend the highest-value suite from the agent's prompt, tools and up to 20 recent real calls (last 90 days, contact details removed). Requires Agent IQ access and uses the workspace Agent IQ pricing.
+         */
+        post: operations["generateVoiceSimulationScenarios"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/estimate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Estimate a simulation session
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        post: operations["estimateVoiceSimulationSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List simulation sessions
+         * @description Requires workspace access. Voice simulations use isolated agent copies and the workspace simulation entitlement.
+         */
+        get: operations["listVoiceSimulationSessions"];
+        put?: never;
+        /**
+         * Launch a voice simulation session
+         * @description Queues real audio conversations using isolated test copies. Review the estimate and supply the accepted maximum surcharge. Reuse the same idempotency_key only for an identical request. Voice usage and monthly access are separate from the surcharge. Registration is not proof of a completed audio run.
+         */
+        post: operations["launchVoiceSimulationSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/sessions/{sessionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a simulation session and report
+         * @description Returns run status, criterion scores and transcript evidence. Outcomes distinguish pass, fail, infrastructure error and inconclusive evidence.
+         */
+        get: operations["getVoiceSimulationSession"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/sessions/{sessionId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a voice simulation session
+         * @description Requests asynchronous cancellation. Remains available after the feature is disabled. Already connected runs may incur usage charges.
+         */
+        post: operations["cancelVoiceSimulationSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/sessions/{sessionId}/improvements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Propose a simulation improvement
+         * @description Agent IQ proposes changes within change_scope based on the tested draft and session evidence. The default is prompts only. Expanded proposals include structured configuration diffs and hosted-function tests. This does not modify the source agent or apply the draft. Requires Agent IQ access.
+         */
+        post: operations["proposeVoiceSimulationImprovement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/improvements/{improvementId}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Apply an improvement to a simulation draft
+         * @description Applies the reviewed configuration and hosted-function handlers to future simulation copies only. The source agent and production assignments are unchanged. Stale draft revisions are rejected.
+         */
+        post: operations["applyVoiceSimulationImprovement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/sessions/{sessionId}/runs/{runId}/recording": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a voice simulation recording
+         * @description Stream the tested agent audio recording when retained by the workspace. Requires access to the session and source agent.
+         */
+        get: operations["getVoiceSimulationRecording"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Archive a voice simulation project
+         * @description Archives the resource while retaining existing session evidence. Project archival also requests cancellation of active sessions.
+         */
+        post: operations["archiveVoiceSimulationProject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/scenarios/{scenarioId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Archive a voice simulation scenario
+         * @description Archives the resource while retaining existing session evidence. Project archival also requests cancellation of active sessions.
+         */
+        post: operations["archiveVoiceSimulationScenario"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/improvements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List voice simulation improvement history
+         * @description Returns reviewed and pending prompt proposals without modifying the original agent.
+         */
+        get: operations["listVoiceSimulationImprovements"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/speech/voices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List voices for IVR recordings
+         * @description Lists voices using the workspace brand speech account. Provider-owned workspaces require an enabled provider grant and their own speech key. Keys are never returned.
+         */
+        get: operations["listVoiceSimulationSpeechVoices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/ivr/audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate recordings for IVR prompts
+         * @description Generates speech for announcement and menu nodes using the configured brand account. May incur speech-provider charges. Identical workspace/text/voice/model requests reuse cached assets. Partial failures return complete=false and per-node errors; review before saving the returned graph.
+         */
+        post: operations["generateVoiceSimulationIvrAudio"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/audio/{audioId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download an IVR recording
+         * @description Returns a workspace-scoped generated recording. Requires workspace access.
+         */
+        get: operations["getVoiceSimulationIvrAudio"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/improvement-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List self-improving runs
+         * @description Returns up to 50 recent improvement runs for this project.
+         */
+        get: operations["listVoiceSimulationImprovementRuns"];
+        put?: never;
+        /**
+         * Create a self-improving run
+         * @description Creates an awaiting-approval draft. Does not launch calls. Only one active improvement run per project. AI generation can consume the configured interaction budget before call approval.
+         */
+        post: operations["createVoiceSimulationImprovementRun"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/improvement-runs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Review a self-improving run
+         * @description Returns counters, selected scenarios, review fingerprint and the latest 100 activity events. Review the actual scenarios and draft before approval.
+         */
+        get: operations["getVoiceSimulationImprovementRun"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Choose scenarios before improvement approval
+         * @description Owner only, while awaiting approval and no generation is in progress. Updates the selected suite without resetting consumed AI usage. Approved suites cannot be changed; stop and create a new run instead.
+         */
+        patch: operations["updateVoiceSimulationImprovementRun"];
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/improvement-runs/{id}/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate and save an improvement test suite
+         * @description Owner only, before approval. Reserves one Agent IQ interaction and saves the generated scenarios for review. Replaces this draft run selection. Does not launch calls.
+         */
+        post: operations["generateVoiceSimulationImprovementScenarios"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/improvement-runs/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve or renew an improvement budget
+         * @description Owner approval starts real calls and automatic Agent IQ changes to the isolated simulation draft. Present the complete selected suite and budget to the user first. Submit the fingerprint from that review. Calls, AI interactions and surcharges accumulate across renewals. The full approved suite is frozen; changes require a new improvement run. Errors, missing evidence and insufficient budget pause the loop.
+         */
+        post: operations["approveVoiceSimulationImprovementRun"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/improvement-runs/{id}/stop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Stop a self-improving run
+         * @description Stops future work and requests cancellation of active sessions. In-flight calls may take time to end; already incurred usage remains billable.
+         */
+        post: operations["stopVoiceSimulationImprovementRun"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get recurring improvement policy
+         * @description Returns the policy, remaining cycle allowance, next time trigger and unconsumed completed-call count.
+         */
+        get: operations["getVoiceSimulationSchedule"];
+        /**
+         * Approve or renew recurring improvement cycles
+         * @description Explicit owner approval is required. The reviewed run supplies the fixed regression suite; an unstarted reviewed run is converted to the schedule. Each cycle uses its own approved budgets. Fresh tests can be preauthorized. Only isolated simulation drafts change; original agents require manual review. Reapproval resets the cycle allowance but retains consumed-call history. Active scheduled cycles must finish or be stopped before renewal.
+         */
+        put: operations["saveVoiceSimulationSchedule"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause future improvement cycles
+         * @description Owner only. Stops future scheduling without cancelling the current cycle. Use the improvement-run stop operation to cancel current work.
+         */
+        post: operations["pauseVoiceSimulationSchedule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1305,7 +1893,7 @@ export interface components {
              * @default sip_invite
              * @enum {string}
              */
-            cold_transfer_mode: "sip_invite" | "sip_refer";
+            cold_transfer_mode?: "sip_invite" | "sip_refer";
             /** @description Show the original caller as caller ID when supported. Applies to SIP INVITE transfers. */
             show_transferee_as_caller?: boolean;
             transfer_ring_duration_ms?: number;
@@ -1324,7 +1912,7 @@ export interface components {
             ivr_option?: components["schemas"]["WarmTransferPrompt"];
             opt_out_human_detection?: boolean;
             /** @default true */
-            enable_bridge_audio_cue: boolean;
+            enable_bridge_audio_cue?: boolean;
         };
         WarmTransferHandoffOption: components["schemas"]["WarmTransferPrompt"] | components["schemas"]["WarmTransferStaticMessage"];
         WarmTransferPrompt: {
@@ -1352,15 +1940,15 @@ export interface components {
                     agent_version: number;
                 };
                 /** @default 30000 */
-                transfer_timeout_ms: number;
+                transfer_timeout_ms?: number;
                 /**
                  * @default cancel_transfer
                  * @enum {string}
                  */
-                action_on_timeout: "cancel_transfer" | "bridge_transfer";
+                action_on_timeout?: "cancel_transfer" | "bridge_transfer";
             };
             /** @default true */
-            enable_bridge_audio_cue: boolean;
+            enable_bridge_audio_cue?: boolean;
         };
         EndCallTool: {
             /**
@@ -1501,7 +2089,7 @@ export interface components {
             voice_model?: components["schemas"]["VoiceModel"];
             fallback_voice_ids?: string[] | null;
             /** @default en-US */
-            language: string;
+            language?: string;
             response_engine: components["schemas"]["ResponseEngine"];
             /** Format: uri */
             webhook_url?: string | null;
@@ -1922,7 +2510,7 @@ export interface components {
             agentId: string;
             agentVersion?: number | null;
             /** @default Chat */
-            title: string;
+            title?: string;
             /** Format: uri */
             logoUrl?: string | null;
             /**
@@ -1931,20 +2519,20 @@ export interface components {
              */
             color?: string;
             /** @default #071a3e */
-            themeColor: string;
+            themeColor?: string;
             /** @default #3E6AEF */
-            componentColor: string;
+            componentColor?: string;
             /** @default Need support? */
-            fabText: string;
+            fabText?: string;
             /** @default AI Assistant */
-            botName: string;
+            botName?: string;
             popupMessage?: string | null;
             /** @default true */
-            showAiPopup: boolean;
+            showAiPopup?: boolean;
             /** @default 5 */
-            showAiPopupTime: number;
+            showAiPopupTime?: number;
             /** @default false */
-            autoOpen: boolean;
+            autoOpen?: boolean;
             allowedOrigins?: string[];
             metadata?: {
                 [key: string]: unknown;
@@ -2186,7 +2774,7 @@ export interface components {
              * @default elevenlabs
              * @enum {string}
              */
-            voiceProvider: "elevenlabs" | "cartesia" | "minimax";
+            voiceProvider?: "elevenlabs" | "cartesia" | "minimax";
             providerVoiceId: string;
             voiceName: string;
             publicUserId?: string | null;
@@ -2197,7 +2785,7 @@ export interface components {
              * @default elevenlabs
              * @enum {string}
              */
-            voiceProvider: "elevenlabs" | "cartesia" | "minimax";
+            voiceProvider?: "elevenlabs" | "cartesia" | "minimax";
             voiceName: string;
             files: string[];
         };
@@ -2463,24 +3051,24 @@ export interface components {
              * @default descending
              * @enum {string}
              */
-            sort_order: "ascending" | "descending";
+            sort_order?: "ascending" | "descending";
             /**
              * @description Maximum number of calls to return.
              * @default 50
              */
-            limit: number;
+            limit?: number;
             /**
              * @description Number of records to skip for pagination.
              * @default 0
              */
-            skip: number;
+            skip?: number;
             /** @description Pagination key from the previous response. */
             pagination_key?: string;
             /**
              * @description Whether to include the total count of matching calls.
              * @default false
              */
-            include_total: boolean;
+            include_total?: boolean;
         };
         /** @description Filter criteria for calls. All provided conditions are combined with AND. */
         CallFilter: {
@@ -2744,18 +3332,18 @@ export interface components {
              * @default mixed
              * @enum {string}
              */
-            mixType: "mono" | "mixed" | "stereo";
+            mixType?: "mono" | "mixed" | "stereo";
             /**
              * @description Sample rate for the stream.
              * @default 8000
              * @enum {integer}
              */
-            sampleRate: 8000 | 16000 | 24000 | 48000;
+            sampleRate?: 8000 | 16000 | 24000 | 48000;
             /**
              * @description Keep the stream listen-only.
              * @default true
              */
-            disableBidirectionalAudio: boolean;
+            disableBidirectionalAudio?: boolean;
             /** @description Optional WebSocket authentication payload. */
             wsAuth?: {
                 [key: string]: unknown;
@@ -2780,6 +3368,555 @@ export interface components {
             success: boolean;
             callId: string;
             call?: components["schemas"]["CallRecord"];
+        };
+        VoiceSimulationScenarioDefinition: {
+            /** @description Allowed voice model for the simulated counterpart; omitted means workspace default. */
+            counterpart_model?: string | null;
+            /** @description Allowed Agent IQ model key for scoring; omitted means workspace default. */
+            judge_model?: string | null;
+            name: string;
+            persona: string;
+            instructions: string;
+            /**
+             * @default sim_dials
+             * @enum {string}
+             */
+            direction?: "agent_dials" | "sim_dials";
+            /** @default 180 */
+            max_duration_seconds?: number;
+            /** @default 80 */
+            pass_threshold?: number;
+            /** @description Why Agent IQ recommended this scenario. Optional. */
+            rationale?: string;
+            /**
+             * @description What the recommendation was based on. Present only with a rationale.
+             * @enum {string}
+             */
+            origin?: "prompt" | "call_history" | "request";
+            criteria: {
+                id: string;
+                description: string;
+                weight?: number;
+                required?: boolean;
+            }[];
+            agent_variables?: {
+                [key: string]: string;
+            };
+            counterpart_variables?: {
+                [key: string]: string;
+            };
+            voice_id?: string | null;
+            tool_mocks?: {
+                [key: string]: unknown;
+            };
+            ivr?: {
+                entry: string;
+                nodes: {
+                    id: string;
+                    /** @enum {string} */
+                    type: "say" | "menu" | "hold" | "bridge" | "hangup";
+                    prompt?: string;
+                    next?: string;
+                    seconds?: number;
+                    routes?: {
+                        [key: string]: string;
+                    };
+                    failure?: string;
+                    timeout_seconds?: number;
+                    retry_limit?: number;
+                    /**
+                     * Format: uuid
+                     * @description Workspace recording whose stored text must exactly match prompt; regenerate after editing.
+                     */
+                    audio_id?: string;
+                    position?: {
+                        x: number;
+                        y: number;
+                    };
+                }[];
+                required_nodes?: string[];
+            } | null;
+        };
+        VoiceSimulationError: {
+            error: string;
+            code?: string;
+        };
+        VoiceSimulationSettings: {
+            /** @description Imported English accent voices for simulation counterparts. The library is provisioned automatically by the simulation UI or first run; refresh settings after provisioning. Source-agent voices remain unchanged. */
+            voice_options?: {
+                key?: string;
+                name?: string;
+                /** @enum {string} */
+                provider?: "cartesia" | "elevenlabs";
+                accent?: string;
+                /** @enum {string} */
+                language?: "en";
+                voice_id?: string;
+            }[];
+            model_options?: {
+                counterpart?: string[];
+                ai?: string[];
+                defaults?: {
+                    counterpart?: string | null;
+                    ai?: string | null;
+                };
+            };
+            enabled: boolean;
+            workspace_enabled?: boolean;
+            provider_allowed?: boolean;
+            per_run_price: number;
+            monthly_price: number;
+            currency: string;
+            max_concurrent_runs?: number;
+            max_session_runs?: number;
+            can_manage?: boolean;
+            max_auto_calls?: number;
+            max_auto_ai?: number;
+            speech?: {
+                enabled?: boolean;
+                providers?: {
+                    /** @enum {string} */
+                    provider?: "cartesia" | "elevenlabs";
+                    configured?: boolean;
+                    voice_id?: string;
+                    model?: string;
+                }[];
+            };
+        };
+        VoiceSimulationProject: {
+            /** Format: uuid */
+            id: string;
+            workspace_id: number;
+            name: string;
+            description?: string;
+            source_agent_id: string;
+            draft_revision: number;
+            draft_patch?: components["schemas"]["VoiceSimulationDraftPatch"];
+            baseline_fingerprint?: string | null;
+            created_by?: number;
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            updated_at?: string | null;
+            /** Format: date-time */
+            archived_at?: string | null;
+            /**
+             * @description automated lets Agent IQ draft, run and improve the suite through improvement runs and schedules. manual runs selected scenarios once with no automatic draft changes.
+             * @enum {string}
+             */
+            automation_mode: "automated" | "manual";
+        };
+        VoiceSimulationDraftPatch: {
+            general_prompt?: string;
+            global_prompt?: string;
+        } | {
+            /** @enum {integer} */
+            version: 2;
+            /** @description Approved prompt, tool, graph, knowledge and engine behavior fields. Arrays replace the complete field. Protected existing values use opaque references and cannot be moved. */
+            engine: {
+                [key: string]: unknown;
+            };
+            /** @description Approved voice behavior and analysis fields. Publication, assignments and platform event callbacks cannot be changed. */
+            agent: {
+                [key: string]: unknown;
+            };
+            functions: {
+                [key: string]: components["schemas"]["VoiceSimulationHostedFunction"];
+            };
+        };
+        VoiceSimulationHostedFunction: {
+            /** @description Map local aliases to existing custom-tool names. A handler requests a connector with {$request:{connector:alias,args:{...}}}, then reads context.responses[alias]. Simulations return fixtures. Accepted endpoints use the reviewed HTTPS connection with credentials retained server-side. Each connector runs at most once per invocation. */
+            connectors?: {
+                [key: string]: string;
+            };
+            description: string;
+            /** @description Synchronous JavaScript function expression accepting input and context and returning JSON. No network, filesystem, modules or host credentials. context.fixture is available only during simulation. */
+            code: string;
+            input_schema: {
+                [key: string]: unknown;
+            };
+            tests: {
+                input: unknown;
+                expected: unknown;
+                fixture?: unknown;
+                connector_results?: {
+                    [key: string]: unknown;
+                };
+            }[];
+        };
+        VoiceSimulationScenario: {
+            /** Format: uuid */
+            id: string;
+            workspace_id?: number;
+            /** Format: uuid */
+            project_id: string;
+            name: string;
+            revision: number;
+            definition: components["schemas"]["VoiceSimulationScenarioDefinition"];
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        VoiceSimulationEstimate: {
+            currency: string;
+            run_count: number;
+            per_run_price?: number;
+            maximum_surcharge: number;
+            monthly_price?: number;
+            max_audio_seconds?: number;
+            billing_description?: string;
+        };
+        VoiceSimulationLaunchInput: {
+            scenario_ids: string[];
+            /** @default 1 */
+            repetitions?: number;
+            max_surcharge: number;
+            idempotency_key: string;
+        };
+        VoiceSimulationSession: {
+            draft_fingerprint?: string;
+            /**
+             * @description Null while active. Pass requires all runs to pass; failed criteria take precedence over errors, cancellations and inconclusive evidence.
+             * @enum {string|null}
+             */
+            outcome?: "pass" | "fail" | "inconclusive" | "error" | "cancelled" | null;
+            test_counts?: {
+                total?: number;
+                passed?: number;
+                failed?: number;
+                inconclusive?: number;
+                errors?: number;
+                cancelled?: number;
+                pending?: number;
+            };
+            /** Format: uuid */
+            id: string;
+            workspace_id: number;
+            /** Format: uuid */
+            project_id: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "completed" | "cancelled" | "failed";
+            /** Format: date-time */
+            cancel_requested_at?: string | null;
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            completed_at?: string | null;
+            estimate?: components["schemas"]["VoiceSimulationEstimate"];
+            runs?: components["schemas"]["VoiceSimulationRun"][];
+            /**
+             * Format: uuid
+             * @description Automatic improvement run that owns this session, if any.
+             */
+            campaign_id?: string | null;
+        };
+        VoiceSimulationRun: {
+            /** @description Fingerprint of the tested scenario definition. */
+            scenario_fingerprint?: string;
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            scenario_id?: string;
+            name?: string;
+            /** @enum {string} */
+            status: "queued" | "preparing" | "dialing" | "running" | "scoring" | "completed" | "failed" | "cancelled";
+            /** @enum {string|null} */
+            outcome?: "pass" | "fail" | "error" | "inconclusive" | null;
+            error_code?: string | null;
+            score?: number | null;
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            started_at?: string | null;
+            /** Format: date-time */
+            completed_at?: string | null;
+            report?: components["schemas"]["VoiceSimulationReport"] | null;
+        };
+        VoiceSimulationReport: {
+            outcome: string;
+            score?: number | null;
+            summary: string;
+            criteria?: {
+                id: string;
+                description: string;
+                weight?: number;
+                required?: boolean;
+                /** @enum {string} */
+                verdict?: "pass" | "fail" | "inconclusive";
+                explanation?: string;
+                turn_indexes?: number[];
+                /** @description Validated references to observed IVR or tool events, call duration, or termination evidence. Array references use zero-based indexes. */
+                evidence_refs?: string[];
+            }[];
+            ivr_checks?: {
+                node_id?: string;
+                passed?: boolean;
+            }[];
+            evidence?: {
+                target_connected?: boolean;
+                counterpart_connected?: boolean;
+                transcript?: {
+                    /** @enum {string} */
+                    role?: "agent" | "user";
+                    content?: string;
+                }[];
+                ivr_visited_nodes?: string[];
+                tool_captures?: {
+                    tool?: string;
+                    args?: {
+                        [key: string]: unknown;
+                    };
+                    result?: unknown;
+                }[];
+                duration_seconds?: number;
+                recording_available?: boolean;
+                collected_variables?: {
+                    [key: string]: string;
+                };
+                analysis?: {
+                    [key: string]: unknown;
+                } | null;
+                ivr_inputs?: {
+                    node_id?: string;
+                    digits?: string;
+                    matched?: boolean;
+                }[];
+                /** @description Observed invocation names only; an invocation alone does not prove that an external action succeeded. */
+                tool_invocations?: {
+                    name?: string;
+                }[];
+                /** @enum {string|null} */
+                call_end_reason?: "agent_hangup" | "user_hangup" | "max_duration_reached" | "inactivity" | null;
+            };
+        };
+        /**
+         * @description Approved categories for simulation draft changes. Existing approvals retain prompts-only scope until explicitly renewed.
+         * @default [
+         *       "prompts"
+         *     ]
+         */
+        VoiceSimulationChangeScope: ("prompts" | "tools" | "flow" | "settings" | "analysis" | "knowledge" | "webhooks")[];
+        VoiceSimulationImprovement: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            project_id: string;
+            /** Format: uuid */
+            session_id?: string;
+            /** Format: date-time */
+            created_at?: string | null;
+            /** Format: date-time */
+            applied_at?: string | null;
+            /** @description For expanded proposals, true only when the applied current draft has passed the complete current suite and has not already been accepted. Saving still rechecks source drift and permissions. */
+            can_accept?: boolean;
+            /** Format: uuid */
+            tested_session_id?: string | null;
+            proposal: {
+                /**
+                 * @description Present for expanded configuration proposals; absent for legacy prompt proposals.
+                 * @enum {integer}
+                 */
+                version?: 2;
+                change_scope?: components["schemas"]["VoiceSimulationChangeScope"];
+                patch?: components["schemas"]["VoiceSimulationDraftPatch"];
+                draft_fingerprint?: string;
+                changes?: {
+                    section?: string;
+                    field?: string;
+                    category?: string;
+                    before?: unknown;
+                    after?: unknown;
+                }[];
+                function_tests?: {
+                    [key: string]: {
+                        fingerprint?: string;
+                        passed?: boolean;
+                        results?: {
+                            [key: string]: unknown;
+                        }[];
+                    };
+                };
+                summary: string;
+                reasons: string[];
+                /** @enum {string} */
+                field?: "general_prompt" | "global_prompt";
+                before?: string;
+                after?: string;
+                draft_revision: number;
+            };
+        };
+        VoiceSimulationIvr: {
+            entry: string;
+            nodes: {
+                id: string;
+                /** @enum {string} */
+                type: "say" | "menu" | "hold" | "bridge" | "hangup";
+                prompt?: string;
+                next?: string;
+                seconds?: number;
+                routes?: {
+                    [key: string]: string;
+                };
+                failure?: string;
+                timeout_seconds?: number;
+                retry_limit?: number;
+                /**
+                 * Format: uuid
+                 * @description Workspace recording whose stored text must exactly match prompt; regenerate after editing.
+                 */
+                audio_id?: string;
+                position?: {
+                    x: number;
+                    y: number;
+                };
+            }[];
+            required_nodes?: string[];
+        };
+        VoiceSimulationImprovementRun: {
+            change_scope?: components["schemas"]["VoiceSimulationChangeScope"];
+            /**
+             * Format: uuid
+             * @description Recurring policy that created this cycle, if any.
+             */
+            schedule_id?: string | null;
+            /** @description Monotonic cycle number across renewals of the same policy. */
+            schedule_cycle?: number | null;
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            project_id: string;
+            workspace_id: number;
+            created_by?: number;
+            /** @enum {string} */
+            status: "awaiting_approval" | "running" | "paused" | "passed" | "cancelled" | "failed";
+            phase?: string;
+            scenario_ids?: string[];
+            approved_revision?: number | null;
+            /** @description Total simulation runs allowed, including prior reserved calls; workspace cap may be lower. */
+            max_calls: number;
+            /** @description Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower. */
+            max_ai: number;
+            max_surcharge?: string | number;
+            calls_used: number;
+            ai_used: number;
+            iteration: number;
+            /** Format: uuid */
+            current_session_id?: string | null;
+            surcharge_reserved?: string | number;
+            ai_model?: string | null;
+            reason?: string | null;
+            approval_version: number;
+            approved_by?: number | null;
+            /** Format: date-time */
+            approved_at?: string | null;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+            scenarios?: {
+                /** Format: uuid */
+                id: string;
+                revision: number;
+                name: string;
+                definition: components["schemas"]["VoiceSimulationScenarioDefinition"];
+            }[];
+            approved_scenarios?: {
+                /** Format: uuid */
+                id: string;
+                revision: number;
+                name: string;
+                definition: components["schemas"]["VoiceSimulationScenarioDefinition"];
+            }[] | null;
+            /** @description GET returns a token binding the reviewed scenario revisions and draft revision. Submit the token the user actually reviewed when approving; never refresh it silently. */
+            review_fingerprint?: string;
+            events?: {
+                id?: string | number;
+                kind?: string;
+                payload?: {
+                    [key: string]: unknown;
+                };
+                /** Format: date-time */
+                created_at?: string;
+            }[];
+        };
+        VoiceSimulationScheduleResponse: {
+            schedule: components["schemas"]["VoiceSimulationSchedule"] | null;
+        };
+        VoiceSimulationSchedule: {
+            change_scope?: components["schemas"]["VoiceSimulationChangeScope"];
+            /** Format: uuid */
+            id?: string;
+            workspace_id?: number;
+            /** Format: uuid */
+            project_id?: string;
+            created_by?: number;
+            /** @enum {string} */
+            status?: "enabled" | "paused" | "exhausted";
+            config?: components["schemas"]["VoiceSimulationScheduleTrigger"];
+            scenario_ids?: string[];
+            max_calls?: number;
+            max_ai?: number;
+            /** @description Decimal surcharge allowance per cycle. */
+            max_surcharge?: string;
+            max_cycles?: number;
+            cycles_started?: number;
+            ai_model?: string;
+            new_scenarios?: number;
+            expected_draft_revision?: number;
+            pending_calls?: number;
+            /** Format: date-time */
+            next_run_at?: string | null;
+            /** Format: uuid */
+            last_campaign_id?: string | null;
+            reason?: string | null;
+            /** Format: date-time */
+            calls_after?: string;
+            /** Format: date-time */
+            next_check_at?: string;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+        };
+        /** @description Time is interpreted in the IANA timezone. Monthly dates clamp to month end. Either starts on either trigger; both waits for the time and call threshold. Calls only requires a threshold. */
+        VoiceSimulationScheduleTrigger: {
+            /** @enum {string} */
+            cadence?: "none" | "daily" | "weekly" | "monthly";
+            /** @default UTC */
+            timezone?: string;
+            /** @default 09:00 */
+            time?: string;
+            /** @description Sunday=0, Monday=1. */
+            weekday?: number;
+            month_day?: number;
+            call_threshold?: number | null;
+            /**
+             * @default either
+             * @enum {string}
+             */
+            combination?: "either" | "both";
+        };
+        VoiceSimulationScheduleApproval: {
+            change_scope?: components["schemas"]["VoiceSimulationChangeScope"];
+            /** @constant */
+            confirm: true;
+            /** Format: uuid */
+            improvement_run_id: string;
+            review_fingerprint: string;
+            trigger: components["schemas"]["VoiceSimulationScheduleTrigger"];
+            max_calls: number;
+            max_ai: number;
+            /** @description Per-cycle run surcharge allowance. Voice usage, AI charges and monthly access remain additional. */
+            max_surcharge: number;
+            max_cycles: number;
+            /** @description An allowed Agent IQ model key. */
+            ai_model: string;
+            /**
+             * @description Automatically generate this many new tests from recent real calls each cycle, in addition to the fixed approved suite.
+             * @default 0
+             */
+            new_scenarios?: number;
         };
     };
     responses: never;
@@ -4880,6 +6017,3276 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RerunCallAnalysisResponse"];
+                };
+            };
+        };
+    };
+    listVoiceSimulationTemplates: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        templates?: {
+                            id?: string;
+                            category?: string;
+                            scenario?: components["schemas"]["VoiceSimulationScenarioDefinition"];
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationSettings: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationSettings"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    listVoiceSimulationSourceAgents: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        agents?: {
+                            agent_id?: string;
+                            agent_name?: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    listVoiceSimulationProjects: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        projects?: components["schemas"]["VoiceSimulationProject"][];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    createVoiceSimulationProject: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    description?: string;
+                    source_agent_id: string;
+                    /**
+                     * Format: uuid
+                     * @description Optional existing project to duplicate within the same workspace.
+                     */
+                    copy_project_id?: string;
+                    /**
+                     * @description How the project runs. A copy keeps the original's mode unless this is set.
+                     * @default automated
+                     * @enum {string}
+                     */
+                    automation_mode?: "automated" | "manual";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationProject"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationProject: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationProject"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    updateVoiceSimulationProject: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    automation_mode: "automated" | "manual";
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationProject"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    listVoiceSimulationScenarios: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        scenarios?: components["schemas"]["VoiceSimulationScenario"][];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    createVoiceSimulationScenario: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    definition: components["schemas"]["VoiceSimulationScenarioDefinition"];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationScenario"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    updateVoiceSimulationScenario: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+                scenarioId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    definition: components["schemas"]["VoiceSimulationScenarioDefinition"];
+                    revision: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationScenario"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    generateVoiceSimulationScenarios: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @description Allowed Agent IQ model key from workspace model_options. */
+                    ai_model?: string;
+                    /** @description What to test. Omit or leave empty to let Agent IQ recommend scenarios. */
+                    instruction?: string;
+                    count?: number;
+                    /**
+                     * @description Include recent real calls as evidence.
+                     * @default true
+                     */
+                    use_call_history?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        scenarios?: components["schemas"]["VoiceSimulationScenarioDefinition"][];
+                        context?: {
+                            calls_reviewed?: number;
+                            recommended?: boolean;
+                        };
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    estimateVoiceSimulationSession: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    scenario_ids: string[];
+                    repetitions?: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationEstimate"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    listVoiceSimulationSessions: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        sessions?: components["schemas"]["VoiceSimulationSession"][];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    launchVoiceSimulationSession: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VoiceSimulationLaunchInput"];
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationSession"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationSession: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationSession"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    cancelVoiceSimulationSession: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationSession"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    proposeVoiceSimulationImprovement: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    change_scope?: components["schemas"]["VoiceSimulationChangeScope"];
+                    /** @description Allowed Agent IQ model key from workspace model_options. */
+                    ai_model?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovement"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    applyVoiceSimulationImprovement: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+                improvementId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @constant */
+                    confirm: true;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        project_id?: string;
+                        draft_revision?: number;
+                        applied?: boolean;
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationRecording: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                sessionId: string;
+                runId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Audio recording */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "audio/wav": string;
+                };
+            };
+            /** @description Recording unavailable */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    archiveVoiceSimulationProject: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id?: string;
+                        archived?: boolean;
+                    };
+                };
+            };
+            /** @description Resource not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    archiveVoiceSimulationScenario: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+                scenarioId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        id?: string;
+                        archived?: boolean;
+                    };
+                };
+            };
+            /** @description Resource not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listVoiceSimulationImprovements: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        improvements?: components["schemas"]["VoiceSimulationImprovement"][];
+                    };
+                };
+            };
+            /** @description Resource not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listVoiceSimulationSpeechVoices: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                provider: "cartesia" | "elevenlabs";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        voices?: {
+                            id: string;
+                            name: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    generateVoiceSimulationIvrAudio: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ivr: components["schemas"]["VoiceSimulationIvr"];
+                    /** @enum {string} */
+                    provider: "cartesia" | "elevenlabs";
+                    voice_id?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        ivr: components["schemas"]["VoiceSimulationIvr"];
+                        complete: boolean;
+                        errors: {
+                            node_id?: string;
+                            error?: string;
+                            code?: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationIvrAudio: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                audioId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "audio/wav": string;
+                    "audio/mpeg": string;
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    listVoiceSimulationImprovementRuns: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        improvement_runs?: components["schemas"]["VoiceSimulationImprovementRun"][];
+                    };
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    createVoiceSimulationImprovementRun: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @description Total simulation runs allowed, including prior reserved calls; workspace cap may be lower. */
+                    max_calls?: number;
+                    /** @description Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower. */
+                    max_ai?: number;
+                    /** @description Maximum cumulative per-run surcharges. Voice usage, Agent IQ pricing and monthly access remain separate. */
+                    max_surcharge?: number;
+                    scenario_ids?: string[];
+                    ai_model?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovementRun"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationImprovementRun: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovementRun"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    updateVoiceSimulationImprovementRun: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    scenario_ids: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovementRun"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    generateVoiceSimulationImprovementScenarios: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    instruction: string;
+                    count?: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovementRun"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    approveVoiceSimulationImprovementRun: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    change_scope?: components["schemas"]["VoiceSimulationChangeScope"];
+                    /** @description Allowed Agent IQ model key for future improvement steps (provider/model). Saved atomically with approval. Omit to retain the run model, or resolve the workspace default for an older run without a model. May be changed when approving a draft or renewing a paused run; scenario scoring and counterpart models are unchanged. */
+                    ai_model?: string;
+                    /** @description Total simulation runs allowed, including prior reserved calls; workspace cap may be lower. */
+                    max_calls: number;
+                    /** @description Total logical Agent IQ interactions, including execution planning, scenario generation, scoring and draft improvements. Multi-scenario execution plans consume one interaction each; single-scenario runs skip planning. Model fallback belongs to the same interaction. Workspace cap may be lower. */
+                    max_ai: number;
+                    /** @description Maximum cumulative per-run surcharges. Voice usage, Agent IQ pricing and monthly access remain separate. */
+                    max_surcharge: number;
+                    /** @constant */
+                    confirm: true;
+                    review_fingerprint: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovementRun"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    stopVoiceSimulationImprovementRun: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationImprovementRun"];
+                };
+            };
+            /** @description Invalid input. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Authentication required. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature disabled or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Resource not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Revision, price or idempotency conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Voice configuration or fixture unavailable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Workspace queue limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Feature setup or service unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    getVoiceSimulationSchedule: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Recurring policy. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationScheduleResponse"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    saveVoiceSimulationSchedule: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VoiceSimulationScheduleApproval"];
+            };
+        };
+        responses: {
+            /** @description Recurring policy. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationScheduleResponse"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+        };
+    };
+    pauseVoiceSimulationSchedule: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                projectId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Recurring policy. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationScheduleResponse"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
+                };
+            };
+            /** @description Invalid request, unavailable feature or access denied. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoiceSimulationError"];
                 };
             };
         };

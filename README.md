@@ -3,7 +3,7 @@
 `@upon-ai/sdk` and `@upon-ai/mcp-server`, owned by UponAI and licensed under MIT.
 
 ```sh
-npm install @upon-ai/sdk@0.1.1
+npm install @upon-ai/sdk@0.1.2
 ```
 
 [SDK guide](https://docs.uponai.com/sdk/overview/) ·
@@ -25,8 +25,9 @@ npm run pack:release
 ```
 
 Generated sources are reproducible from `contract/openapi.json` and its explicit
-policy. The SDK has 75 typed operations. MCP exposes 18 curated read operations
-plus workspace discovery, and three separately enabled call-changing operations.
+policy. The SDK has 110 typed operations. MCP exposes 28 curated read operations
+plus workspace discovery, and eight separately enabled write operations for calls,
+simulation sessions, improvement runs and schedules.
 
 - [SDK usage](packages/sdk/README.md)
 - [MCP configuration](packages/mcp-server/README.md)
@@ -40,3 +41,10 @@ are not carried into these packages. No third-party prototype source is copied.
 Tests use isolated mock API responses and a real MCP protocol client. Live
 customer-workspace integration is a separate release gate; a passing local test
 suite is not evidence that all API operations work in production.
+
+Recurring voice improvement policies are available through
+`getVoiceSimulationSchedule`, `saveVoiceSimulationSchedule` and
+`pauseVoiceSimulationSchedule`. A policy requires explicit review, per-cycle
+budgets and a bounded number of cycles before reapproval. MCP exposes schedule
+summaries and the optional `pauseVoiceSimulationSchedule` write capability;
+automatic recurring approval is deliberately excluded from the MCP catalog.

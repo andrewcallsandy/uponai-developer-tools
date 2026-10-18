@@ -43,3 +43,35 @@ test('pagination delegates documented cursor handling and stops repeated cursors
  for await(const x of sdk.paginate({operation:'listAgents',input:{query:{workspaceId:1}},items:p=>p,next:()=>undefined}))values.push(x);assert.equal(values.length,1);
  await assert.rejects(async()=>{for await(const x of sdk.paginate({operation:'listAgents',input:{query:{workspaceId:1}},items:p=>p,next:(p,args)=>args})){}},/cursor repeated/);
 });
+test('simulation audio permits larger recordings while retaining a bounded response',async()=>{
+ const args={query:{workspaceId:1},path:{sessionId:'session',runId:'run'}};
+ const payload=new Uint8Array(6*1024*1024);
+ const sdk=new UponAI({apiKey:'x',fetch:async()=>new Response(payload,{headers:{'content-type':'audio/wav','content-length':String(payload.length)}})});
+ assert.equal((await sdk.getVoiceSimulationRecording(args)).size,payload.length);
+ const oversized=new UponAI({apiKey:'x',fetch:async()=>new Response('x',{headers:{'content-length':String(65*1024*1024)}})});
+ await assert.rejects(()=>oversized.getVoiceSimulationRecording(args),/exceeds/);
+});
+
+test('improvement approval forwards the selected model with reviewed approval',async()=>{
+ let request;const sdk=new UponAI({apiKey:'test',fetch:async(url,options)=>{request={url,options};return json({ai_model:'configured/model'});}});
+ const body={confirm:true,review_fingerprint:'reviewed',max_calls:6,max_ai:12,max_surcharge:0,ai_model:'configured/model'};
+ await sdk.approveVoiceSimulationImprovementRun({path:{id:'11111111-1111-4111-8111-111111111111'},query:{workspaceId:1},body});
+ assert.deepEqual(JSON.parse(request.options.body),body);
+});
+
+test('recurring improvement approval sends the reviewed policy using PUT',async()=>{
+ let request;const sdk=new UponAI({apiKey:'test-token',fetch:async(url,options)=>{request={url,options};return json({schedule:{status:'enabled'}});}});
+ const body={confirm:true,improvement_run_id:'11111111-1111-4111-8111-111111111111',review_fingerprint:'reviewed',trigger:{cadence:'weekly',weekday:1,timezone:'America/New_York',time:'09:00',call_threshold:100,combination:'both'},max_calls:6,max_ai:12,max_surcharge:0,max_cycles:10,ai_model:'chosen',new_scenarios:1};
+ await sdk.saveVoiceSimulationSchedule({path:{projectId:'11111111-1111-4111-8111-111111111111'},query:{workspaceId:1},body});assert.equal(request.options.method,'PUT');assert.deepEqual(JSON.parse(request.options.body),body);
+});
+
+test('project automation mode is sent with PATCH and creation accepts the mode',async()=>{
+ const requests=[];const sdk=new UponAI({apiKey:'test-token',fetch:async(url,options)=>{requests.push({url,options});return json({id:'11111111-1111-4111-8111-111111111111',automation_mode:'manual'});}});
+ const path={projectId:'11111111-1111-4111-8111-111111111111'};
+ const updated=await sdk.updateVoiceSimulationProject({path,query:{workspaceId:1},body:{automation_mode:'manual'}});
+ assert.equal(updated.automation_mode,'manual');assert.equal(requests[0].options.method,'PATCH');
+ assert(requests[0].url.endsWith('/api/v1/voice-simulations/projects/'+path.projectId+'?workspaceId=1'));
+ assert.deepEqual(JSON.parse(requests[0].options.body),{automation_mode:'manual'});
+ await sdk.createVoiceSimulationProject({query:{workspaceId:1},body:{name:'Manual suite',source_agent_id:'agent',automation_mode:'manual'}});
+ assert.equal(requests[1].options.method,'POST');assert.equal(JSON.parse(requests[1].options.body).automation_mode,'manual');
+});

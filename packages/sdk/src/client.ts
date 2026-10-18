@@ -64,9 +64,10 @@ export class ClientCore {
    }
    if(!response.ok){await response.body?.cancel();const id=response.headers.get('x-request-id');throw new UponAIError(`UponAI API returned HTTP ${response.status}`,response.status,id&&/^[\w-]{1,128}$/.test(id)?id:undefined);}
    if(response.status===204)return undefined as OperationOutput<K>;
-   const contentLength=Number(response.headers.get('content-length'));if(contentLength>MAX_BYTES){await response.body?.cancel();throw new UponAIError('Response exceeds 5 MiB');}
+   const responseLimit=operation==='getVoiceSimulationRecording'?64*1024*1024:MAX_BYTES;
+   const contentLength=Number(response.headers.get('content-length'));if(contentLength>responseLimit){await response.body?.cancel();throw new UponAIError('Response exceeds the permitted size');}
    const chunks:Uint8Array[]=[];let size=0;const reader=response.body?.getReader();
-   if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>MAX_BYTES){await reader.cancel();throw new UponAIError('Response exceeds 5 MiB');}chunks.push(value);}}catch(e){if(e instanceof UponAIError)throw e;throw new UponAIError('Response interrupted');}}
+   if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>responseLimit){await reader.cancel();throw new UponAIError('Response exceeds the permitted size');}chunks.push(value);}}catch(e){if(e instanceof UponAIError)throw e;throw new UponAIError('Response interrupted');}}
    const bytes=Buffer.concat(chunks);const contentType=response.headers.get('content-type')||'';
    if(contentType.includes('json')){try{return JSON.parse(bytes.toString('utf8'));}catch{throw new UponAIError('Invalid JSON response');}}
    return new Blob([bytes],{type:contentType}) as OperationOutput<K>;
