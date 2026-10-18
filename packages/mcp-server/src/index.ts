@@ -41,7 +41,7 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
  const available=new Set(rows.map((w:any)=>w.id));
  if(requested.some(id=>!available.has(id)))throw Error('Configured workspace is not accessible');
  const allowed=new Set(requested);
- const server=new McpServer({name:'uponai',version:'0.1.1'},{instructions:'UponAI customer API tools. Only configured workspaces are accessible. Read tools return summaries; credentials, transcripts and configuration secrets are omitted. Write tools appear only when explicitly enabled by the operator.'});
+ const server=new McpServer({name:'uponai',version:'0.1.2'},{instructions:'UponAI customer API tools. Only configured workspaces are accessible. Read tools return summaries; credentials, transcripts and configuration secrets are omitted. Write tools appear only when explicitly enabled by the operator.'});
  server.registerTool('list_workspaces',{description:'List configured workspaces accessible to this API credential. Without a workspace allowlist, lists accessible workspace names for initial setup only.',inputSchema:{},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:true}},async()=>({content:[{type:'text',text:JSON.stringify(projectResult({workspaces:rows.filter((w:any)=>!allowed.size||allowed.has(w.id))}))}]}));
  if(!allowed.size)return server;
  const run=async(operation:string,input:any)=>{
