@@ -1,4 +1,32 @@
-# Release verification — 2026-10-14
+# Release verification — 2026-10-18
+
+SDK and MCP **0.1.2** are published under the `latest` npm tag through
+[the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/39083827420).
+Both registry artifacts passed the workflow's SHA-512 comparison.
+
+- Public contract SHA-256: `d8b4def3f123e951857909aaf9eb3036093aefb07a1c377d99bcfe50306c6504`.
+- 110 typed SDK operations; MCP workspace discovery plus 28 curated read tools.
+  Eight optional writes remain disabled by default.
+- Production API promotion preceded publication. The live contract matched the
+  reviewed snapshot; anonymous and invalid-token requests were rejected, and the
+  internal canonical specification continued to require authentication.
+- A clean registry installation of both 0.1.2 packages completed with zero
+  dependency vulnerabilities. Signature auditing verified 97 registry signatures
+  and 13 attestations, including both UponAI packages.
+- The installed SDK read production workspaces, voice simulation settings and
+  projects. The installed MCP executable initialized over real stdio as 0.1.2,
+  exposed 29 default tools, read production settings and rejected a workspace
+  outside its explicit allowlist. Optional writes were absent by default.
+- Staging acceptance used the candidate SDK/MCP against a real completed voice
+  session. Both call legs connected, evaluation passed, cancellation reached a
+  terminal state, repeat cancellation was safe, and workspace isolation held.
+
+These checks distinguish live read/protocol evidence from staging voice-call
+acceptance; they do not claim that all 110 operations were exercised in production.
+Workspaces require explicit administrator enablement for voice simulations.
+Public documentation is published independently at https://docs.uponai.com.
+
+## Earlier release verification — 2026-10-14
 
 SDK and MCP **0.1.1** are published under the `latest` npm tag through GitHub
 trusted publishing, with provenance. Both trusted connections have completed a
