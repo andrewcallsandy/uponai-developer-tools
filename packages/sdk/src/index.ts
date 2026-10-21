@@ -116,4 +116,5 @@ export class UponAI extends ClientCore {
   getVoiceSimulationSchedule(args: OperationInput<'getVoiceSimulationSchedule'>, options?: RequestOptions): Promise<OperationOutput<'getVoiceSimulationSchedule'>> { return this.execute('getVoiceSimulationSchedule', args, options); }
   saveVoiceSimulationSchedule(args: OperationInput<'saveVoiceSimulationSchedule'>, options?: RequestOptions): Promise<OperationOutput<'saveVoiceSimulationSchedule'>> { return this.execute('saveVoiceSimulationSchedule', args, options); }
   pauseVoiceSimulationSchedule(args: OperationInput<'pauseVoiceSimulationSchedule'>, options?: RequestOptions): Promise<OperationOutput<'pauseVoiceSimulationSchedule'>> { return this.execute('pauseVoiceSimulationSchedule', args, options); }
+  createCallMonitorSession(args: OperationInput<'createCallMonitorSession'>, options?: RequestOptions): Promise<OperationOutput<'createCallMonitorSession'>> { return this.execute('createCallMonitorSession', args, options); }
 }

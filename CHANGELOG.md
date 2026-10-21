@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 — 2026-10-21
+
+- Add `createCallMonitorSession` for single-use live transcript WebSocket sessions with optional entitled live audio. Coordinated with the live call monitoring API release.
+- MCP tool exposure is unchanged; monitoring credentials and streams remain outside model tool results.
+
 ## 0.1.3 — 2026-10-21
 
 - Typed voice and chat webhook event selections for create, update and readback.

@@ -37,3 +37,7 @@ client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_url:null,
 client.updateAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_events:['chat_started']}});
 // @ts-expect-error Chat agents cannot subscribe to voice events.
 client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_events:['transcript_updated']}});
+
+client.createCallMonitorSession({path:{callId:'call'},body:{audio:true}});
+// @ts-expect-error Audio mode is a boolean.
+client.createCallMonitorSession({path:{callId:'call'},body:{audio:'true'}});

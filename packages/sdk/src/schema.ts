@@ -1786,6 +1786,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/calls/{callId}/monitor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Open a live call monitoring session
+         * @description Create a single-use ticket valid for 60 seconds for a call-scoped WebSocket. Connect to websocket_path on the same API origin using wss. The stream sends ready, transcript_snapshot, transcript_updated and call_ended JSON events. Transcript events contain the complete current transcripts array; replace items by id. Optional audio uses audio_started, audio_chunk, audio_stopped and audio_error events. Audio chunks contain base64 signed 16-bit little-endian PCM; audio_started supplies sample_rate and channels. Audio requires workspace live-audio access and a supported active media connection. Audio startup failure leaves transcripts available. Access is rechecked on connection and every 15 seconds. Reconnect by creating a new session. Tickets are credentials; keep them out of logs. Live transcripts are raw, before post-call privacy processing. No client messages are required.
+         */
+        post: operations["createCallMonitorSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -9400,6 +9420,93 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["VoiceSimulationError"];
                 };
+            };
+        };
+    };
+    createCallMonitorSession: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                callId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description Request live audio in addition to transcripts.
+                     * @default false
+                     */
+                    audio?: boolean;
+                };
+            };
+        };
+        responses: {
+            /** @description Single-use monitoring ticket created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Relative WebSocket path on the same API origin, including the single-use ticket. */
+                        websocket_path: string;
+                        /** @constant */
+                        expires_in: 60;
+                        audio: boolean;
+                    };
+                };
+            };
+            /** @description Invalid audio option */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid or missing API token */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Live audio access is not enabled */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Live call not found or inaccessible */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Call is no longer live */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Too many pending monitoring sessions */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Monitoring temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
