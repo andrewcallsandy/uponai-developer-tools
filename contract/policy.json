@@ -829,6 +829,7 @@
       "VoiceSimulationScenario",
       "VoiceSimulationProject",
       "VoiceSimulationSettings",
+      "VoiceSimulationModelOption",
       "VoiceSimulationEstimate",
       "VoiceSimulationRun",
       "VoiceSimulationReport",
@@ -845,7 +846,9 @@
       "VoiceSimulationScheduleResponse",
       "VoiceSimulationChangeScope",
       "VoiceSimulationHostedFunction",
-      "VoiceSimulationDraftPatch"
+      "VoiceSimulationDraftPatch",
+      "VoiceWebhookEvent",
+      "ChatWebhookEvent"
     ]
   },
   "tags": [

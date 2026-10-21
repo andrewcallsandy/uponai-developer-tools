@@ -2,10 +2,11 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { UponAI, UponAIError } from '@upon-ai/sdk';
 import { catalog } from './catalog.js';
+import { voiceWebhookEvents, chatWebhookEvents } from './webhookEvents.js';
 export interface McpOptions { api: UponAI; workspaceIds?: readonly number[]; enabledWrites?: readonly string[]; }
-const writable=['createPhoneCall','endLiveCall','rerunCallAnalysis','estimateVoiceSimulationSession','launchVoiceSimulationSession','cancelVoiceSimulationSession','stopVoiceSimulationImprovementRun','pauseVoiceSimulationSchedule'];
-const safeFields=new Set(['id','name','agent_id','agent_name','llm_id','model','version','is_published','chat_id','chat_status','call_id','call_type','call_status','direction','duration_ms','start_timestamp','end_timestamp','creation_timestamp','last_modification_timestamp','workspace_id','workspaceId','knowledge_base_id','knowledge_base_name','status','voice_id','voice_name','gender','accent','language','conversation_flow_id','conversation_flow_name','concurrency','current_concurrency','concurrency_limit','active_calls','max_concurrency','success','callId','total','page','limit','totalPages','has_more','pagination_key','paginationKey','paginationKeyVersion','next_cursor','project_id','session_id','source_agent_id','draft_revision','draft_fingerprint','scenario_id','score','outcome','error_code','created_at','completed_at','cancel_requested_at','enabled','workspace_enabled','provider_allowed','per_run_price','monthly_price','currency','max_concurrent_runs','max_session_runs','run_count','maximum_surcharge','max_audio_seconds','revision','key','provider','passed','failed','inconclusive','errors','cancelled','pending','counterpart','ai','max_auto_calls','max_auto_ai','max_calls','max_ai','calls_used','ai_used','iteration','max_surcharge','surcharge_reserved','approval_version','phase','reason','current_session_id','max_cycles','cycles_started','pending_calls','next_run_at','last_campaign_id','new_scenarios','ai_model','cadence','timezone','time','weekday','month_day','call_threshold','combination','automation_mode']);
-const containers=new Set(['data','items','agents','llms','chats','calls','workspaces','knowledge_bases','voices','conversation_flows','versions','pagination','projects','scenarios','sessions','runs','estimate','voice_options','model_options','defaults','test_counts','improvement_runs','schedule']);
+const writable=['updateAgentWebhookSettings','updateChatAgentWebhookSettings','createPhoneCall','endLiveCall','rerunCallAnalysis','estimateVoiceSimulationSession','launchVoiceSimulationSession','cancelVoiceSimulationSession','stopVoiceSimulationImprovementRun','pauseVoiceSimulationSchedule'];
+const safeFields=new Set(['id','name','agent_id','agent_name','llm_id','model','version','is_published','chat_id','chat_status','call_id','call_type','call_status','direction','duration_ms','start_timestamp','end_timestamp','creation_timestamp','last_modification_timestamp','workspace_id','workspaceId','knowledge_base_id','knowledge_base_name','status','voice_id','voice_name','gender','accent','language','conversation_flow_id','conversation_flow_name','concurrency','current_concurrency','concurrency_limit','active_calls','max_concurrency','success','callId','total','page','limit','totalPages','has_more','pagination_key','paginationKey','paginationKeyVersion','next_cursor','project_id','session_id','source_agent_id','draft_revision','draft_fingerprint','scenario_id','score','outcome','error_code','created_at','completed_at','cancel_requested_at','enabled','workspace_enabled','provider_allowed','per_run_price','monthly_price','currency','max_concurrent_runs','max_session_runs','run_count','maximum_surcharge','max_audio_seconds','revision','key','provider','passed','failed','inconclusive','errors','cancelled','pending','counterpart','ai','max_auto_calls','max_auto_ai','max_calls','max_ai','calls_used','ai_used','iteration','max_surcharge','surcharge_reserved','approval_version','phase','reason','current_session_id','max_cycles','cycles_started','pending_calls','next_run_at','last_campaign_id','new_scenarios','ai_model','cadence','timezone','time','weekday','month_day','call_threshold','combination','automation_mode','label','alias','tier']);
+const containers=new Set(['data','items','agents','llms','chats','calls','workspaces','knowledge_bases','voices','conversation_flows','versions','pagination','projects','scenarios','sessions','runs','estimate','voice_options','model_options','defaults','test_counts','improvement_runs','schedule','ai_details','model_prices']);
 /** Intentional lossy projection: no prompts, transcripts, configuration blobs or credentials. */
 export function projectResult(value:unknown,depth=0,schedule=false):unknown {
  if(depth>6)return null;
@@ -13,7 +14,9 @@ export function projectResult(value:unknown,depth=0,schedule=false):unknown {
  if(value&&typeof value==='object'){
   const output:Record<string,unknown>={};
   for(const [key,v]of Object.entries(value)){
-   if(key==='change_scope'&&Array.isArray(v))output[key]=v.filter(x=>['prompts','tools','flow','settings','analysis','knowledge','webhooks'].includes(x));
+   if(key==='webhook_url')output.webhook_configured=typeof v==='string'&&v.length>0;
+   else if(key==='webhook_events'&&Array.isArray(v))output[key]=v.filter(x=>[...voiceWebhookEvents,...chatWebhookEvents].includes(x));
+   else if(key==='change_scope'&&Array.isArray(v))output[key]=v.filter(x=>['prompts','tools','flow','settings','analysis','knowledge','webhooks'].includes(x));
    else if(['counterpart','ai'].includes(key)&&Array.isArray(v))output[key]=v.filter(x=>typeof x==='string').slice(0,100).map(x=>x.slice(0,200));
    else if(key==='config'&&schedule&&v&&typeof v==='object')output[key]=projectResult(v,depth+1);
    else if(containers.has(key)&&(Array.isArray(v)||(v&&typeof v==='object')))output[key]=projectResult(v,depth+1,key==='schedule');
@@ -41,7 +44,7 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
  const available=new Set(rows.map((w:any)=>w.id));
  if(requested.some(id=>!available.has(id)))throw Error('Configured workspace is not accessible');
  const allowed=new Set(requested);
- const server=new McpServer({name:'uponai',version:'0.1.2'},{instructions:'UponAI customer API tools. Only configured workspaces are accessible. Read tools return summaries; credentials, transcripts and configuration secrets are omitted. Write tools appear only when explicitly enabled by the operator.'});
+ const server=new McpServer({name:'uponai',version:'0.1.3'},{instructions:'UponAI customer API tools. Only configured workspaces are accessible. Read tools return summaries; credentials, transcripts and configuration secrets are omitted. Write tools appear only when explicitly enabled by the operator.'});
  server.registerTool('list_workspaces',{description:'List configured workspaces accessible to this API credential. Without a workspace allowlist, lists accessible workspace names for initial setup only.',inputSchema:{},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:true}},async()=>({content:[{type:'text',text:JSON.stringify(projectResult({workspaces:rows.filter((w:any)=>!allowed.size||allowed.has(w.id))}))}]}));
  if(!allowed.size)return server;
  const run=async(operation:string,input:any)=>{
@@ -60,6 +63,16 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
   });
  }
  for(const operation of options.enabledWrites||[]){
+  if(operation==='updateAgentWebhookSettings'||operation==='updateChatAgentWebhookSettings') {
+   const chat=operation==='updateChatAgentWebhookSettings';
+   const url=z.string().url().refine(value=>{const parsed=new URL(value);return ['http:','https:'].includes(parsed.protocol)&&!parsed.username&&!parsed.password;},'Use an HTTP(S) receiving URL without embedded credentials.').nullable();
+   server.registerTool(operation,{description:'Update the customer webhook destination and event selections through the platform proxy. Omitted settings are preserved. Subscription changes require an editable version; publish it separately to activate. Requires confirmation.',inputSchema:z.object({workspaceId:positive,agentId:identifier,version:z.number().int().nonnegative().optional(),webhook_url:url.optional(),webhook_events:z.array(z.enum(chat?chatWebhookEvents:voiceWebhookEvents)).optional(),confirm:z.literal(true)}).strict(),annotations:{readOnlyHint:false,destructiveHint:true,idempotentHint:true,openWorldHint:true}},async(input:any)=>{
+    const {workspaceId,agentId,version,confirm,...settings}=input;
+    if(!Object.keys(settings).length)return {isError:true,content:[{type:'text' as const,text:'Provide webhook_url or webhook_events.'}]};
+    return run(chat?'updateChatAgent':'updateAgent',{path:{agentId},...(version===undefined?{}:{query:{version}}),body:{workspaceId,...settings}});
+   });
+   continue;
+  }
   if(operation==='pauseVoiceSimulationSchedule') {
    server.registerTool(operation,{description:'Pause future scheduled improvement cycles. Current work continues until explicitly stopped. Requires confirmation.',inputSchema:z.object({workspaceId:positive,projectId:z.string().uuid(),confirm:z.literal(true)}).strict(),annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:true}},async(input:any)=>run(operation,{query:{workspaceId:input.workspaceId},path:{projectId:input.projectId}}));
    continue;
@@ -71,7 +84,7 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
   if(operation.includes('VoiceSimulation')) {
    const cancel=operation==='cancelVoiceSimulationSession';
    const launch=operation==='launchVoiceSimulationSession';
-   const shape:Record<string,z.ZodTypeAny>=cancel?{workspaceId:positive,sessionId:identifier,confirm:z.literal(true)}:{workspaceId:positive,projectId:identifier,scenario_ids:z.array(z.string().uuid()).min(1).max(100),repetitions:z.number().int().min(1).max(10).optional(),...(launch?{max_surcharge:z.number().finite().nonnegative(),idempotency_key:z.string().min(1).max(128),confirm:z.literal(true)}:{})};
+   const shape:Record<string,z.ZodTypeAny>=cancel?{workspaceId:positive,sessionId:identifier,confirm:z.literal(true)}:{workspaceId:positive,projectId:identifier,ai_model:z.string().min(1).max(200).optional(),scenario_ids:z.array(z.string().uuid()).min(1).max(100),repetitions:z.number().int().min(1).max(10).optional(),...(launch?{max_surcharge:z.number().finite().nonnegative(),idempotency_key:z.string().min(1).max(128),confirm:z.literal(true)}:{})};
    server.registerTool(operation,{description:cancel?'Cancel an isolated voice simulation session.':launch?'Launch real voice simulations using saved scenarios. Voice usage and the accepted surcharge may be billed. Requires an estimate, explicit confirmation, and an idempotency key.':'Estimate the run surcharge for saved voice simulation scenarios. Voice usage and monthly access are billed separately.',inputSchema:z.object(shape).strict(),annotations:{readOnlyHint:!launch&&!cancel,destructiveHint:launch||cancel,idempotentHint:true,openWorldHint:true}},async(input:any)=>{
     const {workspaceId,projectId,sessionId,confirm,...body}=input;
     return run(operation,{query:{workspaceId},path:cancel?{sessionId}:{projectId},body});

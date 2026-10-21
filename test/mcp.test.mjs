@@ -41,11 +41,12 @@ test('HTTP checks auth, Host, Origin and request size before upstream access',as
 test('simulation launch requires explicit budget, confirmation and stable key without exposing reports',async()=>{
  const {api,requests}=apiRecorder();const {client,close}=await connect({api,workspaceIds:[1],enabledWrites:['launchVoiceSimulationSession']});
  try {
-  const args={workspaceId:1,projectId:'project',scenario_ids:['12345678-1234-4123-8123-123456789abc'],max_surcharge:2,idempotency_key:'repeatable-session-key'};
+  const args={workspaceId:1,projectId:'project',scenario_ids:['12345678-1234-4123-8123-123456789abc'],max_surcharge:2,idempotency_key:'repeatable-session-key',ai_model:'configured/fast'};
   const before=requests.length;assert((await client.callTool({name:'launchVoiceSimulationSession',arguments:args})).isError);assert.equal(requests.length,before);
   await client.callTool({name:'launchVoiceSimulationSession',arguments:{...args,confirm:true}});
   assert.equal(requests.length,before+1);assert(requests.at(-1).url.endsWith('/voice-simulations/projects/project/sessions?workspaceId=1'));
   assert.equal(JSON.parse(requests.at(-1).options.body).idempotency_key,args.idempotency_key);
+  assert.equal(JSON.parse(requests.at(-1).options.body).ai_model,args.ai_model);
   const summary=JSON.stringify(projectResult({id:'session',runs:[{id:'run',score:90,outcome:'pass',report:{evidence:{transcript:'PRIVATE'}}}],agent_patch:{general_prompt:'PRIVATE'}}));
   assert(summary.includes('90'));assert(!summary.includes('PRIVATE'));
  } finally {await close();}
@@ -93,4 +94,32 @@ test('project summaries show automation mode; mode changes stay outside MCP',asy
 });
 test('simulation summaries expose reviewed categories and exact draft identity without handler code',()=>{
  assert.deepEqual(projectResult({draft_fingerprint:'abc',change_scope:['prompts','webhooks','untrusted'],functions:{secret:{code:'private'}},proposal:{patch:{}}}),{draft_fingerprint:'abc',change_scope:['prompts','webhooks']});
+});
+
+
+test('simulation model tiers expose retail display fields without wholesale prices',()=>{
+ const result=projectResult({model_options:{ai_details:[{id:'configured/fast',alias:'Fast coach',label:'Fast coach',tier:'Low',per_run_price:0.4,wholesale_per_run:0.1,api_key:'PRIVATE'}]},model_prices:[{scenario_id:'s',ai_model:'configured/fast',label:'Fast coach',tier:'Low',per_run_price:0.4,per_run_cost:0.1}]});
+ assert.equal(result.model_options.ai_details[0].label,'Fast coach');assert.equal(result.model_prices[0].per_run_price,0.4);
+ const json=JSON.stringify(result);assert(!json.includes('wholesale'));assert(!json.includes('per_run_cost'));assert(!json.includes('PRIVATE'));
+});
+
+for (const [tool,route,event] of [['updateAgentWebhookSettings','agents','transcript_updated'],['updateChatAgentWebhookSettings','chat-agents','chat_analyzed']]) {
+ test(`${tool}: opt-in, confirmed, scoped webhook-only update with exact version`,async()=>{
+  const {api,requests}=apiRecorder();const {client,close}=await connect({api,workspaceIds:[1],enabledWrites:[tool]});
+  try {
+   const args={workspaceId:1,agentId:'agent_test',version:3,webhook_events:[event]};
+   const before=requests.length;
+   for(const invalid of [args,{...args,confirm:true,workspaceId:2},{...args,confirm:true,general_prompt:'hidden'},{...args,confirm:true,webhook_events:['invalid']},{workspaceId:1,agentId:'agent_test',confirm:true}])assert((await client.callTool({name:tool,arguments:invalid})).isError);
+   assert.equal(requests.length,before);
+   assert(!(await client.callTool({name:tool,arguments:{...args,confirm:true}})).isError);
+   assert(requests.at(-1).url.endsWith(`/${route}/agent_test?version=3`));
+   assert.deepEqual(JSON.parse(requests.at(-1).options.body),{workspaceId:1,webhook_events:[event]});
+   await client.callTool({name:tool,arguments:{workspaceId:1,agentId:'agent_test',webhook_url:null,webhook_events:[],confirm:true}});
+   assert.deepEqual(JSON.parse(requests.at(-1).options.body),{workspaceId:1,webhook_url:null,webhook_events:[]});
+  } finally {await close();}
+ });
+}
+test('webhook summaries expose selections and configured state without destinations or authentication secrets',()=>{
+ assert.deepEqual(projectResult({agent_id:'agent_test',webhook_url:'https://customer.example/SECRET',webhook_auth_value:'SECRET',webhook_events:['transcript_updated','chat_ended','SECRET']}),{agent_id:'agent_test',webhook_configured:true,webhook_events:['transcript_updated','chat_ended']});
+ assert.deepEqual(projectResult({webhook_url:null,webhook_events:[]}),{webhook_configured:false,webhook_events:[]});
 });

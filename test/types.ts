@@ -30,3 +30,10 @@ void mode;
 client.updateVoiceSimulationProject({path:{projectId:'project'},query:{workspaceId:1},body:{automation_mode:'paused'}});
 // @ts-expect-error Updating a project requires an automation mode.
 client.updateVoiceSimulationProject({path:{projectId:'project'},query:{workspaceId:1},body:{}});
+
+client.updateAgent({path:{agentId:'a'},query:{version:3},body:{workspaceId:1,webhook_events:['call_started','call_ended','call_analyzed','transcript_updated','transfer_started','transfer_bridged','transfer_cancelled','transfer_ended']}});
+client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_url:null,webhook_events:['chat_started','chat_ended','chat_analyzed']}});
+// @ts-expect-error Voice agents cannot subscribe to chat events.
+client.updateAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_events:['chat_started']}});
+// @ts-expect-error Chat agents cannot subscribe to voice events.
+client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_events:['transcript_updated']}});

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3 — 2026-10-21
+
+- Typed voice and chat webhook event selections for create, update and readback.
+- Customer webhook destinations remain separate from platform proxy delivery.
+- Optional confirmed MCP webhook-setting tools with workspace scoping and event validation.
+- Agent MCP summaries show selected events and configured state without destination URLs or secrets.
+- Includes voice simulation model display aliases and tiers in SDK types and safe MCP summaries.
+- Coordinated with the production webhook persistence API release.
+
 ## 0.1.2 — 2026-10-17
 
 - Optional `copy_project_id` on project creation duplicates the draft and active scenarios in the same workspace, with fresh run history and approvals.
