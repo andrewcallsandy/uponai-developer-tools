@@ -29,3 +29,6 @@ const catalog=Object.fromEntries(readOperations.map(id=>{
  return [id,{summary:entry.summary,parameters:entry.parameters.map(({name,in:location,required,schema})=>({name,in:location,required,schema}))}];
 }));
 fs.writeFileSync('packages/mcp-server/src/catalog.ts','// Reviewed MCP operation subset; generated from public contract.\nexport const catalog: Record<string, {summary:string;parameters:Array<{name:string;in:string;required?:boolean;schema:any}>}> = '+JSON.stringify(catalog,null,2)+';\n');
+
+// Webhook inputs and safe outputs share the reviewed contract enums.
+fs.writeFileSync('packages/mcp-server/src/webhookEvents.ts', '// Generated from the approved public contract.\n'+['Voice','Chat'].map(channel=>'export const '+channel.toLowerCase()+'WebhookEvents = '+JSON.stringify(spec.components.schemas[channel+'WebhookEvent'].enum)+' as const;').join('\n')+'\n');

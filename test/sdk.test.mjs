@@ -75,3 +75,24 @@ test('project automation mode is sent with PATCH and creation accepts the mode',
  await sdk.createVoiceSimulationProject({query:{workspaceId:1},body:{name:'Manual suite',source_agent_id:'agent',automation_mode:'manual'}});
  assert.equal(requests[1].options.method,'POST');assert.equal(JSON.parse(requests[1].options.body).automation_mode,'manual');
 });
+
+
+test('simulation estimate and launch preserve selected model IDs',async()=>{
+ const requests=[];const sdk=new UponAI({apiKey:'test',fetch:async(url,options)=>{requests.push({url,options});return json({maximum_surcharge:0.4,model_prices:[{ai_model:'configured/fast',label:'Low',per_run_price:0.4}]});}});
+ const common={path:{projectId:'project'},query:{workspaceId:1},body:{scenario_ids:['12345678-1234-4123-8123-123456789abc'],ai_model:'configured/fast'}};
+ const quote=await sdk.estimateVoiceSimulationSession(common);assert.equal(quote.model_prices[0].label,'Low');
+ await sdk.launchVoiceSimulationSession({...common,body:{...common.body,max_surcharge:0.4,idempotency_key:'tier-test'}});
+ assert(requests.every(r=>JSON.parse(r.options.body).ai_model==='configured/fast'));
+});
+
+for(const [operation,route,event] of [['updateAgent','agents','transfer_ended'],['updateChatAgent','chat-agents','chat_analyzed']]) {
+ test(`${operation} preserves webhook selections, explicit clears, and customer readback`,async()=>{
+  const requests=[];const sdk=new UponAI({apiKey:'test',fetch:async(url,options)=>{requests.push({url,options});return json({agent_id:'a',...JSON.parse(options.body)});}});
+  const body={workspaceId:1,webhook_url:'https://customer.example/events',webhook_events:[event]};
+  const result=await sdk[operation]({path:{agentId:'a'},query:{version:3},body});
+  assert(requests[0].url.endsWith(`/${route}/a?version=3`));assert.equal(requests[0].options.method,'PATCH');
+  assert.deepEqual(result.webhook_events,[event]);assert.equal(result.webhook_url,body.webhook_url);
+  await sdk[operation]({path:{agentId:'a'},body:{workspaceId:1,webhook_url:null,webhook_events:[]}});
+  assert.deepEqual(JSON.parse(requests[1].options.body),{workspaceId:1,webhook_url:null,webhook_events:[]});
+ });
+}

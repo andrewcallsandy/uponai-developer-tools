@@ -104,7 +104,7 @@ export interface paths {
         head?: never;
         /**
          * Update agent
-         * @description Apply partial updates to an existing agent configuration.
+         * @description Apply partial updates. Customer webhook URLs and event selections are stored by the platform; delivery uses the platform proxy. Omitted webhook fields are preserved. Subscription changes require an editable version; publish it separately to activate.
          */
         patch: operations["updateAgent"];
         trace?: never;
@@ -236,7 +236,7 @@ export interface paths {
         head?: never;
         /**
          * Update chat agent
-         * @description Apply partial updates to an existing chat agent configuration.
+         * @description Apply partial updates. Customer webhook URLs and event selections are stored by the platform; delivery uses the platform proxy. Omitted webhook fields are preserved. Subscription changes require an editable version; publish it separately to activate.
          */
         patch: operations["updateChatAgent"];
         trace?: never;
@@ -2091,9 +2091,13 @@ export interface components {
             /** @default en-US */
             language?: string;
             response_engine: components["schemas"]["ResponseEngine"];
-            /** Format: uri */
+            /**
+             * Format: uri
+             * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
+             */
             webhook_url?: string | null;
-            webhook_events?: string[];
+            /** @description Customer event selections. Omission preserves selections on update and defaults to the three lifecycle events on creation. An empty array disables customer event delivery. Optional subscriptions are enabled only when selected. Subscription changes require an editable version and publication to activate for production calls or chats. */
+            webhook_events?: components["schemas"]["VoiceWebhookEvent"][];
             webhook_timeout_ms?: number;
             response_threshold?: number;
             interruption_sensitivity?: number;
@@ -2135,6 +2139,8 @@ export interface components {
             type: string;
             llm_id?: string;
         };
+        /** @enum {string} */
+        VoiceWebhookEvent: "call_started" | "call_ended" | "call_analyzed" | "transcript_updated" | "transfer_started" | "transfer_bridged" | "transfer_cancelled" | "transfer_ended";
         CustomSttConfig: ({
             /**
              * @description Realtime transcription provider used when stt_mode is custom.
@@ -2152,9 +2158,13 @@ export interface components {
             fallback_voice_ids?: string[] | null;
             language?: string | null;
             response_engine?: components["schemas"]["ResponseEngine"];
-            /** Format: uri */
+            /**
+             * Format: uri
+             * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
+             */
             webhook_url?: string | null;
-            webhook_events?: string[];
+            /** @description Customer event selections. Omission preserves selections on update and defaults to the three lifecycle events on creation. An empty array disables customer event delivery. Optional subscriptions are enabled only when selected. Subscription changes require an editable version and publication to activate for production calls or chats. */
+            webhook_events?: components["schemas"]["VoiceWebhookEvent"][];
             webhook_timeout_ms?: number | null;
             response_threshold?: number | null;
             interruption_sensitivity?: number | null;
@@ -2195,6 +2205,13 @@ export interface components {
             voice_model?: components["schemas"]["VoiceModel"];
             fallback_voice_ids?: string[] | null;
             language?: string;
+            /**
+             * Format: uri
+             * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
+             */
+            webhook_url?: string | null;
+            /** @description Customer event selections. Omission preserves selections on update and defaults to the three lifecycle events on creation. An empty array disables customer event delivery. Optional subscriptions are enabled only when selected. Subscription changes require an editable version and publication to activate for production calls or chats. */
+            webhook_events?: components["schemas"]["VoiceWebhookEvent"][];
             response_engine?: components["schemas"]["ResponseEngine"];
             interruption_sensitivity?: number;
             max_call_duration_ms?: number;
@@ -2279,9 +2296,13 @@ export interface components {
             auto_close_message?: string | null;
             end_chat_after_silence_ms?: number;
             timezone?: string;
-            /** Format: uri */
+            /**
+             * Format: uri
+             * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
+             */
             webhook_url?: string | null;
-            webhook_events?: string[];
+            /** @description Customer event selections. Omission preserves selections on update and defaults to the three lifecycle events on creation. An empty array disables customer event delivery. Optional subscriptions are enabled only when selected. Subscription changes require an editable version and publication to activate for production calls or chats. */
+            webhook_events?: components["schemas"]["ChatWebhookEvent"][];
             webhook_timeout_ms?: number;
             /** @enum {string} */
             data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only";
@@ -2302,6 +2323,8 @@ export interface components {
                 [key: string]: string;
             };
         };
+        /** @enum {string} */
+        ChatWebhookEvent: "chat_started" | "chat_ended" | "chat_analyzed";
         ChatAgentAnalysisField: {
             /** @example chat_summary */
             type: string;
@@ -2314,9 +2337,13 @@ export interface components {
         ChatAgent: components["schemas"]["ChatAgentSummary"] & {
             end_chat_after_silence_ms?: number | null;
             timezone?: string | null;
-            /** Format: uri */
+            /**
+             * Format: uri
+             * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
+             */
             webhook_url?: string | null;
-            webhook_events?: string[];
+            /** @description Customer event selections. Omission preserves selections on update and defaults to the three lifecycle events on creation. An empty array disables customer event delivery. Optional subscriptions are enabled only when selected. Subscription changes require an editable version and publication to activate for production calls or chats. */
+            webhook_events?: components["schemas"]["ChatWebhookEvent"][];
             webhook_timeout_ms?: number | null;
             /** @enum {string|null} */
             data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only" | null;
@@ -2348,9 +2375,13 @@ export interface components {
             auto_close_message?: string | null;
             end_chat_after_silence_ms?: number;
             timezone?: string;
-            /** Format: uri */
+            /**
+             * Format: uri
+             * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
+             */
             webhook_url?: string | null;
-            webhook_events?: string[];
+            /** @description Customer event selections. Omission preserves selections on update and defaults to the three lifecycle events on creation. An empty array disables customer event delivery. Optional subscriptions are enabled only when selected. Subscription changes require an editable version and publication to activate for production calls or chats. */
+            webhook_events?: components["schemas"]["ChatWebhookEvent"][];
             webhook_timeout_ms?: number;
             /** @enum {string} */
             data_storage_setting?: "everything" | "everything_except_pii" | "basic_attributes_only";
@@ -3456,6 +3487,8 @@ export interface components {
             model_options?: {
                 counterpart?: string[];
                 ai?: string[];
+                /** @description Retail-facing labels and effective per-connected-run prices for allowed AI model IDs. Blank configuration inherits the workspace surcharge. */
+                ai_details?: components["schemas"]["VoiceSimulationModelOption"][];
                 defaults?: {
                     counterpart?: string | null;
                     ai?: string | null;
@@ -3482,6 +3515,15 @@ export interface components {
                     model?: string;
                 }[];
             };
+        };
+        VoiceSimulationModelOption: {
+            /** @description Stable allowed AI model ID used in requests. */
+            id: string;
+            /** @description Configured alias */
+            label: string;
+            alias?: string | null;
+            tier?: string | null;
+            per_run_price: number;
         };
         VoiceSimulationProject: {
             /** Format: uuid */
@@ -3561,7 +3603,17 @@ export interface components {
         VoiceSimulationEstimate: {
             currency: string;
             run_count: number;
+            /** @description Highest per-run surcharge in this session. For mixed models, use model_prices and maximum_surcharge for exact amounts. */
             per_run_price?: number;
+            /** @description Server-computed per-scenario pricing, frozen when the session is launched. Each connected repetition incurs this surcharge; voice usage and Agent IQ interactions remain separate. */
+            model_prices?: {
+                /** Format: uuid */
+                scenario_id?: string;
+                ai_model?: string;
+                label?: string;
+                tier?: string | null;
+                per_run_price?: number;
+            }[];
             maximum_surcharge: number;
             monthly_price?: number;
             max_audio_seconds?: number;
@@ -3569,6 +3621,8 @@ export interface components {
         };
         VoiceSimulationLaunchInput: {
             scenario_ids: string[];
+            /** @description Use the same optional AI model ID as the estimate. Selects scoring and per-run tier pricing; changing it requires a new idempotency key. */
+            ai_model?: string;
             /** @default 1 */
             repetitions?: number;
             max_surcharge: number;
@@ -4261,6 +4315,34 @@ export interface operations {
                     "application/json": components["schemas"]["Agent"];
                 };
             };
+            /** @description Invalid webhook URL or event selection for this agent channel. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or workspace not found or inaccessible. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The selected version is published. Create an editable version before changing subscriptions. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The webhook subscription could not be verified. Customer settings were not saved. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     listAgentVersions: {
@@ -4503,6 +4585,34 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ChatAgent"];
                 };
+            };
+            /** @description Invalid webhook URL or event selection for this agent channel. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or workspace not found or inaccessible. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The selected version is published. Create an editable version before changing subscriptions. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The webhook subscription could not be verified. Customer settings were not saved. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -7170,6 +7280,8 @@ export interface operations {
             content: {
                 "application/json": {
                     scenario_ids: string[];
+                    /** @description Optional allowed AI model ID from settings. Overrides scenario scoring models and selects their per-run tier price. Aliases are display labels, not IDs. */
+                    ai_model?: string;
                     repetitions?: number;
                 };
             };

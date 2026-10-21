@@ -2544,6 +2544,10 @@ export const metadata = {
           "minItems": 1,
           "maxItems": 100
         },
+        "ai_model": {
+          "type": "string",
+          "description": "Optional allowed AI model ID from settings. Overrides scenario scoring models and selects their per-run tier price. Aliases are display labels, not IDs."
+        },
         "repetitions": {
           "type": "integer",
           "minimum": 1,

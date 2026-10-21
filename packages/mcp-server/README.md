@@ -12,7 +12,7 @@ Configure your MCP client with:
   "mcpServers": {
     "uponai": {
       "command": "npx",
-      "args": ["-y", "@upon-ai/mcp-server@0.1.2"],
+      "args": ["-y", "@upon-ai/mcp-server@0.1.3"],
       "env": {
         "UPONAI_API_KEY": "YOUR_CUSTOMER_API_TOKEN",
         "UPONAI_WORKSPACE_IDS": "123"
@@ -40,7 +40,7 @@ Upstream API authorization still applies to every request.
 ## Optional write capabilities
 
 Writes are off by default. An operator can set `UPONAI_MCP_WRITE_OPERATIONS` to a
-comma-separated subset of `createPhoneCall,endLiveCall,rerunCallAnalysis,estimateVoiceSimulationSession,launchVoiceSimulationSession,cancelVoiceSimulationSession,stopVoiceSimulationImprovementRun,pauseVoiceSimulationSchedule`.
+comma-separated subset of `createPhoneCall,endLiveCall,rerunCallAnalysis,estimateVoiceSimulationSession,launchVoiceSimulationSession,cancelVoiceSimulationSession,stopVoiceSimulationImprovementRun,pauseVoiceSimulationSchedule,updateAgentWebhookSettings,updateChatAgentWebhookSettings`.
 Each write also requires a `confirm: true` argument and an allowed workspace.
 The confirmation argument is an extra safeguard, not proof of human approval;
 configure your MCP client's approval controls before enabling writes. These tools
@@ -84,3 +84,14 @@ an unseen suite. Project summaries include `automation_mode` (`automated` or
 `manual`); creating projects and changing their mode with
 `updateVoiceSimulationProject` remain SDK/UI operations. IVR speech credentials are configured through Brand Management,
 never through MCP.
+
+## Webhook settings
+
+Enable `updateAgentWebhookSettings` and/or `updateChatAgentWebhookSettings`
+to manage customer webhook settings. Supply an allowed `workspaceId`, `agentId`,
+optional editable `version`, `webhook_url` and/or `webhook_events`, and
+`confirm: true`. Omitted fields are preserved; null URL or an empty event list
+disables customer delivery. These tools use the platform proxy and do not publish
+versions. A published version requiring subscription changes returns HTTP 409.
+Agent summaries include selected events and `webhook_configured`, never receiving
+URLs or webhook authentication secrets.
