@@ -96,3 +96,15 @@ for(const [operation,route,event] of [['updateAgent','agents','transfer_ended'],
   assert.deepEqual(JSON.parse(requests[1].options.body),{workspaceId:1,webhook_url:null,webhook_events:[]});
  });
 }
+test('monitor session issues a single authenticated POST and returns the short-lived WebSocket path', async () => {
+ let request;
+ const sdk = new UponAI({apiKey:'test-token',fetch:async(url,options)=>{
+  request={url,options};return json({websocket_path:'/api/v1/calls/monitor/ws?ticket=example',expires_in:60,audio:true},201);
+ }});
+ const session=await sdk.createCallMonitorSession({path:{callId:'call_a'},body:{audio:true}});
+ assert.equal(String(request.url),'https://api.upon-ai.com/api/v1/calls/call_a/monitor');
+ assert.equal(request.options.method,'POST');
+ assert.equal(request.options.headers.Authorization,'Bearer test-token');
+ assert.deepEqual(JSON.parse(request.options.body),{audio:true});
+ assert.equal(session.expires_in,60);
+});

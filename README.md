@@ -3,7 +3,7 @@
 `@upon-ai/sdk` and `@upon-ai/mcp-server`, owned by UponAI and licensed under MIT.
 
 ```sh
-npm install @upon-ai/sdk@0.1.3
+npm install @upon-ai/sdk@0.1.4
 ```
 
 [SDK guide](https://docs.uponai.com/sdk/overview/) ·
@@ -25,7 +25,7 @@ npm run pack:release
 ```
 
 Generated sources are reproducible from `contract/openapi.json` and its explicit
-policy. The SDK has 110 typed operations. MCP exposes 28 curated read operations
+policy. The SDK has 111 typed operations. MCP exposes 28 curated read operations
 plus workspace discovery, and ten separately enabled write operations for calls,
 simulation sessions, improvement runs, schedules and agent webhook settings.
 Webhook settings use the platform proxy and saved customer selections.

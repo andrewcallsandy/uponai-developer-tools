@@ -660,6 +660,12 @@
       "path": "/api/v1/voice-simulations/projects/{projectId}/improvement-schedule/pause",
       "method": "post",
       "operationId": "pauseVoiceSimulationSchedule"
+    },
+    {
+      "sourcePath": "/api/calls/{callId}/monitor",
+      "path": "/api/v1/calls/{callId}/monitor",
+      "method": "post",
+      "operationId": "createCallMonitorSession"
     }
   ],
   "components": {

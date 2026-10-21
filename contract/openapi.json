@@ -8100,6 +8100,99 @@
           }
         ]
       }
+    },
+    "/api/v1/calls/{callId}/monitor": {
+      "post": {
+        "summary": "Open a live call monitoring session",
+        "description": "Create a single-use ticket valid for 60 seconds for a call-scoped WebSocket. Connect to websocket_path on the same API origin using wss. The stream sends ready, transcript_snapshot, transcript_updated and call_ended JSON events. Transcript events contain the complete current transcripts array; replace items by id. Optional audio uses audio_started, audio_chunk, audio_stopped and audio_error events. Audio chunks contain base64 signed 16-bit little-endian PCM; audio_started supplies sample_rate and channels. Audio requires workspace live-audio access and a supported active media connection. Audio startup failure leaves transcripts available. Access is rechecked on connection and every 15 seconds. Reconnect by creating a new session. Tickets are credentials; keep them out of logs. Live transcripts are raw, before post-call privacy processing. No client messages are required.",
+        "tags": [
+          "Calls"
+        ],
+        "parameters": [
+          {
+            "name": "callId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "audio": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Request live audio in addition to transcripts."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Single-use monitoring ticket created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "websocket_path",
+                    "expires_in",
+                    "audio"
+                  ],
+                  "properties": {
+                    "websocket_path": {
+                      "type": "string",
+                      "description": "Relative WebSocket path on the same API origin, including the single-use ticket."
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "const": 60
+                    },
+                    "audio": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid audio option"
+          },
+          "401": {
+            "description": "Invalid or missing API token"
+          },
+          "403": {
+            "description": "Live audio access is not enabled"
+          },
+          "404": {
+            "description": "Live call not found or inaccessible"
+          },
+          "409": {
+            "description": "Call is no longer live"
+          },
+          "429": {
+            "description": "Too many pending monitoring sessions"
+          },
+          "503": {
+            "description": "Monitoring temporarily unavailable"
+          }
+        },
+        "operationId": "createCallMonitorSession",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {

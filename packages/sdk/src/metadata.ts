@@ -3381,5 +3381,32 @@ export const metadata = {
     "bodyRequired": false,
     "bodyType": null,
     "bodySchema": null
+  },
+  "createCallMonitorSession": {
+    "path": "/api/v1/calls/{callId}/monitor",
+    "method": "post",
+    "summary": "Open a live call monitoring session",
+    "parameters": [
+      {
+        "name": "callId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "audio": {
+          "type": "boolean",
+          "default": false,
+          "description": "Request live audio in addition to transcripts."
+        }
+      }
+    }
   }
 } as const;

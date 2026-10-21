@@ -6,7 +6,7 @@ Requires Node >=22.14. ESM package; CommonJS consumers can use dynamic `import()
 ## Install
 
 ```sh
-npm install @upon-ai/sdk@0.1.3
+npm install @upon-ai/sdk@0.1.4
 ```
 
 ```ts
