@@ -1,4 +1,21 @@
-# Release verification — 2026-10-18
+# Release verification — 2026-10-21
+
+SDK and MCP **0.1.4** are published under the `latest` npm tag through
+[the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/39677206650).
+Production API release `2026.10.21.2108` preceded package publication.
+
+- The public contract contains 111 SDK operations, including `createCallMonitorSession`.
+- Clean npm installation verified 97 registry signatures and 14 attestations.
+- The registry SDK read production workspaces and received the expected 409 when requesting monitoring for an ended call.
+- The registry MCP initialized over real stdio as 0.1.4, exposed 29 default tools, discovered configured workspaces, and rejected an out-of-allowlist workspace.
+- Monitoring tickets and raw text/audio streams remain SDK/API capabilities, outside the MCP tool catalog. Ten optional writes remain disabled by default.
+- Production acceptance verified real transcript updates and non-silent PCM through the public hostname, two viewers, disconnect isolation, ticket replay rejection and call completion. Ticket issuers covered all three Fargate tasks; local tests separately forced cross-replica routing.
+- The isolated SIP fixture used temporary agents and a manually associated parent media SID; this verifies actual stream transport, not ordinary phone-number ingress. Temporary resources were removed.
+
+Public documentation and its assistant are released separately at https://docs.uponai.com.
+These checks do not claim all 111 operations were exercised in production.
+
+# Earlier release verification — 2026-10-18
 
 SDK and MCP **0.1.2** are published under the `latest` npm tag through
 [the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/39083827420).
