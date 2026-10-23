@@ -123,3 +123,13 @@ test('webhook summaries expose selections and configured state without destinati
  assert.deepEqual(projectResult({agent_id:'agent_test',webhook_url:'https://customer.example/SECRET',webhook_auth_value:'SECRET',webhook_events:['transcript_updated','chat_ended','SECRET']}),{agent_id:'agent_test',webhook_configured:true,webhook_events:['transcript_updated','chat_ended']});
  assert.deepEqual(projectResult({webhook_url:null,webhook_events:[]}),{webhook_configured:false,webhook_events:[]});
 });
+
+test('flow list retains header cursors while removing configuration secrets', async () => {
+ const api = new UponAI({apiKey:'test',fetch:async url=>new Response(JSON.stringify(url.endsWith('/workspaces')?{workspaces:[{id:1,name:'One'}]}:[{conversation_flow_id:'flow',name:'Public',api_key:'PRIVATE',tools:[{secret:'PRIVATE'}]}]),{headers:{'content-type':'application/json','x-has-more':'true','x-pagination-key':'next'}})});
+ const {client,close}=await connect({api,workspaceIds:[1]});
+ try {
+  const result=await client.callTool({name:'listConversationFlows',arguments:{workspaceId:1}});
+  assert(!result.isError); const page=JSON.parse(result.content[0].text);
+  assert.equal(page.has_more,true);assert.equal(page.pagination_key,'next');assert.equal(page.items[0].conversation_flow_id,'flow');assert(!JSON.stringify(page).includes('PRIVATE'));
+ }finally{await close();}
+});

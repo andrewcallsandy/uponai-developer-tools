@@ -108,3 +108,11 @@ test('monitor session issues a single authenticated POST and returns the short-l
  assert.deepEqual(JSON.parse(request.options.body),{audio:true});
  assert.equal(session.expires_in,60);
 });
+
+test('array flow lists retain their shape and pagination iterator reads header cursors',async()=>{
+ const seen=[];
+ const sdk=new UponAI({apiKey:'test',fetch:async url=>{seen.push(url);return url.includes('paginationKey=next')?json([{conversation_flow_id:'second'}],200,{'X-Has-More':'false'}):json([{conversation_flow_id:'first'}],200,{'X-Has-More':'true','X-Pagination-Key':'next'});}});
+ const ids=[];
+ for await(const flow of sdk.paginate({operation:'listConversationFlows',input:{query:{workspaceId:1}},items:page=>page,next:(_page,previous,response)=>response.hasMore?{query:{...previous.query,paginationKey:response.paginationKey}}:undefined}))ids.push(flow.conversation_flow_id);
+ assert.deepEqual(ids,['first','second']);assert.equal(seen.length,2);
+});

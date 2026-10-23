@@ -41,3 +41,11 @@ client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,webhook_events:['
 client.createCallMonitorSession({path:{callId:'call'},body:{audio:true}});
 // @ts-expect-error Audio mode is a boolean.
 client.createCallMonitorSession({path:{callId:'call'},body:{audio:'true'}});
+
+// Connection metadata is additive; existing createWebCall requests remain valid.
+const connection = client.createWebCall({body:{workspaceId:1,agentId:'agent'}}).then(call => {
+  const transport: 'gateway' | undefined = call.transport;
+  const servers = call.iceServers;
+  return {transport, servers, token:call.accessToken};
+});
+void connection;

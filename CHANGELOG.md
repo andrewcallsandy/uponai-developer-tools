@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5 — 2026-10-23
+
+- Add typed browser-call transport and ICE server connection settings.
+- Expose pagination metadata through SDK response callbacks and paginator continuation callbacks while retaining flow-list arrays.
+- MCP conversation-flow lists return safe items and continuation cursors. Workspace checks and credential filtering remain enforced.
+- Document call update behavior for ongoing and completed calls.
+
 ## 0.1.4 — 2026-10-21
 
 - Add `createCallMonitorSession` for single-use live transcript WebSocket sessions with optional entitled live audio. Coordinated with the live call monitoring API release.

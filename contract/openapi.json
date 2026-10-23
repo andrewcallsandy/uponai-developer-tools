@@ -1951,7 +1951,7 @@
     "/api/v1/conversation-flows": {
       "get": {
         "summary": "List conversation flows",
-        "description": "Enumerate conversation flows for the workspace.",
+        "description": "Enumerate conversation flows for the workspace. The JSON body remains an array. Follow X-Pagination-Key while X-Has-More is true; paginationKeyVersion is accepted for compatibility and is no longer needed.",
         "tags": [
           "Conversation Flows"
         ],
@@ -1972,6 +1972,20 @@
         "responses": {
           "200": {
             "description": "Conversation flow summaries.",
+            "headers": {
+              "X-Has-More": {
+                "description": "Whether another page is available.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "X-Pagination-Key": {
+                "description": "Opaque cursor for the next page.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -12204,6 +12218,41 @@
           "optOutSensitiveDataStorage": {
             "type": "boolean"
           },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "gateway"
+            ],
+            "description": "Audio transport for the browser connection."
+          },
+          "iceServers": {
+            "type": "array",
+            "description": "ICE server configuration to pass to the browser connection client.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "urls": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ]
+                },
+                "username": {
+                  "type": "string"
+                },
+                "credential": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "accessToken": {
             "type": "string",
             "nullable": true
@@ -12965,6 +13014,7 @@
         }
       },
       "UpdateCallRequest": {
+        "description": "Metadata updates are routed according to the current call state. Ongoing calls use the live-call operation; completed calls use the stored-call operation. Connecting calls return 409. Privacy settings cannot be made less restrictive during a live call.",
         "type": "object",
         "properties": {
           "workspaceId": {

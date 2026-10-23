@@ -1,6 +1,6 @@
 import { metadata } from './metadata.js';
 import { UponAIError, UponAIValidationError } from './errors.js';
-import type { ClientOptions, OperationId, OperationInput, OperationOutput, RequestOptions, PaginationOptions } from './types.js';
+import type { ClientOptions, OperationId, OperationInput, OperationOutput, RequestOptions, PaginationOptions, ResponseMetadata } from './types.js';
 const MAX_BYTES=5*1024*1024;
 const fail=(message:string):never=>{throw new UponAIValidationError(message);};
 function bounded(n:number,min:number,max:number,label:string){if(!Number.isInteger(n)||n<min||n>max)fail(`Invalid ${label}`);return n;}
@@ -63,6 +63,7 @@ export class ClientCore {
     await response.body?.cancel();await new Promise<void>((resolve,reject)=>{if(signal.aborted)return reject(new UponAIError('Request cancelled or timed out'));const cancel=()=>{clearTimeout(timer);reject(new UponAIError('Request cancelled or timed out'));};const timer=setTimeout(()=>{signal.removeEventListener('abort',cancel);resolve();},delay);signal.addEventListener('abort',cancel,{once:true});});continue;
    }
    if(!response.ok){await response.body?.cancel();const id=response.headers.get('x-request-id');throw new UponAIError(`UponAI API returned HTTP ${response.status}`,response.status,id&&/^[\w-]{1,128}$/.test(id)?id:undefined);}
+   options.onResponse?.({status:response.status,...(response.headers.has('x-has-more')?{hasMore:response.headers.get('x-has-more')==='true'}:{}),...(response.headers.get('x-pagination-key')?{paginationKey:response.headers.get('x-pagination-key')!}:{})});
    if(response.status===204)return undefined as OperationOutput<K>;
    const responseLimit=operation==='getVoiceSimulationRecording'?64*1024*1024:MAX_BYTES;
    const contentLength=Number(response.headers.get('content-length'));if(contentLength>responseLimit){await response.body?.cancel();throw new UponAIError('Response exceeds the permitted size');}
@@ -77,8 +78,9 @@ export class ClientCore {
   if(!Object.hasOwn(metadata,options.operation)||metadata[options.operation].method!=='get')fail('Pagination supports GET operations only');
   const max=bounded(options.maxPages??100,1,1000,'page limit');let input=options.input;const seen=new Set<string>();
   for(let i=0;i<max;i++){const key=JSON.stringify(input);if(seen.has(key))throw new UponAIError('Pagination cursor repeated');seen.add(key);
-   const page=await this.execute(options.operation,input,{signal:options.signal});for(const item of options.items(page))yield item;
-   const next=options.next(page,input);if(!next)return;input=next;
+   let response:ResponseMetadata={status:200};
+   const page=await this.execute(options.operation,input,{signal:options.signal,onResponse:meta=>{response=meta;}});for(const item of options.items(page))yield item;
+   const next=options.next(page,input,response);if(!next)return;input=next;
   }throw new UponAIError('Pagination page limit reached');
  }
 }

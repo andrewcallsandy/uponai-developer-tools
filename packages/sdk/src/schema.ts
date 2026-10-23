@@ -542,7 +542,7 @@ export interface paths {
         };
         /**
          * List conversation flows
-         * @description Enumerate conversation flows for the workspace.
+         * @description Enumerate conversation flows for the workspace. The JSON body remains an array. Follow X-Pagination-Key while X-Has-More is true; paginationKeyVersion is accepted for compatibility and is no longer needed.
          */
         get: operations["listConversationFlows"];
         put?: never;
@@ -3077,6 +3077,17 @@ export interface components {
                 [key: string]: string;
             };
             optOutSensitiveDataStorage?: boolean;
+            /**
+             * @description Audio transport for the browser connection.
+             * @enum {string}
+             */
+            transport?: "gateway";
+            /** @description ICE server configuration to pass to the browser connection client. */
+            iceServers?: {
+                urls?: string | string[];
+                username?: string;
+                credential?: string;
+            }[];
             accessToken?: string | null;
             /** Format: date-time */
             expiresAt?: string | null;
@@ -3306,6 +3317,7 @@ export interface components {
             includeArchived?: boolean;
             includeChildCalls?: boolean;
         };
+        /** @description Metadata updates are routed according to the current call state. Ongoing calls use the live-call operation; completed calls use the stored-call operation. Connecting calls return 409. Privacy settings cannot be made less restrictive during a live call. */
         UpdateCallRequest: {
             /** @description Optional backward-compatible fallback. Required only when the call cannot be resolved from stored call data. */
             workspaceId?: number;
@@ -5101,6 +5113,10 @@ export interface operations {
             /** @description Conversation flow summaries. */
             200: {
                 headers: {
+                    /** @description Whether another page is available. */
+                    "X-Has-More"?: boolean;
+                    /** @description Opaque cursor for the next page. */
+                    "X-Pagination-Key"?: string;
                     [name: string]: unknown;
                 };
                 content: {
