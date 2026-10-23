@@ -1,4 +1,20 @@
-# Release verification — 2026-10-21
+# Release verification — 2026-10-23
+
+SDK and MCP **0.1.5** are published under the `latest` npm tag through
+[the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/40006655635).
+Production API release `2026.10.23.1844` preceded package publication; its public
+contract exactly matched the reviewed package contract.
+
+- All 37 package/protocol tests, consumer type checks, tarball installation, and dependency audit passed.
+- Clean registry installation verified 97 package signatures and 16 attestations.
+- The installed registry SDK preserved flow-list arrays, read continuation headers, and fetched the next page against production.
+- The installed registry MCP returned safe flow summaries with continuation cursors and rejected a workspace outside its allowlist.
+- Browser transport and ICE server fields are additive. No new MCP tools are exposed.
+- Real browser audio and calendar booking execution were not tested in this release.
+
+Public documentation and assistant activation are verified separately at https://docs.uponai.com.
+
+# Earlier release verification — 2026-10-21
 
 SDK and MCP **0.1.4** are published under the `latest` npm tag through
 [the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/39677206650).
