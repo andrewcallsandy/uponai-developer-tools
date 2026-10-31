@@ -186,6 +186,81 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/agents/{agentId}/environment-tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List agent environment tags
+         * @description List the agent's environment tags. Each tag points to one published version (or none) and carries dynamic variable values that apply to calls or chats using the tag. Every agent has the built-in prod and staging tags. Set includeDetectedVariables=true to also return the dynamic variables each tagged version (and the current working version) references.
+         */
+        get: operations["listAgentEnvironmentTags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/environment-tags/detected-variables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Detect agent dynamic variables
+         * @description List the dynamic variables a version expects as inputs, found in its prompts, messages, tools, and default dynamic variables. System variables and values collected during the conversation are excluded. Use the result to decide which variables to set on an environment tag.
+         */
+        get: operations["detectAgentDynamicVariables"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/environment-tags/{tagName}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Create or update agent environment tag
+         * @description Point a tag at a published version, unassign it (version null), replace its dynamic variables, or create a new tag (create true). Omitted fields keep their current values. Tag variables override the agent's default dynamic variables, so a blank value replaces the default; omit a variable to keep the default. Publishing a version does not move tags; move them here or with environmentTags when publishing.
+         */
+        put: operations["updateAgentEnvironmentTag"];
+        post?: never;
+        /**
+         * Delete agent environment tag
+         * @description Remove a custom tag and its variables. The built-in prod and staging tags cannot be removed.
+         */
+        delete: operations["deleteAgentEnvironmentTag"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/chat-agents": {
         parameters: {
             query?: never;
@@ -313,6 +388,81 @@ export interface paths {
          * @description Delete one specific chat agent version.
          */
         delete: operations["deleteChatAgentVersion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/environment-tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List chat agent environment tags
+         * @description List the chat agent's environment tags. Each tag points to one published version (or none) and carries dynamic variable values that apply to calls or chats using the tag. Every agent has the built-in prod and staging tags. Set includeDetectedVariables=true to also return the dynamic variables each tagged version (and the current working version) references.
+         */
+        get: operations["listChatAgentEnvironmentTags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Detect chat agent dynamic variables
+         * @description List the dynamic variables a version expects as inputs, found in its prompts, messages, tools, and default dynamic variables. System variables and values collected during the conversation are excluded. Use the result to decide which variables to set on an environment tag.
+         */
+        get: operations["detectChatAgentDynamicVariables"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Create or update chat agent environment tag
+         * @description Point a tag at a published version, unassign it (version null), replace its dynamic variables, or create a new tag (create true). Omitted fields keep their current values. Tag variables override the agent's default dynamic variables, so a blank value replaces the default; omit a variable to keep the default. Publishing a version does not move tags; move them here or with environmentTags when publishing.
+         */
+        put: operations["updateChatAgentEnvironmentTag"];
+        post?: never;
+        /**
+         * Delete chat agent environment tag
+         * @description Remove a custom tag and its variables. The built-in prod and staging tags cannot be removed.
+         */
+        delete: operations["deleteChatAgentEnvironmentTag"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2281,6 +2431,73 @@ export interface components {
             versionTitle?: string;
             /** @description Optional description stored on the published version. */
             versionDescription?: string;
+            /** @description Existing environment tags (for example prod) to point at this version after it is published. Publishing alone does not move tags. */
+            environmentTags?: string[];
+        };
+        PublishedAgentVersion: components["schemas"]["Agent"] & {
+            environmentTagUpdate?: components["schemas"]["EnvironmentTagMoveResult"];
+        };
+        EnvironmentTagMoveResult: {
+            moved: string[];
+            failed: {
+                tag: string;
+                error: string;
+            }[];
+        };
+        EnvironmentTagListResponse: {
+            tags: components["schemas"]["EnvironmentTag"][];
+            /** @description Maximum number of tags an agent can have, including prod and staging. */
+            maxTags: number;
+            /** @description Returned with includeDetectedVariables. The latest draft, or the latest version when there is no draft. */
+            workingVersion?: number | null;
+            /** @description Returned with includeDetectedVariables. Maps version numbers to the variables that version references. */
+            detectedVariables?: {
+                [key: string]: components["schemas"]["DetectedDynamicVariable"][];
+            };
+        };
+        EnvironmentTag: {
+            /** @description Tag name. prod and staging are built in. */
+            name: string;
+            /** @description True for the built-in prod and staging tags. */
+            isDefault: boolean;
+            /** @description Published version the tag points to, or null when unassigned. */
+            version: number | null;
+            /**
+             * Format: date-time
+             * @description When the tag was last pointed at a version.
+             */
+            assignedAt: string | null;
+            /** @description Values supplied to calls or chats that use this tag. They override the agent's default dynamic variables. */
+            dynamicVariables: {
+                [key: string]: string;
+            };
+        };
+        DetectedDynamicVariable: {
+            name: string;
+            /** @description The agent's default value, or null when there is none. */
+            defaultValue: string | null;
+        };
+        DetectedDynamicVariablesResponse: {
+            version: number;
+            variables: components["schemas"]["DetectedDynamicVariable"][];
+        };
+        UpdateEnvironmentTagRequest: {
+            workspaceId: number;
+            /** @description Published version to point the tag at, or null to unassign. Omit to keep the current version. */
+            version?: number | null;
+            /** @description Replaces the tag's variables. Values must be text. Omit to keep the current variables. */
+            dynamicVariables?: {
+                [key: string]: string;
+            };
+            /**
+             * @description Create the tag if it does not exist. An agent can have at most 10 tags.
+             * @default false
+             */
+            create?: boolean;
+        };
+        EnvironmentTagUpdateResponse: {
+            tag: components["schemas"]["EnvironmentTag"];
+            tags: components["schemas"]["EnvironmentTag"][];
         };
         ChatAgentListResponse: components["schemas"]["ChatAgentSummary"][] | components["schemas"]["ChatAgentListEnvelope"];
         ChatAgentSummary: components["schemas"]["ChatAgentVersion"] & {
@@ -2424,6 +2641,9 @@ export interface components {
         };
         ChatAgentVersionListResponse: components["schemas"]["ChatAgentVersion"][] | {
             data?: components["schemas"]["ChatAgentVersion"][];
+        };
+        PublishedChatAgentVersion: components["schemas"]["ChatAgent"] & {
+            environmentTagUpdate?: components["schemas"]["EnvironmentTagMoveResult"];
         };
         ChatListResponse: components["schemas"]["Chat"][] | components["schemas"]["ChatListEnvelope"];
         Chat: {
@@ -4023,6 +4243,12 @@ export interface components {
         AgentIdPath: string;
         /** @description Specific agent version. */
         VersionPath: number;
+        /** @description Also return the dynamic variables referenced by each tagged version and the working version. */
+        IncludeDetectedVariablesQuery: boolean;
+        /** @description Agent version to inspect. */
+        RequiredVersionQuery: number;
+        /** @description Environment tag name, such as prod, staging, or a custom tag. */
+        TagNamePath: string;
         /** @description Sort direction for chat listings. */
         SortOrderQuery: "ascending" | "descending";
         /** @description Chat identifier. */
@@ -4130,6 +4356,13 @@ export interface operations {
                     "application/json": components["schemas"]["Llm"];
                 };
             };
+            /** @description Multi-prompt LLMs (with states) are deprecated. From 12/15/2026, creating an LLM with states is rejected; use a conversation flow instead. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     getLlm: {
@@ -4211,6 +4444,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Llm"];
                 };
+            };
+            /** @description Multi-prompt LLMs are deprecated. Adding states to a single-prompt LLM is rejected, and from 02/01/2027 updating states on a multi-prompt LLM is rejected; convert the agent to a conversation flow instead. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -4448,13 +4688,13 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Published agent version. */
+            /** @description Published agent version. When environmentTags was sent, environmentTagUpdate reports which tags moved; the publish succeeds even if a tag move fails. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Agent"];
+                    "application/json": components["schemas"]["PublishedAgentVersion"];
                 };
             };
         };
@@ -4478,6 +4718,180 @@ export interface operations {
         responses: {
             /** @description Agent version deleted. */
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description An environment tag points to this version. Move or unassign the tag first. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listAgentEnvironmentTags: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Also return the dynamic variables referenced by each tagged version and the working version. */
+                includeDetectedVariables?: components["parameters"]["IncludeDetectedVariablesQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Environment tags. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagListResponse"];
+                };
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    detectAgentDynamicVariables: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Agent version to inspect. */
+                version: components["parameters"]["RequiredVersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detected dynamic variables. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectedDynamicVariablesResponse"];
+                };
+            };
+            /** @description Invalid version. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateAgentEnvironmentTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEnvironmentTagRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated tag and the agent's full tag list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagUpdateResponse"];
+                };
+            };
+            /** @description Invalid tag name, version, or variables; unknown tag without create; or the 10-tag limit. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The version is a draft. Only published versions can be tagged. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    deleteAgentEnvironmentTag: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Tag removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Built-in or unknown tag. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4719,13 +5133,13 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Published chat agent version. */
+            /** @description Published chat agent version. When environmentTags was sent, environmentTagUpdate reports which tags moved; the publish succeeds even if a tag move fails. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ChatAgent"];
+                    "application/json": components["schemas"]["PublishedChatAgentVersion"];
                 };
             };
         };
@@ -4749,6 +5163,180 @@ export interface operations {
         responses: {
             /** @description Chat agent version deleted. */
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description An environment tag points to this version. Move or unassign the tag first. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listChatAgentEnvironmentTags: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Also return the dynamic variables referenced by each tagged version and the working version. */
+                includeDetectedVariables?: components["parameters"]["IncludeDetectedVariablesQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Environment tags. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagListResponse"];
+                };
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    detectChatAgentDynamicVariables: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Agent version to inspect. */
+                version: components["parameters"]["RequiredVersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detected dynamic variables. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectedDynamicVariablesResponse"];
+                };
+            };
+            /** @description Invalid version. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateChatAgentEnvironmentTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEnvironmentTagRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated tag and the agent's full tag list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagUpdateResponse"];
+                };
+            };
+            /** @description Invalid tag name, version, or variables; unknown tag without create; or the 10-tag limit. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The version is a draft. Only published versions can be tagged. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    deleteChatAgentEnvironmentTag: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Tag removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Built-in or unknown tag. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

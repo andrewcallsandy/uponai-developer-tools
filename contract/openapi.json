@@ -386,6 +386,9 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "Multi-prompt LLMs (with states) are deprecated. From 12/15/2026, creating an LLM with states is rejected; use a conversation flow instead."
           }
         },
         "operationId": "createLlm",
@@ -466,6 +469,9 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "Multi-prompt LLMs are deprecated. Adding states to a single-prompt LLM is rejected, and from 02/01/2027 updating states on a multi-prompt LLM is rejected; convert the agent to a conversation flow instead."
           }
         },
         "operationId": "updateLlm",
@@ -795,11 +801,11 @@
         },
         "responses": {
           "200": {
-            "description": "Published agent version.",
+            "description": "Published agent version. When environmentTags was sent, environmentTagUpdate reports which tags moved; the publish succeeds even if a tag move fails.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Agent"
+                  "$ref": "#/components/schemas/PublishedAgentVersion"
                 }
               }
             }
@@ -836,9 +842,246 @@
         "responses": {
           "204": {
             "description": "Agent version deleted."
+          },
+          "409": {
+            "description": "An environment tag points to this version. Move or unassign the tag first."
           }
         },
         "operationId": "deleteAgentVersion",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/agents/{agentId}/environment-tags": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentIdPath"
+        }
+      ],
+      "get": {
+        "summary": "List agent environment tags",
+        "description": "List the agent's environment tags. Each tag points to one published version (or none) and carries dynamic variable values that apply to calls or chats using the tag. Every agent has the built-in prod and staging tags. Set includeDetectedVariables=true to also return the dynamic variables each tagged version (and the current working version) references.",
+        "tags": [
+          "Agents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/IncludeDetectedVariablesQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Environment tags.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvironmentTagListResponse"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "tags": [
+                        {
+                          "name": "prod",
+                          "isDefault": true,
+                          "version": 4,
+                          "assignedAt": "2026-10-30T23:22:23.363Z",
+                          "dynamicVariables": {
+                            "transfer_number": "+15550001"
+                          }
+                        },
+                        {
+                          "name": "staging",
+                          "isDefault": true,
+                          "version": null,
+                          "assignedAt": null,
+                          "dynamicVariables": {}
+                        }
+                      ],
+                      "maxTags": 10
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found in this workspace."
+          }
+        },
+        "operationId": "listAgentEnvironmentTags",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/agents/{agentId}/environment-tags/detected-variables": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentIdPath"
+        }
+      ],
+      "get": {
+        "summary": "Detect agent dynamic variables",
+        "description": "List the dynamic variables a version expects as inputs, found in its prompts, messages, tools, and default dynamic variables. System variables and values collected during the conversation are excluded. Use the result to decide which variables to set on an environment tag.",
+        "tags": [
+          "Agents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/RequiredVersionQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detected dynamic variables.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectedDynamicVariablesResponse"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "version": 4,
+                      "variables": [
+                        {
+                          "name": "company",
+                          "defaultValue": "Acme"
+                        },
+                        {
+                          "name": "customer_name",
+                          "defaultValue": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid version."
+          },
+          "404": {
+            "description": "Agent or version not found."
+          }
+        },
+        "operationId": "detectAgentDynamicVariables",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/agents/{agentId}/environment-tags/{tagName}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentIdPath"
+        },
+        {
+          "$ref": "#/components/parameters/TagNamePath"
+        }
+      ],
+      "put": {
+        "summary": "Create or update agent environment tag",
+        "description": "Point a tag at a published version, unassign it (version null), replace its dynamic variables, or create a new tag (create true). Omitted fields keep their current values. Tag variables override the agent's default dynamic variables, so a blank value replaces the default; omit a variable to keep the default. Publishing a version does not move tags; move them here or with environmentTags when publishing.",
+        "tags": [
+          "Agents"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEnvironmentTagRequest"
+              },
+              "examples": {
+                "moveAndSetVariables": {
+                  "value": {
+                    "workspaceId": 12,
+                    "version": 5,
+                    "dynamicVariables": {
+                      "transfer_number": "+15550001"
+                    }
+                  }
+                },
+                "createTag": {
+                  "value": {
+                    "workspaceId": 12,
+                    "create": true,
+                    "dynamicVariables": {
+                      "transfer_number": "+15550002"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated tag and the agent's full tag list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvironmentTagUpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag name, version, or variables; unknown tag without create; or the 10-tag limit."
+          },
+          "404": {
+            "description": "Agent or version not found."
+          },
+          "409": {
+            "description": "The version is a draft. Only published versions can be tagged."
+          }
+        },
+        "operationId": "updateAgentEnvironmentTag",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete agent environment tag",
+        "description": "Remove a custom tag and its variables. The built-in prod and staging tags cannot be removed.",
+        "tags": [
+          "Agents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tag removed."
+          },
+          "400": {
+            "description": "Built-in or unknown tag."
+          },
+          "404": {
+            "description": "Agent not found in this workspace."
+          }
+        },
+        "operationId": "deleteAgentEnvironmentTag",
         "security": [
           {
             "bearerAuth": []
@@ -1209,11 +1452,11 @@
         },
         "responses": {
           "200": {
-            "description": "Published chat agent version.",
+            "description": "Published chat agent version. When environmentTags was sent, environmentTagUpdate reports which tags moved; the publish succeeds even if a tag move fails.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChatAgent"
+                  "$ref": "#/components/schemas/PublishedChatAgentVersion"
                 }
               }
             }
@@ -1250,9 +1493,246 @@
         "responses": {
           "204": {
             "description": "Chat agent version deleted."
+          },
+          "409": {
+            "description": "An environment tag points to this version. Move or unassign the tag first."
           }
         },
         "operationId": "deleteChatAgentVersion",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/chat-agents/{agentId}/environment-tags": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentIdPath"
+        }
+      ],
+      "get": {
+        "summary": "List chat agent environment tags",
+        "description": "List the chat agent's environment tags. Each tag points to one published version (or none) and carries dynamic variable values that apply to calls or chats using the tag. Every agent has the built-in prod and staging tags. Set includeDetectedVariables=true to also return the dynamic variables each tagged version (and the current working version) references.",
+        "tags": [
+          "Chat Agents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/IncludeDetectedVariablesQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Environment tags.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvironmentTagListResponse"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "tags": [
+                        {
+                          "name": "prod",
+                          "isDefault": true,
+                          "version": 4,
+                          "assignedAt": "2026-10-30T23:22:23.363Z",
+                          "dynamicVariables": {
+                            "transfer_number": "+15550001"
+                          }
+                        },
+                        {
+                          "name": "staging",
+                          "isDefault": true,
+                          "version": null,
+                          "assignedAt": null,
+                          "dynamicVariables": {}
+                        }
+                      ],
+                      "maxTags": 10
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found in this workspace."
+          }
+        },
+        "operationId": "listChatAgentEnvironmentTags",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentIdPath"
+        }
+      ],
+      "get": {
+        "summary": "Detect chat agent dynamic variables",
+        "description": "List the dynamic variables a version expects as inputs, found in its prompts, messages, tools, and default dynamic variables. System variables and values collected during the conversation are excluded. Use the result to decide which variables to set on an environment tag.",
+        "tags": [
+          "Chat Agents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/RequiredVersionQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detected dynamic variables.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectedDynamicVariablesResponse"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "version": 4,
+                      "variables": [
+                        {
+                          "name": "company",
+                          "defaultValue": "Acme"
+                        },
+                        {
+                          "name": "customer_name",
+                          "defaultValue": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid version."
+          },
+          "404": {
+            "description": "Agent or version not found."
+          }
+        },
+        "operationId": "detectChatAgentDynamicVariables",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/AgentIdPath"
+        },
+        {
+          "$ref": "#/components/parameters/TagNamePath"
+        }
+      ],
+      "put": {
+        "summary": "Create or update chat agent environment tag",
+        "description": "Point a tag at a published version, unassign it (version null), replace its dynamic variables, or create a new tag (create true). Omitted fields keep their current values. Tag variables override the agent's default dynamic variables, so a blank value replaces the default; omit a variable to keep the default. Publishing a version does not move tags; move them here or with environmentTags when publishing.",
+        "tags": [
+          "Chat Agents"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEnvironmentTagRequest"
+              },
+              "examples": {
+                "moveAndSetVariables": {
+                  "value": {
+                    "workspaceId": 12,
+                    "version": 5,
+                    "dynamicVariables": {
+                      "transfer_number": "+15550001"
+                    }
+                  }
+                },
+                "createTag": {
+                  "value": {
+                    "workspaceId": 12,
+                    "create": true,
+                    "dynamicVariables": {
+                      "transfer_number": "+15550002"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated tag and the agent's full tag list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvironmentTagUpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag name, version, or variables; unknown tag without create; or the 10-tag limit."
+          },
+          "404": {
+            "description": "Agent or version not found."
+          },
+          "409": {
+            "description": "The version is a draft. Only published versions can be tagged."
+          }
+        },
+        "operationId": "updateChatAgentEnvironmentTag",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete chat agent environment tag",
+        "description": "Remove a custom tag and its variables. The built-in prod and staging tags cannot be removed.",
+        "tags": [
+          "Chat Agents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tag removed."
+          },
+          "400": {
+            "description": "Built-in or unknown tag."
+          },
+          "404": {
+            "description": "Agent not found in this workspace."
+          }
+        },
+        "operationId": "deleteChatAgentEnvironmentTag",
         "security": [
           {
             "bearerAuth": []
@@ -8294,6 +8774,36 @@
         },
         "description": "Specific agent version."
       },
+      "IncludeDetectedVariablesQuery": {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "description": "Also return the dynamic variables referenced by each tagged version and the working version."
+      },
+      "RequiredVersionQuery": {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Agent version to inspect."
+      },
+      "TagNamePath": {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      },
       "SortOrderQuery": {
         "name": "sortOrder",
         "in": "query",
@@ -9975,6 +10485,215 @@
           "versionDescription": {
             "type": "string",
             "description": "Optional description stored on the published version."
+          },
+          "environmentTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Existing environment tags (for example prod) to point at this version after it is published. Publishing alone does not move tags."
+          }
+        }
+      },
+      "PublishedAgentVersion": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Agent"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "environmentTagUpdate": {
+                "$ref": "#/components/schemas/EnvironmentTagMoveResult"
+              }
+            }
+          }
+        ]
+      },
+      "EnvironmentTagMoveResult": {
+        "type": "object",
+        "required": [
+          "moved",
+          "failed"
+        ],
+        "properties": {
+          "moved": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "failed": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "tag",
+                "error"
+              ],
+              "properties": {
+                "tag": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnvironmentTagListResponse": {
+        "type": "object",
+        "required": [
+          "tags",
+          "maxTags"
+        ],
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnvironmentTag"
+            }
+          },
+          "maxTags": {
+            "type": "integer",
+            "description": "Maximum number of tags an agent can have, including prod and staging."
+          },
+          "workingVersion": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Returned with includeDetectedVariables. The latest draft, or the latest version when there is no draft."
+          },
+          "detectedVariables": {
+            "type": "object",
+            "description": "Returned with includeDetectedVariables. Maps version numbers to the variables that version references.",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DetectedDynamicVariable"
+              }
+            }
+          }
+        }
+      },
+      "EnvironmentTag": {
+        "type": "object",
+        "required": [
+          "name",
+          "isDefault",
+          "version",
+          "assignedAt",
+          "dynamicVariables"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Tag name. prod and staging are built in."
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "True for the built-in prod and staging tags."
+          },
+          "version": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Published version the tag points to, or null when unassigned."
+          },
+          "assignedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When the tag was last pointed at a version."
+          },
+          "dynamicVariables": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Values supplied to calls or chats that use this tag. They override the agent's default dynamic variables."
+          }
+        }
+      },
+      "DetectedDynamicVariable": {
+        "type": "object",
+        "required": [
+          "name",
+          "defaultValue"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string",
+            "nullable": true,
+            "description": "The agent's default value, or null when there is none."
+          }
+        }
+      },
+      "DetectedDynamicVariablesResponse": {
+        "type": "object",
+        "required": [
+          "version",
+          "variables"
+        ],
+        "properties": {
+          "version": {
+            "type": "integer"
+          },
+          "variables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetectedDynamicVariable"
+            }
+          }
+        }
+      },
+      "UpdateEnvironmentTagRequest": {
+        "type": "object",
+        "required": [
+          "workspaceId"
+        ],
+        "properties": {
+          "workspaceId": {
+            "type": "integer"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 0,
+            "nullable": true,
+            "description": "Published version to point the tag at, or null to unassign. Omit to keep the current version."
+          },
+          "dynamicVariables": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Replaces the tag's variables. Values must be text. Omit to keep the current variables."
+          },
+          "create": {
+            "type": "boolean",
+            "default": false,
+            "description": "Create the tag if it does not exist. An agent can have at most 10 tags."
+          }
+        }
+      },
+      "EnvironmentTagUpdateResponse": {
+        "type": "object",
+        "required": [
+          "tag",
+          "tags"
+        ],
+        "properties": {
+          "tag": {
+            "$ref": "#/components/schemas/EnvironmentTag"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnvironmentTag"
+            }
           }
         }
       },
@@ -10408,6 +11127,21 @@
                 "items": {
                   "$ref": "#/components/schemas/ChatAgentVersion"
                 }
+              }
+            }
+          }
+        ]
+      },
+      "PublishedChatAgentVersion": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ChatAgent"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "environmentTagUpdate": {
+                "$ref": "#/components/schemas/EnvironmentTagMoveResult"
               }
             }
           }

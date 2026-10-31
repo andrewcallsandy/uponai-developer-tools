@@ -116,3 +116,22 @@ test('array flow lists retain their shape and pagination iterator reads header c
  for await(const flow of sdk.paginate({operation:'listConversationFlows',input:{query:{workspaceId:1}},items:page=>page,next:(_page,previous,response)=>response.hasMore?{query:{...previous.query,paginationKey:response.paginationKey}}:undefined}))ids.push(flow.conversation_flow_id);
  assert.deepEqual(ids,['first','second']);assert.equal(seen.length,2);
 });
+
+test('environment tag methods build scoped requests, allow unassignment and treat delete as 204',async()=>{
+ const requests=[];const sdk=new UponAI({apiKey:'x',fetch:async(url,options)=>{requests.push({url,options});return options.method==='DELETE'?new Response(null,{status:204}):json({tags:[],maxTags:10});}});
+ await sdk.listAgentEnvironmentTags({path:{agentId:'a'},query:{workspaceId:1,includeDetectedVariables:true}});
+ assert.equal(requests.at(-1).url,'https://api.upon-ai.com/api/v1/agents/a/environment-tags?workspaceId=1&includeDetectedVariables=true');
+ await sdk.detectChatAgentDynamicVariables({path:{agentId:'c'},query:{workspaceId:1,version:4}});
+ assert.equal(requests.at(-1).url,'https://api.upon-ai.com/api/v1/chat-agents/c/environment-tags/detected-variables?workspaceId=1&version=4');
+ const body={workspaceId:1,version:null,dynamicVariables:{transfer_number:''},create:false};
+ await sdk.updateAgentEnvironmentTag({path:{agentId:'a',tagName:'prod'},body});
+ assert.equal(requests.at(-1).options.method,'PUT');assert.equal(requests.at(-1).url,'https://api.upon-ai.com/api/v1/agents/a/environment-tags/prod');assert.deepEqual(JSON.parse(requests.at(-1).options.body),body);
+ assert.equal(await sdk.deleteChatAgentEnvironmentTag({path:{agentId:'c',tagName:'qa'},query:{workspaceId:1}}),undefined);
+ assert.equal(requests.at(-1).url,'https://api.upon-ai.com/api/v1/chat-agents/c/environment-tags/qa?workspaceId=1');
+ await sdk.publishAgentVersion({path:{agentId:'a',version:5},body:{workspaceId:1,environmentTags:['prod','staging']}});
+ assert.deepEqual(JSON.parse(requests.at(-1).options.body),{workspaceId:1,environmentTags:['prod','staging']});
+ const n=requests.length;
+ await assert.rejects(()=>sdk.detectAgentDynamicVariables({path:{agentId:'a'},query:{workspaceId:1}}),UponAIValidationError);
+ await assert.rejects(()=>sdk.updateAgentEnvironmentTag({path:{agentId:'a',tagName:'../admin'},body:{workspaceId:1}}),UponAIValidationError);
+ assert.equal(requests.length,n);
+});

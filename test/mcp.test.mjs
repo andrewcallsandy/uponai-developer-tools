@@ -10,7 +10,7 @@ async function connect(options){const server=await createMcpServer(options);cons
 test('invalid API credential cannot initialize MCP',async()=>{const api=new UponAI({apiKey:'invalid',fetch:async()=>new Response(null,{status:401})});await assert.rejects(()=>createMcpServer({api}),e=>e.status===401);});
 test('read-only default tools are scoped and return no configuration secrets',async()=>{
  const {api,requests}=apiRecorder(),{client,close}=await connect({api,workspaceIds:[1]});try{
- const {tools}=await client.listTools();assert.equal(tools.length,29);assert(tools.every(t=>t.annotations.readOnlyHint));assert(!tools.some(t=>/raw|delete|createPhoneCall/.test(t.name)));
+ const {tools}=await client.listTools();assert.equal(tools.length,33);assert(tools.every(t=>t.annotations.readOnlyHint));assert(!tools.some(t=>/raw|delete|createPhoneCall/.test(t.name)));
  const result=await client.callTool({name:'getAgent',arguments:{workspaceId:1,agentId:'a'}});assert(!JSON.stringify(result).includes('secret'));assert(JSON.stringify(result).includes('Public'));
  const prior=requests.length;const denied=await client.callTool({name:'getAgent',arguments:{workspaceId:2,agentId:'a'}});assert(denied.isError);assert.equal(requests.length,prior);
  const injected=await client.callTool({name:'getAgent',arguments:{workspaceId:1,agentId:'a',headers:{'X-Actor-Type':'admin'}}});assert(injected.isError);assert.equal(requests.length,prior);
@@ -133,3 +133,38 @@ test('flow list retains header cursors while removing configuration secrets', as
   assert.equal(page.has_more,true);assert.equal(page.pagination_key,'next');assert.equal(page.items[0].conversation_flow_id,'flow');assert(!JSON.stringify(page).includes('PRIVATE'));
  }finally{await close();}
 });
+
+test('environment tag reads are scoped and show variable names without values or defaults',async()=>{
+ const {api,requests}=apiRecorder(),{client,close}=await connect({api,workspaceIds:[1]});try{
+  const {tools}=await client.listTools();
+  for(const name of ['listAgentEnvironmentTags','detectAgentDynamicVariables','listChatAgentEnvironmentTags','detectChatAgentDynamicVariables'])assert(tools.some(t=>t.name===name&&t.annotations.readOnlyHint));
+  assert(!tools.some(t=>/EnvironmentTag(Version)?$/.test(t.name)&&!/^list/.test(t.name)));
+  await client.callTool({name:'listChatAgentEnvironmentTags',arguments:{workspaceId:1,agentId:'c',includeDetectedVariables:true}});
+  assert(requests.at(-1).url.endsWith('/chat-agents/c/environment-tags?workspaceId=1&includeDetectedVariables=true'));
+  await client.callTool({name:'detectAgentDynamicVariables',arguments:{workspaceId:1,agentId:'a',version:4}});
+  assert(requests.at(-1).url.endsWith('/agents/a/environment-tags/detected-variables?workspaceId=1&version=4'));
+  const n=requests.length;assert((await client.callTool({name:'listAgentEnvironmentTags',arguments:{workspaceId:2,agentId:'a'}})).isError);assert.equal(requests.length,n);
+ }finally{await close();}
+ assert.deepEqual(projectResult({tags:[{name:'prod',isDefault:true,version:4,assignedAt:'2026-10-30T00:00:00Z',dynamicVariables:{transfer_number:'+15550001',api_token:'SECRET'}}],maxTags:10,workingVersion:5,detectedVariables:{'4':[{name:'company',defaultValue:'SECRET'},{name:'customer_name',defaultValue:null}],bad:[{name:'x'}]}}),
+  {tags:[{name:'prod',isDefault:true,version:4,assignedAt:'2026-10-30T00:00:00Z',dynamicVariableNames:['transfer_number','api_token']}],maxTags:10,workingVersion:5,detectedVariables:{'4':[{name:'company',hasDefaultValue:true},{name:'customer_name',hasDefaultValue:false}]}});
+ assert.deepEqual(projectResult({version:4,variables:[{name:'company',defaultValue:'SECRET'}]}),{version:4,variables:[{name:'company',hasDefaultValue:true}]});
+ assert.deepEqual(projectResult({voices:[{voice_id:'v',tags:['warm']}]}),{voices:[{voice_id:'v'}]});
+});
+for (const [tool,route] of [['setAgentEnvironmentTagVersion','agents'],['setChatAgentEnvironmentTagVersion','chat-agents']]) {
+ test(`${tool}: opt-in, confirmed, scoped tag pointer move without variable or create/delete access`,async()=>{
+  const {api}=apiRecorder();{const {client,close}=await connect({api,workspaceIds:[1]});try{assert(!(await client.listTools()).tools.some(t=>t.name===tool));}finally{await close();}}
+  for(const op of ['updateAgentEnvironmentTag','deleteAgentEnvironmentTag','updateChatAgentEnvironmentTag','deleteChatAgentEnvironmentTag','publishAgentVersion'])await assert.rejects(()=>createMcpServer({api,workspaceIds:[1],enabledWrites:[op]}),/Unknown write capability/);
+  const recorder=apiRecorder();const {client,close}=await connect({api:recorder.api,workspaceIds:[1],enabledWrites:[tool]});
+  try{
+   const {tools}=await client.listTools();assert(tools.some(t=>t.name===tool&&t.annotations.destructiveHint&&!t.annotations.readOnlyHint));
+   const args={workspaceId:1,agentId:'agent_test',tagName:'prod',version:5};const before=recorder.requests.length;
+   for(const invalid of [args,{...args,confirm:true,workspaceId:2},{...args,confirm:true,dynamicVariables:{a:'b'}},{...args,confirm:true,create:true},{...args,confirm:true,tagName:'../admin'},{...args,confirm:true,tagName:'Prod'},{workspaceId:1,agentId:'agent_test',tagName:'prod',confirm:true}])assert((await client.callTool({name:tool,arguments:invalid})).isError);
+   assert.equal(recorder.requests.length,before);
+   assert(!(await client.callTool({name:tool,arguments:{...args,confirm:true}})).isError);
+   assert.equal(recorder.requests.at(-1).options.method,'PUT');assert(recorder.requests.at(-1).url.endsWith(`/${route}/agent_test/environment-tags/prod`));
+   assert.deepEqual(JSON.parse(recorder.requests.at(-1).options.body),{workspaceId:1,version:5});
+   await client.callTool({name:tool,arguments:{...args,version:null,confirm:true}});
+   assert.deepEqual(JSON.parse(recorder.requests.at(-1).options.body),{workspaceId:1,version:null});
+  }finally{await close();}
+ });
+}

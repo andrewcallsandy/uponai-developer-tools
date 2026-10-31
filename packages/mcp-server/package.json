@@ -30,7 +30,7 @@
   "dependencies": {
     "@upon-ai/sdk": "0.1.5",
     "@modelcontextprotocol/sdk": "1.32.1",
-    "zod": "3.25.76"
+    "zod": "4.6.7"
   },
   "author": "UponAI",
   "homepage": "https://docs.uponai.com",
