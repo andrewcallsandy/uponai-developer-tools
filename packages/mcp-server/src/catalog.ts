@@ -161,6 +161,66 @@ export const catalog: Record<string, {summary:string;parameters:Array<{name:stri
       }
     ]
   },
+  "listAgentEnvironmentTags": {
+    "summary": "List agent environment tags",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    ]
+  },
+  "detectAgentDynamicVariables": {
+    "summary": "Detect agent dynamic variables",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    ]
+  },
   "listChatAgents": {
     "summary": "List chat agents",
     "parameters": [
@@ -248,6 +308,66 @@ export const catalog: Record<string, {summary:string;parameters:Array<{name:stri
         "required": true,
         "schema": {
           "type": "integer"
+        }
+      }
+    ]
+  },
+  "listChatAgentEnvironmentTags": {
+    "summary": "List chat agent environment tags",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    ]
+  },
+  "detectChatAgentDynamicVariables": {
+    "summary": "Detect chat agent dynamic variables",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
         }
       }
     ]

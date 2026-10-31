@@ -28,8 +28,8 @@ from the built checkout.
 
 The token is validated through workspace discovery before MCP initialization.
 Without `UPONAI_WORKSPACE_IDS`, only workspace discovery is available. With an
-explicit comma-separated allowlist, 28 summary-only read tools become available
-for agents, LLMs, chats, conversation flows, knowledge bases, voices, concurrency
+explicit comma-separated allowlist, 32 summary-only read tools become available
+for agents (including environment tags and detected dynamic variables), LLMs, chats, conversation flows, knowledge bases, voices, concurrency
 calls and voice simulations. Tools never accept an arbitrary path, method, authentication header,
 privileged context, or API origin.
 
@@ -40,7 +40,7 @@ Upstream API authorization still applies to every request.
 ## Optional write capabilities
 
 Writes are off by default. An operator can set `UPONAI_MCP_WRITE_OPERATIONS` to a
-comma-separated subset of `createPhoneCall,endLiveCall,rerunCallAnalysis,estimateVoiceSimulationSession,launchVoiceSimulationSession,cancelVoiceSimulationSession,stopVoiceSimulationImprovementRun,pauseVoiceSimulationSchedule,updateAgentWebhookSettings,updateChatAgentWebhookSettings`.
+comma-separated subset of `createPhoneCall,endLiveCall,rerunCallAnalysis,estimateVoiceSimulationSession,launchVoiceSimulationSession,cancelVoiceSimulationSession,stopVoiceSimulationImprovementRun,pauseVoiceSimulationSchedule,updateAgentWebhookSettings,updateChatAgentWebhookSettings,setAgentEnvironmentTagVersion,setChatAgentEnvironmentTagVersion`.
 Each write also requires a `confirm: true` argument and an allowed workspace.
 The confirmation argument is an extra safeguard, not proof of human approval;
 configure your MCP client's approval controls before enabling writes. These tools
@@ -95,3 +95,21 @@ disables customer delivery. These tools use the platform proxy and do not publis
 versions. A published version requiring subscription changes returns HTTP 409.
 Agent summaries include selected events and `webhook_configured`, never receiving
 URLs or webhook authentication secrets.
+
+## Environment tags
+
+`listAgentEnvironmentTags`, `listChatAgentEnvironmentTags`,
+`detectAgentDynamicVariables` and `detectChatAgentDynamicVariables` summarize
+each tag's name, built-in status, published version and assignment time, plus
+the dynamic variable names a version expects. Tag variable values and agent
+default values are omitted; summaries show `dynamicVariableNames` and
+`hasDefaultValue` instead.
+
+Enable `setAgentEnvironmentTagVersion` and/or `setChatAgentEnvironmentTagVersion`
+to point an existing tag at a published version, or pass `version: null` to
+unassign it. Supply an allowed `workspaceId`, `agentId`, `tagName`, `version` and
+`confirm: true`. Moving `prod` changes the version live traffic uses. Tag
+variables are preserved. Replacing tag variables (which overwrites the whole
+map), creating tags, deleting tags and publishing versions remain SDK/UI
+operations, because MCP summaries never reveal the values a replacement would
+overwrite.

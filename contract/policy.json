@@ -86,6 +86,30 @@
       "operationId": "deleteAgentVersion"
     },
     {
+      "sourcePath": "/api/agents/{agentId}/environment-tags",
+      "path": "/api/v1/agents/{agentId}/environment-tags",
+      "method": "get",
+      "operationId": "listAgentEnvironmentTags"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/environment-tags/detected-variables",
+      "path": "/api/v1/agents/{agentId}/environment-tags/detected-variables",
+      "method": "get",
+      "operationId": "detectAgentDynamicVariables"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+      "method": "put",
+      "operationId": "updateAgentEnvironmentTag"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+      "method": "delete",
+      "operationId": "deleteAgentEnvironmentTag"
+    },
+    {
       "sourcePath": "/api/chat-agents",
       "path": "/api/v1/chat-agents",
       "method": "get",
@@ -138,6 +162,30 @@
       "path": "/api/v1/chat-agents/{agentId}/versions/{version}",
       "method": "delete",
       "operationId": "deleteChatAgentVersion"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags",
+      "method": "get",
+      "operationId": "listChatAgentEnvironmentTags"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags/detected-variables",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables",
+      "method": "get",
+      "operationId": "detectChatAgentDynamicVariables"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+      "method": "put",
+      "operationId": "updateChatAgentEnvironmentTag"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+      "method": "delete",
+      "operationId": "deleteChatAgentEnvironmentTag"
     },
     {
       "sourcePath": "/api/chat-agents/{agentId}/publish",
@@ -702,7 +750,10 @@
       "FromDateQuery",
       "ToDateQuery",
       "IncludeArchivedQuery",
-      "IncludeChildCallsQuery"
+      "IncludeChildCallsQuery",
+      "RequiredVersionQuery",
+      "TagNamePath",
+      "IncludeDetectedVariablesQuery"
     ],
     "schemas": [
       "LlmSummary",
@@ -854,7 +905,16 @@
       "VoiceSimulationHostedFunction",
       "VoiceSimulationDraftPatch",
       "VoiceWebhookEvent",
-      "ChatWebhookEvent"
+      "ChatWebhookEvent",
+      "EnvironmentTag",
+      "DetectedDynamicVariable",
+      "EnvironmentTagListResponse",
+      "DetectedDynamicVariablesResponse",
+      "UpdateEnvironmentTagRequest",
+      "EnvironmentTagUpdateResponse",
+      "EnvironmentTagMoveResult",
+      "PublishedAgentVersion",
+      "PublishedChatAgentVersion"
     ]
   },
   "tags": [

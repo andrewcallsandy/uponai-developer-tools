@@ -25,7 +25,7 @@ Keep the API key on your server. Do not embed customer credentials in browser
 bundles. Each client keeps its own credential; an async `apiKey` callback can
 supply a rotated token. There are no global credentials or privileged header overrides.
 
-All 110 reviewed public operations have named methods. Inputs use `path`, `query`
+All 119 reviewed public operations have named methods. Inputs use `path`, `query`
 and `body` groups matching the public OpenAPI contract. Types include
 `OperationInput`, `OperationOutput`, `operations` and `components`.
 Multipart bodies use native `FormData`; binary endpoints return `Blob`.
@@ -76,5 +76,38 @@ await client.updateAgent({
   path: { agentId: 'agent_example' },
   query: { version: 3 },
   body: { workspaceId: 123, webhook_events: ['transcript_updated', 'transfer_ended'] },
+});
+```
+
+## Agent environment tags
+
+Each voice and chat agent has built-in `prod` and `staging` tags and can have up
+to 10 tags in total. A tag points to one published version, or to none, and
+carries dynamic variable values for calls or chats that use the tag. Tag values
+override the agent's default dynamic variables, so a blank string replaces a
+default. Omit a variable to keep the agent default.
+
+`detectAgentDynamicVariables` lists the variables a version expects. In
+`updateAgentEnvironmentTag`, `dynamicVariables` replaces the tag's whole map.
+Read the current tag first if you only want to change one value. `version: null`
+unassigns the tag, and `create: true` adds a custom tag. Publishing a version does
+not move tags unless you pass `environmentTags`. The publish succeeds even if a
+tag move fails; check `environmentTagUpdate.failed` in the response. You cannot
+delete a version while a tag points at it (HTTP 409). Chat agents use the
+matching `*ChatAgent*` methods.
+
+```ts
+const { variables } = await client.detectAgentDynamicVariables({
+  path: { agentId: 'agent_example' },
+  query: { workspaceId: 123, version: 5 },
+});
+const published = await client.publishAgentVersion({
+  path: { agentId: 'agent_example', version: 5 },
+  body: { workspaceId: 123, environmentTags: ['staging'] },
+});
+console.log(published.environmentTagUpdate?.failed);
+await client.updateAgentEnvironmentTag({
+  path: { agentId: 'agent_example', tagName: 'prod' },
+  body: { workspaceId: 123, version: 5, dynamicVariables: { transfer_number: '+15550001' } },
 });
 ```

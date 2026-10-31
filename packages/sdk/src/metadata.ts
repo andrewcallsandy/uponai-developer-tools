@@ -432,6 +432,151 @@ export const metadata = {
     "bodyType": null,
     "bodySchema": null
   },
+  "listAgentEnvironmentTags": {
+    "path": "/api/v1/agents/{agentId}/environment-tags",
+    "method": "get",
+    "summary": "List agent environment tags",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "description": "Also return the dynamic variables referenced by each tagged version and the working version."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "detectAgentDynamicVariables": {
+    "path": "/api/v1/agents/{agentId}/environment-tags/detected-variables",
+    "method": "get",
+    "summary": "Detect agent dynamic variables",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Agent version to inspect."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateAgentEnvironmentTag": {
+    "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+    "method": "put",
+    "summary": "Create or update agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "$ref": "#/components/schemas/UpdateEnvironmentTagRequest"
+    }
+  },
+  "deleteAgentEnvironmentTag": {
+    "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+    "method": "delete",
+    "summary": "Delete agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
   "listChatAgents": {
     "path": "/api/v1/chat-agents",
     "method": "get",
@@ -692,6 +837,151 @@ export const metadata = {
           "minimum": 0
         },
         "description": "Specific agent version."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listChatAgentEnvironmentTags": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags",
+    "method": "get",
+    "summary": "List chat agent environment tags",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "description": "Also return the dynamic variables referenced by each tagged version and the working version."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "detectChatAgentDynamicVariables": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables",
+    "method": "get",
+    "summary": "Detect chat agent dynamic variables",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Agent version to inspect."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateChatAgentEnvironmentTag": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+    "method": "put",
+    "summary": "Create or update chat agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "$ref": "#/components/schemas/UpdateEnvironmentTagRequest"
+    }
+  },
+  "deleteChatAgentEnvironmentTag": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+    "method": "delete",
+    "summary": "Delete chat agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
       },
       {
         "name": "workspaceId",
