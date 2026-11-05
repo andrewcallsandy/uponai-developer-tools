@@ -13,8 +13,8 @@ try{
  await api.listAgents({query:{workspaceId,limit:1}});
  await assert.rejects(()=>new UponAI({apiKey:'invalid-uponai-release-check'}).listWorkspaces(),error=>error.status===401);
  transport=new StdioClientTransport({command:process.execPath,args:['packages/mcp-server/dist/cli.js'],env:{PATH:process.env.PATH,UPONAI_API_KEY:apiKey,UPONAI_WORKSPACE_IDS:String(workspaceId)},stderr:'pipe'});
- client=new Client({name:'uponai-readonly-release-check',version:'0.1.0'});await client.connect(transport);
- const {tools}=await client.listTools();assert.equal(tools.length,19);assert(tools.every(tool=>tool.annotations.readOnlyHint));
+ client=new Client({name:'uponai-readonly-release-check',version:JSON.parse(fs.readFileSync('package.json')).version});await client.connect(transport);
+ const {tools}=await client.listTools();assert.equal(tools.length,37);assert(tools.every(tool=>tool.annotations.readOnlyHint));
  const result=await client.callTool({name:'listAgents',arguments:{workspaceId,limit:1}});assert(!result.isError,'MCP read failed');assert(!JSON.stringify(result).includes(apiKey),'Credential in MCP output');
  const denied=await client.callTool({name:'listAgents',arguments:{workspaceId:workspaceId===1?2:1,limit:1}});assert(denied.isError,'MCP workspace boundary failed');
  console.log(JSON.stringify({sdkWorkspaceDiscovery:'passed',sdkListAgents:'passed',invalidCredentialRejected:'passed',mcpStdioInitialization:'passed',mcpReadOnlyTools:tools.length,mcpListAgents:'passed',mcpWorkspaceRestriction:'passed',writesPerformed:0}));
