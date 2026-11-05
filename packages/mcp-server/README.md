@@ -12,7 +12,7 @@ Configure your MCP client with:
   "mcpServers": {
     "uponai": {
       "command": "npx",
-      "args": ["-y", "@upon-ai/mcp-server@0.1.4"],
+      "args": ["-y", "@upon-ai/mcp-server@0.1.6"],
       "env": {
         "UPONAI_API_KEY": "YOUR_CUSTOMER_API_TOKEN",
         "UPONAI_WORKSPACE_IDS": "123"
