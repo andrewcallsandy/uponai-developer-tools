@@ -432,6 +432,151 @@ export const metadata = {
     "bodyType": null,
     "bodySchema": null
   },
+  "listAgentEnvironmentTags": {
+    "path": "/api/v1/agents/{agentId}/environment-tags",
+    "method": "get",
+    "summary": "List agent environment tags",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "description": "Also return the dynamic variables referenced by each tagged version and the working version."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "detectAgentDynamicVariables": {
+    "path": "/api/v1/agents/{agentId}/environment-tags/detected-variables",
+    "method": "get",
+    "summary": "Detect agent dynamic variables",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Agent version to inspect."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateAgentEnvironmentTag": {
+    "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+    "method": "put",
+    "summary": "Create or update agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "$ref": "#/components/schemas/UpdateEnvironmentTagRequest"
+    }
+  },
+  "deleteAgentEnvironmentTag": {
+    "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+    "method": "delete",
+    "summary": "Delete agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
   "listChatAgents": {
     "path": "/api/v1/chat-agents",
     "method": "get",
@@ -692,6 +837,151 @@ export const metadata = {
           "minimum": 0
         },
         "description": "Specific agent version."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listChatAgentEnvironmentTags": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags",
+    "method": "get",
+    "summary": "List chat agent environment tags",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "includeDetectedVariables",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "description": "Also return the dynamic variables referenced by each tagged version and the working version."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "detectChatAgentDynamicVariables": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables",
+    "method": "get",
+    "summary": "Detect chat agent dynamic variables",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      },
+      {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": "Agent version to inspect."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateChatAgentEnvironmentTag": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+    "method": "put",
+    "summary": "Create or update chat agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "$ref": "#/components/schemas/UpdateEnvironmentTagRequest"
+    }
+  },
+  "deleteChatAgentEnvironmentTag": {
+    "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+    "method": "delete",
+    "summary": "Delete chat agent environment tag",
+    "parameters": [
+      {
+        "name": "agentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Agent identifier."
+      },
+      {
+        "name": "tagName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,19}$"
+        },
+        "description": "Environment tag name, such as prod, staging, or a custom tag."
       },
       {
         "name": "workspaceId",
@@ -3407,6 +3697,545 @@ export const metadata = {
           "description": "Request live audio in addition to transcripts."
         }
       }
+    }
+  },
+  "listIntegrations": {
+    "path": "/api/v1/integrations",
+    "method": "get",
+    "summary": "List integration connections",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Continuation cursor from pagination_key."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "createIntegration": {
+    "path": "/api/v1/integrations",
+    "method": "post",
+    "summary": "Create an integration connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": [
+            "hubspot",
+            "salesforce",
+            "gohighlevel",
+            "notion",
+            "calendly",
+            "calcom"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "auth_config": {
+          "type": "object",
+          "properties": {
+            "api_key": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "client_id": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "client_secret": {
+              "type": "string",
+              "writeOnly": true
+            }
+          }
+        },
+        "tenant_url": {
+          "type": "string"
+        },
+        "tenant_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "name",
+        "auth_config"
+      ]
+    }
+  },
+  "listIntegrationProviders": {
+    "path": "/api/v1/integrations/providers",
+    "method": "get",
+    "summary": "List available integration providers",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "getIntegrationCrmConfig": {
+    "path": "/api/v1/integrations/crm",
+    "method": "get",
+    "summary": "Get contact sync configuration",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "createIntegrationContactField": {
+    "path": "/api/v1/integrations/crm/fields",
+    "method": "post",
+    "summary": "Add a contact field",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "string",
+            "number",
+            "boolean",
+            "date",
+            "datetime",
+            "enum"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "revision": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "label",
+        "revision"
+      ]
+    }
+  },
+  "getIntegration": {
+    "path": "/api/v1/integrations/{connectionId}",
+    "method": "get",
+    "summary": "Get an integration connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateIntegration": {
+    "path": "/api/v1/integrations/{connectionId}",
+    "method": "patch",
+    "summary": "Update an integration connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "auth_config": {
+          "type": "object",
+          "properties": {
+            "api_key": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "client_id": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "client_secret": {
+              "type": "string",
+              "writeOnly": true
+            }
+          }
+        },
+        "tenant_url": {
+          "type": "string"
+        },
+        "tenant_id": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "deleteIntegration": {
+    "path": "/api/v1/integrations/{connectionId}",
+    "method": "delete",
+    "summary": "Delete an unused integration connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "testIntegration": {
+    "path": "/api/v1/integrations/{connectionId}/test",
+    "method": "post",
+    "summary": "Test connection authentication",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "listIntegrationUsages": {
+    "path": "/api/v1/integrations/{connectionId}/usages",
+    "method": "get",
+    "summary": "List agents and knowledge bases using a connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Continuation cursor from pagination_key."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "getIntegrationCrmSchema": {
+    "path": "/api/v1/integrations/{connectionId}/crm-schema",
+    "method": "get",
+    "summary": "Get CRM fields for mapping",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "getIntegrationMappings": {
+    "path": "/api/v1/integrations/{connectionId}/mappings",
+    "method": "get",
+    "summary": "Get connection mappings and revision",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "updateIntegrationMappings": {
+    "path": "/api/v1/integrations/{connectionId}/mappings",
+    "method": "put",
+    "summary": "Replace import and export mappings",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "inbound_sync_mappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_name": {
+                "type": "string"
+              },
+              "external_field_name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field_name",
+              "external_field_name"
+            ]
+          }
+        },
+        "outbound_sync_mappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_name": {
+                "type": "string"
+              },
+              "external_field_name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field_name",
+              "external_field_name"
+            ]
+          }
+        },
+        "sync_conversation_activity": {
+          "type": "boolean"
+        },
+        "sync_new_contacts": {
+          "type": "boolean"
+        },
+        "revision": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "inbound_sync_mappings",
+        "outbound_sync_mappings",
+        "sync_conversation_activity",
+        "sync_new_contacts",
+        "revision"
+      ]
+    }
+  },
+  "updateIntegrationContactSync": {
+    "path": "/api/v1/integrations/{connectionId}/contact-sync",
+    "method": "patch",
+    "summary": "Select or disable the active CRM connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "bodyRequired": true,
+    "bodyType": "application/json",
+    "bodySchema": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "revision": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "revision"
+      ]
     }
   }
 } as const;

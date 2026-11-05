@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.6 — 2026-11-04
+
+- Add 14 workspace integration SDK methods for connections, credential tests, dependency inspection, CRM field mappings and custom contact fields. Credentials remain write-only; revision checks protect shared CRM settings.
+- Add four scoped MCP reads for integration provider discovery, connection summaries and usage inspection. Credential/CRM mutations, tenant URLs and configuration payloads remain outside model tools.
+- Regenerate the reviewed 133-operation public contract and coordinate both package versions and dependency pins.
+
+- Add agent and chat agent environment tag methods: `listAgentEnvironmentTags`, `detectAgentDynamicVariables`, `updateAgentEnvironmentTag`, `deleteAgentEnvironmentTag`, `listChatAgentEnvironmentTags`, `detectChatAgentDynamicVariables`, `updateChatAgentEnvironmentTag` and `deleteChatAgentEnvironmentTag`. Each agent has built-in `prod` and `staging` tags and up to 10 tags in total. Tags point only to published versions, and `version: null` unassigns a tag. `dynamicVariables` replaces the tag's whole variable map with string values, and a blank value overrides the agent default.
+- `publishAgentVersion` and `publishChatAgentVersion` accept optional `environmentTags` and may return `environmentTagUpdate` (`moved`, `failed`). Deleting a version that a tag points at returns HTTP 409.
+- MCP adds four scoped read tools for environment tags and detected dynamic variables. They return variable names only, without values or agent defaults. Two optional confirmed writes, `setAgentEnvironmentTagVersion` and `setChatAgentEnvironmentTagVersion`, move or unassign a tag pointer. Variable replacement, tag creation and deletion stay outside MCP.
+- Coordinated with the production environment tags API release.
+- `createLlm` and `updateLlm` document HTTP 409 for deprecated multi-prompt LLM states (no new multi-prompt LLMs from 12/15/2026, no state edits from 02/01/2027).
+- Security: upgrade the MCP server's `zod` dependency to 4.6.7 and refresh `body-parser` and `fast-uri` to patched releases.
+
 ## 0.1.5 — 2026-10-23
 
 - Add typed browser-call transport and ICE server connection settings.

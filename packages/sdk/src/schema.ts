@@ -186,6 +186,81 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/agents/{agentId}/environment-tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List agent environment tags
+         * @description List the agent's environment tags. Each tag points to one published version (or none) and carries dynamic variable values that apply to calls or chats using the tag. Every agent has the built-in prod and staging tags. Set includeDetectedVariables=true to also return the dynamic variables each tagged version (and the current working version) references.
+         */
+        get: operations["listAgentEnvironmentTags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/environment-tags/detected-variables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Detect agent dynamic variables
+         * @description List the dynamic variables a version expects as inputs, found in its prompts, messages, tools, and default dynamic variables. System variables and values collected during the conversation are excluded. Use the result to decide which variables to set on an environment tag.
+         */
+        get: operations["detectAgentDynamicVariables"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/{agentId}/environment-tags/{tagName}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Create or update agent environment tag
+         * @description Point a tag at a published version, unassign it (version null), replace its dynamic variables, or create a new tag (create true). Omitted fields keep their current values. Tag variables override the agent's default dynamic variables, so a blank value replaces the default; omit a variable to keep the default. Publishing a version does not move tags; move them here or with environmentTags when publishing.
+         */
+        put: operations["updateAgentEnvironmentTag"];
+        post?: never;
+        /**
+         * Delete agent environment tag
+         * @description Remove a custom tag and its variables. The built-in prod and staging tags cannot be removed.
+         */
+        delete: operations["deleteAgentEnvironmentTag"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/chat-agents": {
         parameters: {
             query?: never;
@@ -313,6 +388,81 @@ export interface paths {
          * @description Delete one specific chat agent version.
          */
         delete: operations["deleteChatAgentVersion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/environment-tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * List chat agent environment tags
+         * @description List the chat agent's environment tags. Each tag points to one published version (or none) and carries dynamic variable values that apply to calls or chats using the tag. Every agent has the built-in prod and staging tags. Set includeDetectedVariables=true to also return the dynamic variables each tagged version (and the current working version) references.
+         */
+        get: operations["listChatAgentEnvironmentTags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Detect chat agent dynamic variables
+         * @description List the dynamic variables a version expects as inputs, found in its prompts, messages, tools, and default dynamic variables. System variables and values collected during the conversation are excluded. Use the result to decide which variables to set on an environment tag.
+         */
+        get: operations["detectChatAgentDynamicVariables"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Create or update chat agent environment tag
+         * @description Point a tag at a published version, unassign it (version null), replace its dynamic variables, or create a new tag (create true). Omitted fields keep their current values. Tag variables override the agent's default dynamic variables, so a blank value replaces the default; omit a variable to keep the default. Publishing a version does not move tags; move them here or with environmentTags when publishing.
+         */
+        put: operations["updateChatAgentEnvironmentTag"];
+        post?: never;
+        /**
+         * Delete chat agent environment tag
+         * @description Remove a custom tag and its variables. The built-in prod and staging tags cannot be removed.
+         */
+        delete: operations["deleteChatAgentEnvironmentTag"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1806,6 +1956,222 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/integrations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List integration connections
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["listIntegrations"];
+        put?: never;
+        /**
+         * Create an integration connection
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned. Supports credential-based connections only. Salesforce requires client_id, client_secret and tenant_url. GoHighLevel requires tenant_id. Cal.com requires tenant_url equal to cal.com or cal.eu. Other supported connections require api_key. Browser sign-in onboarding is not available through this API.
+         */
+        post: operations["createIntegration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/providers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List available integration providers
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["listIntegrationProviders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/crm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get contact sync configuration
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["getIntegrationCrmConfig"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/crm/fields": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a contact field
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned. Use revision from GET crm. Existing fields are preserved. Stale revisions return 409.
+         */
+        post: operations["createIntegrationContactField"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/{connectionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get an integration connection
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["getIntegration"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an unused integration connection
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned. Connections used by agents or knowledge bases cannot be deleted; no force-delete is supported.
+         */
+        delete: operations["deleteIntegration"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an integration connection
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        patch: operations["updateIntegration"];
+        trace?: never;
+    };
+    "/api/v1/integrations/{connectionId}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test connection authentication
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        post: operations["testIntegration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/{connectionId}/usages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List agents and knowledge bases using a connection
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["listIntegrationUsages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/{connectionId}/crm-schema": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CRM fields for mapping
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["getIntegrationCrmSchema"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/{connectionId}/mappings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get connection mappings and revision
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned.
+         */
+        get: operations["getIntegrationMappings"];
+        /**
+         * Replace import and export mappings
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned. Fetch the revision from GET mappings first. Inbound mappings must retain phone_number; outbound mappings must omit it. Use unique compatible fields. A stale revision returns 409.
+         */
+        put: operations["updateIntegrationMappings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/{connectionId}/contact-sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Select or disable the active CRM connection
+         * @description Requires workspace management access and a dedicated platform connection. Credentials are write-only and are never returned. Use revision from GET crm. Only one CRM connection can control contact sync. Disabling requires this connection to be active.
+         */
+        patch: operations["updateIntegrationContactSync"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2281,6 +2647,73 @@ export interface components {
             versionTitle?: string;
             /** @description Optional description stored on the published version. */
             versionDescription?: string;
+            /** @description Existing environment tags (for example prod) to point at this version after it is published. Publishing alone does not move tags. */
+            environmentTags?: string[];
+        };
+        PublishedAgentVersion: components["schemas"]["Agent"] & {
+            environmentTagUpdate?: components["schemas"]["EnvironmentTagMoveResult"];
+        };
+        EnvironmentTagMoveResult: {
+            moved: string[];
+            failed: {
+                tag: string;
+                error: string;
+            }[];
+        };
+        EnvironmentTagListResponse: {
+            tags: components["schemas"]["EnvironmentTag"][];
+            /** @description Maximum number of tags an agent can have, including prod and staging. */
+            maxTags: number;
+            /** @description Returned with includeDetectedVariables. The latest draft, or the latest version when there is no draft. */
+            workingVersion?: number | null;
+            /** @description Returned with includeDetectedVariables. Maps version numbers to the variables that version references. */
+            detectedVariables?: {
+                [key: string]: components["schemas"]["DetectedDynamicVariable"][];
+            };
+        };
+        EnvironmentTag: {
+            /** @description Tag name. prod and staging are built in. */
+            name: string;
+            /** @description True for the built-in prod and staging tags. */
+            isDefault: boolean;
+            /** @description Published version the tag points to, or null when unassigned. */
+            version: number | null;
+            /**
+             * Format: date-time
+             * @description When the tag was last pointed at a version.
+             */
+            assignedAt: string | null;
+            /** @description Values supplied to calls or chats that use this tag. They override the agent's default dynamic variables. */
+            dynamicVariables: {
+                [key: string]: string;
+            };
+        };
+        DetectedDynamicVariable: {
+            name: string;
+            /** @description The agent's default value, or null when there is none. */
+            defaultValue: string | null;
+        };
+        DetectedDynamicVariablesResponse: {
+            version: number;
+            variables: components["schemas"]["DetectedDynamicVariable"][];
+        };
+        UpdateEnvironmentTagRequest: {
+            workspaceId: number;
+            /** @description Published version to point the tag at, or null to unassign. Omit to keep the current version. */
+            version?: number | null;
+            /** @description Replaces the tag's variables. Values must be text. Omit to keep the current variables. */
+            dynamicVariables?: {
+                [key: string]: string;
+            };
+            /**
+             * @description Create the tag if it does not exist. An agent can have at most 10 tags.
+             * @default false
+             */
+            create?: boolean;
+        };
+        EnvironmentTagUpdateResponse: {
+            tag: components["schemas"]["EnvironmentTag"];
+            tags: components["schemas"]["EnvironmentTag"][];
         };
         ChatAgentListResponse: components["schemas"]["ChatAgentSummary"][] | components["schemas"]["ChatAgentListEnvelope"];
         ChatAgentSummary: components["schemas"]["ChatAgentVersion"] & {
@@ -2424,6 +2857,9 @@ export interface components {
         };
         ChatAgentVersionListResponse: components["schemas"]["ChatAgentVersion"][] | {
             data?: components["schemas"]["ChatAgentVersion"][];
+        };
+        PublishedChatAgentVersion: components["schemas"]["ChatAgent"] & {
+            environmentTagUpdate?: components["schemas"]["EnvironmentTagMoveResult"];
         };
         ChatListResponse: components["schemas"]["Chat"][] | components["schemas"]["ChatListEnvelope"];
         Chat: {
@@ -4023,6 +4459,12 @@ export interface components {
         AgentIdPath: string;
         /** @description Specific agent version. */
         VersionPath: number;
+        /** @description Also return the dynamic variables referenced by each tagged version and the working version. */
+        IncludeDetectedVariablesQuery: boolean;
+        /** @description Agent version to inspect. */
+        RequiredVersionQuery: number;
+        /** @description Environment tag name, such as prod, staging, or a custom tag. */
+        TagNamePath: string;
         /** @description Sort direction for chat listings. */
         SortOrderQuery: "ascending" | "descending";
         /** @description Chat identifier. */
@@ -4130,6 +4572,13 @@ export interface operations {
                     "application/json": components["schemas"]["Llm"];
                 };
             };
+            /** @description Multi-prompt LLMs (with states) are deprecated. From 12/15/2026, creating an LLM with states is rejected; use a conversation flow instead. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     getLlm: {
@@ -4211,6 +4660,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Llm"];
                 };
+            };
+            /** @description Multi-prompt LLMs are deprecated. Adding states to a single-prompt LLM is rejected, and from 02/01/2027 updating states on a multi-prompt LLM is rejected; convert the agent to a conversation flow instead. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -4448,13 +4904,13 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Published agent version. */
+            /** @description Published agent version. When environmentTags was sent, environmentTagUpdate reports which tags moved; the publish succeeds even if a tag move fails. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Agent"];
+                    "application/json": components["schemas"]["PublishedAgentVersion"];
                 };
             };
         };
@@ -4478,6 +4934,180 @@ export interface operations {
         responses: {
             /** @description Agent version deleted. */
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description An environment tag points to this version. Move or unassign the tag first. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listAgentEnvironmentTags: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Also return the dynamic variables referenced by each tagged version and the working version. */
+                includeDetectedVariables?: components["parameters"]["IncludeDetectedVariablesQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Environment tags. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagListResponse"];
+                };
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    detectAgentDynamicVariables: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Agent version to inspect. */
+                version: components["parameters"]["RequiredVersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detected dynamic variables. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectedDynamicVariablesResponse"];
+                };
+            };
+            /** @description Invalid version. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateAgentEnvironmentTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEnvironmentTagRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated tag and the agent's full tag list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagUpdateResponse"];
+                };
+            };
+            /** @description Invalid tag name, version, or variables; unknown tag without create; or the 10-tag limit. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The version is a draft. Only published versions can be tagged. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    deleteAgentEnvironmentTag: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Tag removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Built-in or unknown tag. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4719,13 +5349,13 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Published chat agent version. */
+            /** @description Published chat agent version. When environmentTags was sent, environmentTagUpdate reports which tags moved; the publish succeeds even if a tag move fails. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ChatAgent"];
+                    "application/json": components["schemas"]["PublishedChatAgentVersion"];
                 };
             };
         };
@@ -4749,6 +5379,180 @@ export interface operations {
         responses: {
             /** @description Chat agent version deleted. */
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description An environment tag points to this version. Move or unassign the tag first. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listChatAgentEnvironmentTags: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Also return the dynamic variables referenced by each tagged version and the working version. */
+                includeDetectedVariables?: components["parameters"]["IncludeDetectedVariablesQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Environment tags. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagListResponse"];
+                };
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    detectChatAgentDynamicVariables: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+                /** @description Agent version to inspect. */
+                version: components["parameters"]["RequiredVersionQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detected dynamic variables. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectedDynamicVariablesResponse"];
+                };
+            };
+            /** @description Invalid version. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateChatAgentEnvironmentTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEnvironmentTagRequest"];
+            };
+        };
+        responses: {
+            /** @description Updated tag and the agent's full tag list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentTagUpdateResponse"];
+                };
+            };
+            /** @description Invalid tag name, version, or variables; unknown tag without create; or the 10-tag limit. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent or version not found. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The version is a draft. Only published versions can be tagged. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    deleteChatAgentEnvironmentTag: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path: {
+                /** @description Agent identifier. */
+                agentId: components["parameters"]["AgentIdPath"];
+                /** @description Environment tag name, such as prod, staging, or a custom tag. */
+                tagName: components["parameters"]["TagNamePath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Tag removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Built-in or unknown tag. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Agent not found in this workspace. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9523,6 +10327,2008 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    listIntegrations: {
+        parameters: {
+            query: {
+                workspaceId: number;
+                /** @description Continuation cursor from pagination_key. */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items?: {
+                            app_id?: string;
+                            provider?: string;
+                            type?: string;
+                            name?: string;
+                            connection_status?: string;
+                            tenant_url?: string;
+                            tenant_id?: string;
+                            crm_config?: {
+                                inbound_sync_mappings?: {
+                                    field_name: string;
+                                    external_field_name: string;
+                                }[];
+                                outbound_sync_mappings?: {
+                                    field_name: string;
+                                    external_field_name: string;
+                                }[];
+                                sync_conversation_activity?: boolean;
+                                sync_new_contacts?: boolean;
+                            };
+                            created_timestamp?: number;
+                            user_modified_timestamp?: number;
+                        }[];
+                        has_more?: boolean;
+                        pagination_key?: string;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    createIntegration: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    provider: "hubspot" | "salesforce" | "gohighlevel" | "notion" | "calendly" | "calcom";
+                    name: string;
+                    auth_config: {
+                        api_key?: string;
+                        client_id?: string;
+                        client_secret?: string;
+                    };
+                    tenant_url?: string;
+                    tenant_id?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful operation */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string;
+                        provider?: string;
+                        type?: string;
+                        name?: string;
+                        connection_status?: string;
+                        tenant_url?: string;
+                        tenant_id?: string;
+                        crm_config?: {
+                            inbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            outbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            sync_conversation_activity?: boolean;
+                            sync_new_contacts?: boolean;
+                        };
+                        created_timestamp?: number;
+                        user_modified_timestamp?: number;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    listIntegrationProviders: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items?: {
+                            id?: string;
+                            name?: string;
+                            type?: string;
+                            description?: string;
+                            auth_type?: string | null;
+                            connection_available?: boolean;
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    getIntegrationCrmConfig: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string | null;
+                        custom_fields?: {
+                            name: string;
+                            /** @enum {string} */
+                            type: "string" | "number" | "boolean" | "date" | "datetime" | "enum";
+                            label: string;
+                            description?: string;
+                            options?: string[];
+                        }[];
+                        crm_analysis_data_mappings?: {
+                            field_name?: string;
+                            analysis_data_name?: string;
+                            /** @enum {string} */
+                            update_mode?: "overwrite" | "fill_if_empty" | "merge";
+                        }[];
+                        revision?: string;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    createIntegrationContactField: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    /** @enum {string} */
+                    type: "string" | "number" | "boolean" | "date" | "datetime" | "enum";
+                    label: string;
+                    description?: string;
+                    options?: string[];
+                    revision: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful operation */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string | null;
+                        custom_fields?: {
+                            name: string;
+                            /** @enum {string} */
+                            type: "string" | "number" | "boolean" | "date" | "datetime" | "enum";
+                            label: string;
+                            description?: string;
+                            options?: string[];
+                        }[];
+                        crm_analysis_data_mappings?: {
+                            field_name?: string;
+                            analysis_data_name?: string;
+                            /** @enum {string} */
+                            update_mode?: "overwrite" | "fill_if_empty" | "merge";
+                        }[];
+                        revision?: string;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    getIntegration: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string;
+                        provider?: string;
+                        type?: string;
+                        name?: string;
+                        connection_status?: string;
+                        tenant_url?: string;
+                        tenant_id?: string;
+                        crm_config?: {
+                            inbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            outbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            sync_conversation_activity?: boolean;
+                            sync_new_contacts?: boolean;
+                        };
+                        created_timestamp?: number;
+                        user_modified_timestamp?: number;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    deleteIntegration: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success?: boolean;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    updateIntegration: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    auth_config?: {
+                        api_key?: string;
+                        client_id?: string;
+                        client_secret?: string;
+                    };
+                    tenant_url?: string;
+                    tenant_id?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string;
+                        provider?: string;
+                        type?: string;
+                        name?: string;
+                        connection_status?: string;
+                        tenant_url?: string;
+                        tenant_id?: string;
+                        crm_config?: {
+                            inbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            outbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            sync_conversation_activity?: boolean;
+                            sync_new_contacts?: boolean;
+                        };
+                        created_timestamp?: number;
+                        user_modified_timestamp?: number;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    testIntegration: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success?: boolean;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    listIntegrationUsages: {
+        parameters: {
+            query: {
+                workspaceId: number;
+                /** @description Continuation cursor from pagination_key. */
+                cursor?: string;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items?: {
+                            type?: string;
+                            agent_id?: string;
+                            agent_name?: string;
+                            agent_versions?: number[];
+                            knowledge_base_id?: string;
+                            knowledge_base_name?: string;
+                            configured_timestamp?: number;
+                        }[];
+                        has_more?: boolean;
+                        pagination_key?: string;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    getIntegrationCrmSchema: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        fields?: {
+                            name?: string;
+                            label?: string;
+                            description?: string;
+                            type?: string;
+                            options?: string[];
+                        }[];
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    getIntegrationMappings: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app?: {
+                            app_id?: string;
+                            provider?: string;
+                            type?: string;
+                            name?: string;
+                            connection_status?: string;
+                            tenant_url?: string;
+                            tenant_id?: string;
+                            crm_config?: {
+                                inbound_sync_mappings?: {
+                                    field_name: string;
+                                    external_field_name: string;
+                                }[];
+                                outbound_sync_mappings?: {
+                                    field_name: string;
+                                    external_field_name: string;
+                                }[];
+                                sync_conversation_activity?: boolean;
+                                sync_new_contacts?: boolean;
+                            };
+                            created_timestamp?: number;
+                            user_modified_timestamp?: number;
+                        };
+                        revision?: string;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    updateIntegrationMappings: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    inbound_sync_mappings: {
+                        field_name: string;
+                        external_field_name: string;
+                    }[];
+                    outbound_sync_mappings: {
+                        field_name: string;
+                        external_field_name: string;
+                    }[];
+                    sync_conversation_activity: boolean;
+                    sync_new_contacts: boolean;
+                    revision: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string;
+                        provider?: string;
+                        type?: string;
+                        name?: string;
+                        connection_status?: string;
+                        tenant_url?: string;
+                        tenant_id?: string;
+                        crm_config?: {
+                            inbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            outbound_sync_mappings?: {
+                                field_name: string;
+                                external_field_name: string;
+                            }[];
+                            sync_conversation_activity?: boolean;
+                            sync_new_contacts?: boolean;
+                        };
+                        created_timestamp?: number;
+                        user_modified_timestamp?: number;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    updateIntegrationContactSync: {
+        parameters: {
+            query: {
+                workspaceId: number;
+            };
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    enabled: boolean;
+                    revision: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        app_id?: string | null;
+                        custom_fields?: {
+                            name: string;
+                            /** @enum {string} */
+                            type: "string" | "number" | "boolean" | "date" | "datetime" | "enum";
+                            label: string;
+                            description?: string;
+                            options?: string[];
+                        }[];
+                        crm_analysis_data_mappings?: {
+                            field_name?: string;
+                            analysis_data_name?: string;
+                            /** @enum {string} */
+                            update_mode?: "overwrite" | "fill_if_empty" | "merge";
+                        }[];
+                        revision?: string;
+                    };
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace management access required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace or connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Connection conflict or stale revision */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Workspace platform connection missing */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Rate limited */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Integration unavailable */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Temporarily unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
             };
         };
     };

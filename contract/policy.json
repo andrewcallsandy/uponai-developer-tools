@@ -86,6 +86,30 @@
       "operationId": "deleteAgentVersion"
     },
     {
+      "sourcePath": "/api/agents/{agentId}/environment-tags",
+      "path": "/api/v1/agents/{agentId}/environment-tags",
+      "method": "get",
+      "operationId": "listAgentEnvironmentTags"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/environment-tags/detected-variables",
+      "path": "/api/v1/agents/{agentId}/environment-tags/detected-variables",
+      "method": "get",
+      "operationId": "detectAgentDynamicVariables"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+      "method": "put",
+      "operationId": "updateAgentEnvironmentTag"
+    },
+    {
+      "sourcePath": "/api/agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/agents/{agentId}/environment-tags/{tagName}",
+      "method": "delete",
+      "operationId": "deleteAgentEnvironmentTag"
+    },
+    {
       "sourcePath": "/api/chat-agents",
       "path": "/api/v1/chat-agents",
       "method": "get",
@@ -138,6 +162,30 @@
       "path": "/api/v1/chat-agents/{agentId}/versions/{version}",
       "method": "delete",
       "operationId": "deleteChatAgentVersion"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags",
+      "method": "get",
+      "operationId": "listChatAgentEnvironmentTags"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags/detected-variables",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags/detected-variables",
+      "method": "get",
+      "operationId": "detectChatAgentDynamicVariables"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+      "method": "put",
+      "operationId": "updateChatAgentEnvironmentTag"
+    },
+    {
+      "sourcePath": "/api/chat-agents/{agentId}/environment-tags/{tagName}",
+      "path": "/api/v1/chat-agents/{agentId}/environment-tags/{tagName}",
+      "method": "delete",
+      "operationId": "deleteChatAgentEnvironmentTag"
     },
     {
       "sourcePath": "/api/chat-agents/{agentId}/publish",
@@ -666,6 +714,90 @@
       "path": "/api/v1/calls/{callId}/monitor",
       "method": "post",
       "operationId": "createCallMonitorSession"
+    },
+    {
+      "sourcePath": "/api/integrations",
+      "path": "/api/v1/integrations",
+      "method": "get",
+      "operationId": "listIntegrations"
+    },
+    {
+      "sourcePath": "/api/integrations",
+      "path": "/api/v1/integrations",
+      "method": "post",
+      "operationId": "createIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/providers",
+      "path": "/api/v1/integrations/providers",
+      "method": "get",
+      "operationId": "listIntegrationProviders"
+    },
+    {
+      "sourcePath": "/api/integrations/crm",
+      "path": "/api/v1/integrations/crm",
+      "method": "get",
+      "operationId": "getIntegrationCrmConfig"
+    },
+    {
+      "sourcePath": "/api/integrations/crm/fields",
+      "path": "/api/v1/integrations/crm/fields",
+      "method": "post",
+      "operationId": "createIntegrationContactField"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}",
+      "path": "/api/v1/integrations/{connectionId}",
+      "method": "get",
+      "operationId": "getIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}",
+      "path": "/api/v1/integrations/{connectionId}",
+      "method": "patch",
+      "operationId": "updateIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}",
+      "path": "/api/v1/integrations/{connectionId}",
+      "method": "delete",
+      "operationId": "deleteIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/test",
+      "path": "/api/v1/integrations/{connectionId}/test",
+      "method": "post",
+      "operationId": "testIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/usages",
+      "path": "/api/v1/integrations/{connectionId}/usages",
+      "method": "get",
+      "operationId": "listIntegrationUsages"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/crm-schema",
+      "path": "/api/v1/integrations/{connectionId}/crm-schema",
+      "method": "get",
+      "operationId": "getIntegrationCrmSchema"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/mappings",
+      "path": "/api/v1/integrations/{connectionId}/mappings",
+      "method": "get",
+      "operationId": "getIntegrationMappings"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/mappings",
+      "path": "/api/v1/integrations/{connectionId}/mappings",
+      "method": "put",
+      "operationId": "updateIntegrationMappings"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/contact-sync",
+      "path": "/api/v1/integrations/{connectionId}/contact-sync",
+      "method": "patch",
+      "operationId": "updateIntegrationContactSync"
     }
   ],
   "components": {
@@ -702,7 +834,10 @@
       "FromDateQuery",
       "ToDateQuery",
       "IncludeArchivedQuery",
-      "IncludeChildCallsQuery"
+      "IncludeChildCallsQuery",
+      "RequiredVersionQuery",
+      "TagNamePath",
+      "IncludeDetectedVariablesQuery"
     ],
     "schemas": [
       "LlmSummary",
@@ -854,7 +989,16 @@
       "VoiceSimulationHostedFunction",
       "VoiceSimulationDraftPatch",
       "VoiceWebhookEvent",
-      "ChatWebhookEvent"
+      "ChatWebhookEvent",
+      "EnvironmentTag",
+      "DetectedDynamicVariable",
+      "EnvironmentTagListResponse",
+      "DetectedDynamicVariablesResponse",
+      "UpdateEnvironmentTagRequest",
+      "EnvironmentTagUpdateResponse",
+      "EnvironmentTagMoveResult",
+      "PublishedAgentVersion",
+      "PublishedChatAgentVersion"
     ]
   },
   "tags": [
@@ -871,7 +1015,8 @@
     "Test Runs",
     "Account",
     "Calls",
-    "Voice Simulations"
+    "Voice Simulations",
+    "Integrations"
   ],
   "families": [
     "llms",

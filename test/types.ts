@@ -49,3 +49,17 @@ const connection = client.createWebCall({body:{workspaceId:1,agentId:'agent'}}).
   return {transport, servers, token:call.accessToken};
 });
 void connection;
+
+// Environment tags: version null unassigns; publish can move tags and report the result.
+client.updateAgentEnvironmentTag({path:{agentId:'a',tagName:'prod'},body:{workspaceId:1,version:null,dynamicVariables:{customer_name:''}}});
+client.updateChatAgentEnvironmentTag({path:{agentId:'a',tagName:'qa'},body:{workspaceId:1,version:2,create:true}});
+// @ts-expect-error Tag variable values are strings.
+client.updateAgentEnvironmentTag({path:{agentId:'a',tagName:'prod'},body:{workspaceId:1,dynamicVariables:{count:1}}});
+// @ts-expect-error Detection requires a version.
+client.detectAgentDynamicVariables({path:{agentId:'a'},query:{workspaceId:1}});
+const moved:Promise<string[]|undefined>=client.publishAgentVersion({path:{agentId:'a',version:3},body:{workspaceId:1,environmentTags:['prod']}}).then(v=>v.environmentTagUpdate?.moved);
+void moved;
+const chatMoved:Promise<Array<{tag:string;error:string}>|undefined>=client.publishChatAgentVersion({path:{agentId:'a',version:3},body:{workspaceId:1,environmentTags:['prod']}}).then(v=>v.environmentTagUpdate?.failed);
+void chatMoved;
+const tagVersion:Promise<number|null|undefined>=client.listChatAgentEnvironmentTags({path:{agentId:'a'},query:{workspaceId:1}}).then(r=>r.tags[0]?.version);
+void tagVersion;
