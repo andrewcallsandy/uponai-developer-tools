@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.7 — 2026-11-05
+
+- Correct package-local installation examples to the integration-capable version and add release validation preventing stale package version pins.
+- Coordinate SDK/MCP metadata, dependency pins and initialization version. Public API contract and runtime integration behavior are unchanged from 0.1.6.
+- Refresh the live read-only verification script for the current 37-tool default MCP catalog.
+
 ## 0.1.6 — 2026-11-04
 
 - Add 14 workspace integration SDK methods for connections, credential tests, dependency inspection, CRM field mappings and custom contact fields. Credentials remain write-only; revision checks protect shared CRM settings.
