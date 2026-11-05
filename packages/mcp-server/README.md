@@ -113,3 +113,7 @@ variables are preserved. Replacing tag variables (which overwrites the whole
 map), creating tags, deleting tags and publishing versions remain SDK/UI
 operations, because MCP summaries never reveal the values a replacement would
 overwrite.
+
+## Integration summaries
+
+The read tools `listIntegrationProviders`, `listIntegrations`, `getIntegration`, and `listIntegrationUsages` use the configured workspace allowlist. Results include connection identifiers, names, provider names, health, availability, dependencies and pagination; credentials, tenant URLs and CRM mappings are omitted. Connection creation, credential rotation, deletion and CRM writes remain SDK/API operations and are not available as MCP tools.

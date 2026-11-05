@@ -125,4 +125,18 @@ export class UponAI extends ClientCore {
   saveVoiceSimulationSchedule(args: OperationInput<'saveVoiceSimulationSchedule'>, options?: RequestOptions): Promise<OperationOutput<'saveVoiceSimulationSchedule'>> { return this.execute('saveVoiceSimulationSchedule', args, options); }
   pauseVoiceSimulationSchedule(args: OperationInput<'pauseVoiceSimulationSchedule'>, options?: RequestOptions): Promise<OperationOutput<'pauseVoiceSimulationSchedule'>> { return this.execute('pauseVoiceSimulationSchedule', args, options); }
   createCallMonitorSession(args: OperationInput<'createCallMonitorSession'>, options?: RequestOptions): Promise<OperationOutput<'createCallMonitorSession'>> { return this.execute('createCallMonitorSession', args, options); }
+  listIntegrations(args: OperationInput<'listIntegrations'>, options?: RequestOptions): Promise<OperationOutput<'listIntegrations'>> { return this.execute('listIntegrations', args, options); }
+  createIntegration(args: OperationInput<'createIntegration'>, options?: RequestOptions): Promise<OperationOutput<'createIntegration'>> { return this.execute('createIntegration', args, options); }
+  listIntegrationProviders(args: OperationInput<'listIntegrationProviders'>, options?: RequestOptions): Promise<OperationOutput<'listIntegrationProviders'>> { return this.execute('listIntegrationProviders', args, options); }
+  getIntegrationCrmConfig(args: OperationInput<'getIntegrationCrmConfig'>, options?: RequestOptions): Promise<OperationOutput<'getIntegrationCrmConfig'>> { return this.execute('getIntegrationCrmConfig', args, options); }
+  createIntegrationContactField(args: OperationInput<'createIntegrationContactField'>, options?: RequestOptions): Promise<OperationOutput<'createIntegrationContactField'>> { return this.execute('createIntegrationContactField', args, options); }
+  getIntegration(args: OperationInput<'getIntegration'>, options?: RequestOptions): Promise<OperationOutput<'getIntegration'>> { return this.execute('getIntegration', args, options); }
+  updateIntegration(args: OperationInput<'updateIntegration'>, options?: RequestOptions): Promise<OperationOutput<'updateIntegration'>> { return this.execute('updateIntegration', args, options); }
+  deleteIntegration(args: OperationInput<'deleteIntegration'>, options?: RequestOptions): Promise<OperationOutput<'deleteIntegration'>> { return this.execute('deleteIntegration', args, options); }
+  testIntegration(args: OperationInput<'testIntegration'>, options?: RequestOptions): Promise<OperationOutput<'testIntegration'>> { return this.execute('testIntegration', args, options); }
+  listIntegrationUsages(args: OperationInput<'listIntegrationUsages'>, options?: RequestOptions): Promise<OperationOutput<'listIntegrationUsages'>> { return this.execute('listIntegrationUsages', args, options); }
+  getIntegrationCrmSchema(args: OperationInput<'getIntegrationCrmSchema'>, options?: RequestOptions): Promise<OperationOutput<'getIntegrationCrmSchema'>> { return this.execute('getIntegrationCrmSchema', args, options); }
+  getIntegrationMappings(args: OperationInput<'getIntegrationMappings'>, options?: RequestOptions): Promise<OperationOutput<'getIntegrationMappings'>> { return this.execute('getIntegrationMappings', args, options); }
+  updateIntegrationMappings(args: OperationInput<'updateIntegrationMappings'>, options?: RequestOptions): Promise<OperationOutput<'updateIntegrationMappings'>> { return this.execute('updateIntegrationMappings', args, options); }
+  updateIntegrationContactSync(args: OperationInput<'updateIntegrationContactSync'>, options?: RequestOptions): Promise<OperationOutput<'updateIntegrationContactSync'>> { return this.execute('updateIntegrationContactSync', args, options); }
 }

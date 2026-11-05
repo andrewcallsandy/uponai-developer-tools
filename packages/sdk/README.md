@@ -25,7 +25,7 @@ Keep the API key on your server. Do not embed customer credentials in browser
 bundles. Each client keeps its own credential; an async `apiKey` callback can
 supply a rotated token. There are no global credentials or privileged header overrides.
 
-All 119 reviewed public operations have named methods. Inputs use `path`, `query`
+All 133 reviewed public operations have named methods. Inputs use `path`, `query`
 and `body` groups matching the public OpenAPI contract. Types include
 `OperationInput`, `OperationOutput`, `operations` and `components`.
 Multipart bodies use native `FormData`; binary endpoints return `Blob`.
@@ -111,3 +111,12 @@ await client.updateAgentEnvironmentTag({
   body: { workspaceId: 123, version: 5, dynamicVariables: { transfer_number: '+15550001' } },
 });
 ```
+
+## Workspace integrations
+
+```js
+const connections = await client.listIntegrations({ query: { workspaceId: 123 } });
+const crm = await client.getIntegrationCrmConfig({ query: { workspaceId: 123 } });
+```
+
+Integration methods manage credential-based connections and revision-aware CRM mappings. Credentials are write-only. Browser sign-in onboarding, connected-document pickers and agent tool configuration are not exposed by these methods. Inbound mappings retain phone number; outbound mappings omit it.

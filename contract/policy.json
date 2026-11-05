@@ -714,6 +714,90 @@
       "path": "/api/v1/calls/{callId}/monitor",
       "method": "post",
       "operationId": "createCallMonitorSession"
+    },
+    {
+      "sourcePath": "/api/integrations",
+      "path": "/api/v1/integrations",
+      "method": "get",
+      "operationId": "listIntegrations"
+    },
+    {
+      "sourcePath": "/api/integrations",
+      "path": "/api/v1/integrations",
+      "method": "post",
+      "operationId": "createIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/providers",
+      "path": "/api/v1/integrations/providers",
+      "method": "get",
+      "operationId": "listIntegrationProviders"
+    },
+    {
+      "sourcePath": "/api/integrations/crm",
+      "path": "/api/v1/integrations/crm",
+      "method": "get",
+      "operationId": "getIntegrationCrmConfig"
+    },
+    {
+      "sourcePath": "/api/integrations/crm/fields",
+      "path": "/api/v1/integrations/crm/fields",
+      "method": "post",
+      "operationId": "createIntegrationContactField"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}",
+      "path": "/api/v1/integrations/{connectionId}",
+      "method": "get",
+      "operationId": "getIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}",
+      "path": "/api/v1/integrations/{connectionId}",
+      "method": "patch",
+      "operationId": "updateIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}",
+      "path": "/api/v1/integrations/{connectionId}",
+      "method": "delete",
+      "operationId": "deleteIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/test",
+      "path": "/api/v1/integrations/{connectionId}/test",
+      "method": "post",
+      "operationId": "testIntegration"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/usages",
+      "path": "/api/v1/integrations/{connectionId}/usages",
+      "method": "get",
+      "operationId": "listIntegrationUsages"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/crm-schema",
+      "path": "/api/v1/integrations/{connectionId}/crm-schema",
+      "method": "get",
+      "operationId": "getIntegrationCrmSchema"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/mappings",
+      "path": "/api/v1/integrations/{connectionId}/mappings",
+      "method": "get",
+      "operationId": "getIntegrationMappings"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/mappings",
+      "path": "/api/v1/integrations/{connectionId}/mappings",
+      "method": "put",
+      "operationId": "updateIntegrationMappings"
+    },
+    {
+      "sourcePath": "/api/integrations/{connectionId}/contact-sync",
+      "path": "/api/v1/integrations/{connectionId}/contact-sync",
+      "method": "patch",
+      "operationId": "updateIntegrationContactSync"
     }
   ],
   "components": {
@@ -931,7 +1015,8 @@
     "Test Runs",
     "Account",
     "Calls",
-    "Voice Simulations"
+    "Voice Simulations",
+    "Integrations"
   ],
   "families": [
     "llms",

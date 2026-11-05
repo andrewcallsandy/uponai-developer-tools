@@ -1,5 +1,91 @@
 // Reviewed MCP operation subset; generated from public contract.
 export const catalog: Record<string, {summary:string;parameters:Array<{name:string;in:string;required?:boolean;schema:any}>}> = {
+  "listIntegrationProviders": {
+    "summary": "List available integration providers",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    ]
+  },
+  "listIntegrations": {
+    "summary": "List integration connections",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ]
+  },
+  "getIntegration": {
+    "summary": "Get an integration connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ]
+  },
+  "listIntegrationUsages": {
+    "summary": "List agents and knowledge bases using a connection",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "connectionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ]
+  },
   "listLlms": {
     "summary": "List LLMs",
     "parameters": [

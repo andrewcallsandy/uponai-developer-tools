@@ -10,7 +10,7 @@ async function connect(options){const server=await createMcpServer(options);cons
 test('invalid API credential cannot initialize MCP',async()=>{const api=new UponAI({apiKey:'invalid',fetch:async()=>new Response(null,{status:401})});await assert.rejects(()=>createMcpServer({api}),e=>e.status===401);});
 test('read-only default tools are scoped and return no configuration secrets',async()=>{
  const {api,requests}=apiRecorder(),{client,close}=await connect({api,workspaceIds:[1]});try{
- const {tools}=await client.listTools();assert.equal(tools.length,33);assert(tools.every(t=>t.annotations.readOnlyHint));assert(!tools.some(t=>/raw|delete|createPhoneCall/.test(t.name)));
+ const {tools}=await client.listTools();assert.equal(tools.length,37);assert(tools.every(t=>t.annotations.readOnlyHint));assert(!tools.some(t=>/raw|delete|createPhoneCall/.test(t.name)));
  const result=await client.callTool({name:'getAgent',arguments:{workspaceId:1,agentId:'a'}});assert(!JSON.stringify(result).includes('secret'));assert(JSON.stringify(result).includes('Public'));
  const prior=requests.length;const denied=await client.callTool({name:'getAgent',arguments:{workspaceId:2,agentId:'a'}});assert(denied.isError);assert.equal(requests.length,prior);
  const injected=await client.callTool({name:'getAgent',arguments:{workspaceId:1,agentId:'a',headers:{'X-Actor-Type':'admin'}}});assert(injected.isError);assert.equal(requests.length,prior);
@@ -168,3 +168,24 @@ for (const [tool,route] of [['setAgentEnvironmentTagVersion','agents'],['setChat
   }finally{await close();}
  });
 }
+
+test('integration reads enforce scope and strip credentials, tenant URLs and CRM configuration',async()=>{
+ const requests=[];
+ const api=new UponAI({apiKey:'private-api-key',fetch:async(url,options)=>{
+  requests.push({url,options});
+  return new Response(JSON.stringify(url.endsWith('/workspaces')?{workspaces:[{id:1,name:'One'}]}:{items:[{app_id:'app_test',name:'Sales CRM',provider:'hubspot',connection_status:'connected',connection_available:true,tenant_url:'SECRET',auth_config:{api_key:'SECRET'},crm_config:{field:'SECRET'}}],has_more:true,pagination_key:'next'}),{headers:{'content-type':'application/json'}});
+ }});
+ const {client,close}=await connect({api,workspaceIds:[1]});
+ try {
+  const {tools}=await client.listTools();
+  for(const name of ['listIntegrationProviders','listIntegrations','getIntegration','listIntegrationUsages'])assert(tools.some(t=>t.name===name&&t.annotations.readOnlyHint));
+  assert(!tools.some(t=>/createIntegration|updateIntegration|deleteIntegration|testIntegration/.test(t.name)));
+  const result=await client.callTool({name:'listIntegrations',arguments:{workspaceId:1,cursor:'previous'}});
+  const text=JSON.stringify(result);assert(!text.includes('SECRET'));assert(text.includes('app_test'));assert(text.includes('connected'));assert(text.includes('next'));
+  assert.match(requests.at(-1).url,/workspaceId=1.*cursor=previous/);
+  const n=requests.length;
+  assert((await client.callTool({name:'getIntegration',arguments:{workspaceId:2,connectionId:'app_test'}})).isError);
+  assert((await client.callTool({name:'getIntegration',arguments:{workspaceId:1,connectionId:'../escape'}})).isError);
+  assert.equal(requests.length,n);
+ }finally{await close();}
+});
