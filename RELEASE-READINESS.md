@@ -1,4 +1,22 @@
-# Release verification — 2026-10-23
+# Release verification — 2026-11-05
+
+SDK and MCP **0.1.7** are published under the `latest` npm tag through
+[the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/41942413270).
+Both packages have verified provenance for source commit `23e716dd5c313c8bd9ce496f466f44c1cd59354c` and `publish.yml`.
+Production API release `2026.11.05.0019` preceded publication, with exact equality to the reviewed 133-operation contract.
+
+- Package checks, consumer types, tarball install/import smoke and dependency audit passed.
+- A clean registry install verified 97 registry signatures, 16 attestations and zero vulnerabilities.
+- The installed SDK fetched all 11 integration providers and the production connection list.
+- The installed MCP initialized over real stdio as 0.1.7 with 37 default tools, performed integration provider/connection reads, rejected an out-of-scope workspace and omitted credentials/configuration details.
+- Both packaged README installation examples select 0.1.7. Release validation now rejects stale package install pins.
+- No external mutations were performed by this registry package verification. CRM actions, bookings and voice behavior were not tested by the package smoke checks.
+
+Version 0.1.6 was published first; 0.1.7 corrects its stale package-local installation examples without changing the public contract or integration behavior. Package metadata is immutable; 0.1.6 was not republished.
+
+Application mutation hardening, public documentation deployment and assistant activation are verified separately by the coordinated application release. Package verification does not establish their completion.
+
+# Earlier release verification — 2026-10-23
 
 SDK and MCP **0.1.5** are published under the `latest` npm tag through
 [the protected OIDC release workflow](https://github.com/andrewcallsandy/uponai-developer-tools/actions/runs/40006655635).
