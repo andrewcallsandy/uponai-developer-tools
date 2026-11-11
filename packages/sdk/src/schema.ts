@@ -2466,16 +2466,26 @@ export interface components {
         AgentSummary: {
             agent_id: string;
             agent_name?: string;
+            language?: components["schemas"]["AgentLanguage"];
             version: number;
         };
+        /**
+         * @description One supported locale or an ordered, non-empty array of distinct locales. For voice agents, the first locale is the pronunciation fallback. Choose only the languages needed by callers; the voice and speech recognition configuration must support the full selection. Applies to LLM and conversation-flow agents in every workspace. Omitted on creation defaults to en-US; omitted on update preserves the current selection.
+         * @example [
+         *       "en-US",
+         *       "es-ES"
+         *     ]
+         */
+        AgentLanguage: components["schemas"]["AgentLanguageLocale"] | components["schemas"]["AgentLanguageLocale"][];
+        /** @enum {string} */
+        AgentLanguageLocale: "en-US" | "en-IN" | "en-GB" | "en-AU" | "en-NZ" | "de-DE" | "es-ES" | "es-419" | "hi-IN" | "fr-FR" | "fr-CA" | "ja-JP" | "pt-PT" | "pt-BR" | "zh-CN" | "ru-RU" | "it-IT" | "ko-KR" | "nl-NL" | "nl-BE" | "pl-PL" | "tr-TR" | "vi-VN" | "ro-RO" | "bg-BG" | "ca-ES" | "th-TH" | "da-DK" | "fi-FI" | "el-GR" | "hu-HU" | "id-ID" | "no-NO" | "sk-SK" | "sv-SE" | "lt-LT" | "lv-LV" | "cs-CZ" | "ms-MY" | "af-ZA" | "ar-SA" | "az-AZ" | "bs-BA" | "cy-GB" | "fa-IR" | "fil-PH" | "gl-ES" | "he-IL" | "hr-HR" | "hy-AM" | "is-IS" | "kk-KZ" | "kn-IN" | "mk-MK" | "mr-IN" | "ne-NP" | "sl-SI" | "sr-RS" | "sw-KE" | "ta-IN" | "ur-IN" | "yue-CN" | "uk-UA";
         CreateAgentRequest: {
             workspaceId: number;
             agent_name: string;
             voice_id: string;
             voice_model?: components["schemas"]["VoiceModel"];
             fallback_voice_ids?: string[] | null;
-            /** @default en-US */
-            language?: string;
+            language?: components["schemas"]["AgentLanguage"];
             response_engine: components["schemas"]["ResponseEngine"];
             /**
              * Format: uri
@@ -2542,7 +2552,7 @@ export interface components {
             voice_id?: string;
             voice_model?: components["schemas"]["VoiceModel"];
             fallback_voice_ids?: string[] | null;
-            language?: string | null;
+            language?: components["schemas"]["AgentLanguage"];
             response_engine?: components["schemas"]["ResponseEngine"];
             /**
              * Format: uri
@@ -2590,7 +2600,7 @@ export interface components {
             voice_id?: string;
             voice_model?: components["schemas"]["VoiceModel"];
             fallback_voice_ids?: string[] | null;
-            language?: string;
+            language?: components["schemas"]["AgentLanguage"];
             /**
              * Format: uri
              * @description Customer receiving URL saved by the platform. Delivery uses the platform proxy. Null disables customer forwarding; omitted PATCH fields are preserved. Responses include the current agent-level destination, even for historical versions.
@@ -2717,6 +2727,7 @@ export interface components {
         };
         ChatAgentListResponse: components["schemas"]["ChatAgentSummary"][] | components["schemas"]["ChatAgentListEnvelope"];
         ChatAgentSummary: components["schemas"]["ChatAgentVersion"] & {
+            language?: components["schemas"]["AgentLanguage"];
             agent_name?: string;
             response_engine?: components["schemas"]["ChatResponseEngine"];
             auto_close_message?: string | null;
@@ -2744,6 +2755,7 @@ export interface components {
         };
         CreateChatAgentRequest: {
             workspaceId: number;
+            language?: components["schemas"]["AgentLanguage"];
             agent_name: string;
             response_engine: components["schemas"]["ChatResponseEngine"];
             auto_close_message?: string | null;
@@ -2788,6 +2800,7 @@ export interface components {
             prompt?: string | null;
         };
         ChatAgent: components["schemas"]["ChatAgentSummary"] & {
+            language?: components["schemas"]["AgentLanguage"];
             end_chat_after_silence_ms?: number | null;
             timezone?: string | null;
             /**
@@ -2823,6 +2836,7 @@ export interface components {
         };
         UpdateChatAgentRequest: {
             workspaceId: number;
+            language?: components["schemas"]["AgentLanguage"];
             agent_name?: string;
             response_engine?: components["schemas"]["ChatResponseEngine"];
             auto_close_message?: string | null;
@@ -4146,6 +4160,8 @@ export interface components {
             /** @enum {string|null} */
             outcome?: "pass" | "fail" | "error" | "inconclusive" | null;
             error_code?: string | null;
+            /** @description Redacted operation-failure details in session detail responses. Null for older runs without recorded diagnostics. Status retries check an existing call and never place another call. Worker processing passes are not call attempts. */
+            diagnostics?: components["schemas"]["VoiceSimulationDiagnostics"] | null;
             score?: number | null;
             /** Format: date-time */
             created_at?: string | null;
@@ -4439,6 +4455,21 @@ export interface components {
              * @default 0
              */
             new_scenarios?: number;
+        };
+        VoiceSimulationDiagnostics: {
+            code: string;
+            message: string;
+            next_action: string;
+            /** @enum {string} */
+            operation: "connect_call" | "stop_call" | "routing_configuration" | "register_call" | "read_call" | "voice_operation" | "simulation_operation";
+            http_status: number | null;
+            /** Format: date-time */
+            last_error_at: string | null;
+            /** @description Failed operations recorded for this run, not call attempts. */
+            failure_count: number;
+            status_retry_count: number;
+            /** @constant */
+            status_retry_limit: 6;
         };
     };
     responses: never;

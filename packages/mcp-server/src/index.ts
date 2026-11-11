@@ -1,10 +1,11 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { UponAI, UponAIError } from '@upon-ai/sdk';
+import { agentLanguageLocales } from './agentLanguages.js';
 import { catalog } from './catalog.js';
 import { voiceWebhookEvents, chatWebhookEvents } from './webhookEvents.js';
 export interface McpOptions { api: UponAI; workspaceIds?: readonly number[]; enabledWrites?: readonly string[]; }
-const writable=['updateAgentWebhookSettings','updateChatAgentWebhookSettings','setAgentEnvironmentTagVersion','setChatAgentEnvironmentTagVersion','createPhoneCall','endLiveCall','rerunCallAnalysis','estimateVoiceSimulationSession','launchVoiceSimulationSession','cancelVoiceSimulationSession','stopVoiceSimulationImprovementRun','pauseVoiceSimulationSchedule'];
+const writable=['updateAgentLanguages','updateChatAgentLanguages','updateAgentWebhookSettings','updateChatAgentWebhookSettings','setAgentEnvironmentTagVersion','setChatAgentEnvironmentTagVersion','createPhoneCall','endLiveCall','rerunCallAnalysis','estimateVoiceSimulationSession','launchVoiceSimulationSession','cancelVoiceSimulationSession','stopVoiceSimulationImprovementRun','pauseVoiceSimulationSchedule'];
 const safeFields=new Set(['app_id','connection_status','connection_available','id','name','agent_id','agent_name','llm_id','model','version','is_published','chat_id','chat_status','call_id','call_type','call_status','direction','duration_ms','start_timestamp','end_timestamp','creation_timestamp','last_modification_timestamp','workspace_id','workspaceId','knowledge_base_id','knowledge_base_name','status','voice_id','voice_name','gender','accent','language','conversation_flow_id','conversation_flow_name','concurrency','current_concurrency','concurrency_limit','active_calls','max_concurrency','success','callId','total','page','limit','totalPages','has_more','pagination_key','paginationKey','paginationKeyVersion','next_cursor','project_id','session_id','source_agent_id','draft_revision','draft_fingerprint','scenario_id','score','outcome','error_code','created_at','completed_at','cancel_requested_at','enabled','workspace_enabled','provider_allowed','per_run_price','monthly_price','currency','max_concurrent_runs','max_session_runs','run_count','maximum_surcharge','max_audio_seconds','revision','key','provider','passed','failed','inconclusive','errors','cancelled','pending','counterpart','ai','max_auto_calls','max_auto_ai','max_calls','max_ai','calls_used','ai_used','iteration','max_surcharge','surcharge_reserved','approval_version','phase','reason','current_session_id','max_cycles','cycles_started','pending_calls','next_run_at','last_campaign_id','new_scenarios','ai_model','cadence','timezone','time','weekday','month_day','call_threshold','combination','automation_mode','label','alias','tier','isDefault','assignedAt','maxTags','workingVersion']);
 const containers=new Set(['data','items','agents','llms','chats','calls','workspaces','knowledge_bases','voices','conversation_flows','versions','pagination','projects','scenarios','sessions','runs','estimate','voice_options','model_options','defaults','test_counts','improvement_runs','schedule','ai_details','model_prices','tag','variables']);
 const variableName=/^[A-Za-z_][A-Za-z0-9_.-]{0,99}$/;
@@ -16,12 +17,17 @@ export function projectResult(value:unknown,depth=0,schedule=false):unknown {
  if(value&&typeof value==='object'){
   const output:Record<string,unknown>={};
   for(const [key,v]of Object.entries(value)){
-   if(key==='webhook_url')output.webhook_configured=typeof v==='string'&&v.length>0;
+   if(key==='diagnostics'&&v&&typeof v==='object'&&!Array.isArray(v)) {
+    const fields=new Set(['code','message','next_action','operation','http_status','last_error_at','failure_count','status_retry_count','status_retry_limit']);
+    output[key]=Object.fromEntries(Object.entries(v).filter(([k,x])=>fields.has(k)&&(x===null||['string','number'].includes(typeof x))).map(([k,x])=>[k,typeof x==='string'?x.slice(0,300):x]));
+   }
+   else if(key==='webhook_url')output.webhook_configured=typeof v==='string'&&v.length>0;
    // Environment tag variable values and agent defaults are customer configuration: names only.
    else if(key==='dynamicVariables'&&v&&typeof v==='object'&&!Array.isArray(v))output.dynamicVariableNames=variableNames(Object.keys(v));
    else if(key==='tags'&&Array.isArray(v)&&v.every(x=>x&&typeof x==='object'&&!Array.isArray(x)))output[key]=projectResult(v,depth+1);
    else if(key==='defaultValue')output.hasDefaultValue=typeof v==='string';
    else if(key==='detectedVariables'&&v&&typeof v==='object'&&!Array.isArray(v))output[key]=Object.fromEntries(Object.entries(v).filter(([version,list])=>/^\d{1,9}$/.test(version)&&Array.isArray(list)).slice(0,20).map(([version,list])=>[version,projectResult(list,depth+1)]));
+   else if(key==='language'&&Array.isArray(v))output[key]=v.filter(x=>typeof x==='string'&&(agentLanguageLocales as readonly string[]).includes(x));
    else if(key==='webhook_events'&&Array.isArray(v))output[key]=v.filter(x=>[...voiceWebhookEvents,...chatWebhookEvents].includes(x));
    else if(key==='change_scope'&&Array.isArray(v))output[key]=v.filter(x=>['prompts','tools','flow','settings','analysis','knowledge','webhooks'].includes(x));
    else if(['counterpart','ai'].includes(key)&&Array.isArray(v))output[key]=v.filter(x=>typeof x==='string').slice(0,100).map(x=>x.slice(0,200));
@@ -51,7 +57,7 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
  const available=new Set(rows.map((w:any)=>w.id));
  if(requested.some(id=>!available.has(id)))throw Error('Configured workspace is not accessible');
  const allowed=new Set(requested);
- const server=new McpServer({name:'uponai',version:'0.1.7'},{instructions:'UponAI customer API tools. Only configured workspaces are accessible. Read tools return summaries; credentials, transcripts and configuration secrets are omitted. Write tools appear only when explicitly enabled by the operator.'});
+ const server=new McpServer({name:'uponai',version:'0.1.8'},{instructions:'UponAI customer API tools. Only configured workspaces are accessible. Read tools return summaries; credentials, transcripts and configuration secrets are omitted. Write tools appear only when explicitly enabled by the operator.'});
  server.registerTool('list_workspaces',{description:'List configured workspaces accessible to this API credential. Without a workspace allowlist, lists accessible workspace names for initial setup only.',inputSchema:{},annotations:{readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:true}},async()=>({content:[{type:'text',text:JSON.stringify(projectResult({workspaces:rows.filter((w:any)=>!allowed.size||allowed.has(w.id))}))}]}));
  if(!allowed.size)return server;
  const run=async(operation:string,input:any)=>{
@@ -70,6 +76,16 @@ export async function createMcpServer(options:McpOptions):Promise<McpServer>{
   });
  }
  for(const operation of options.enabledWrites||[]){
+  if(operation==='updateAgentLanguages'||operation==='updateChatAgentLanguages') {
+   const chat=operation==='updateChatAgentLanguages';
+   const locale=z.enum(agentLanguageLocales);
+   const languages=z.union([locale,z.array(locale).min(1).refine(values=>new Set(values).size===values.length,'Languages must be distinct.')]);
+   server.registerTool(operation,{description:'Set the exact ordered languages for an agent. The first locale is the voice pronunciation fallback. Works with LLM and conversation-flow agents. Requires an editable version and explicit confirmation; publish separately.',inputSchema:z.object({workspaceId:positive,agentId:identifier,version:z.number().int().nonnegative().optional(),language:languages,confirm:z.literal(true)}).strict(),annotations:{readOnlyHint:false,destructiveHint:true,idempotentHint:true,openWorldHint:true}},async(input:any)=>{
+    const {workspaceId,agentId,version,language}=input;
+    return run(chat?'updateChatAgent':'updateAgent',{path:{agentId},...(version===undefined?{}:{query:{version}}),body:{workspaceId,language}});
+   });
+   continue;
+  }
   if(operation==='updateAgentWebhookSettings'||operation==='updateChatAgentWebhookSettings') {
    const chat=operation==='updateChatAgentWebhookSettings';
    const url=z.string().url().refine(value=>{const parsed=new URL(value);return ['http:','https:'].includes(parsed.protocol)&&!parsed.username&&!parsed.password;},'Use an HTTP(S) receiving URL without embedded credentials.').nullable();

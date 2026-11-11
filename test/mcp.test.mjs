@@ -189,3 +189,31 @@ test('integration reads enforce scope and strip credentials, tenant URLs and CRM
   assert.equal(requests.length,n);
  }finally{await close();}
 });
+
+test('language arrays retain order in safe summaries',()=>{
+ assert.deepEqual(projectResult({language:['es-ES','en-US'],api_key:'secret'}),{language:['es-ES','en-US']});
+});
+for(const name of ['updateAgentLanguages','updateChatAgentLanguages']) {
+ test(name+' requires confirmation, preserves locale order and enforces workspace scope',async()=>{
+  const {api,requests}=apiRecorder();const {client,close}=await connect({api,workspaceIds:[1],enabledWrites:[name]});
+  try {
+   const args={workspaceId:1,agentId:'a',version:3,language:['es-ES','en-US'],confirm:true};
+   const count=requests.length;
+   for(const invalid of [{...args,confirm:false},{...args,language:[]},{...args,language:['multi']},{...args,language:['en-US','en-US']},{...args,workspaceId:2}]) {
+    assert((await client.callTool({name,arguments:invalid})).isError);
+   }
+   assert.equal(requests.length,count);
+   await client.callTool({name,arguments:args});
+   assert.deepEqual(JSON.parse(requests.at(-1).options.body),{workspaceId:1,language:['es-ES','en-US']});
+   assert(requests.at(-1).url.endsWith((name.includes('Chat')?'/chat-agents/a':'/agents/a')+'?version=3'));
+  } finally {await close();}
+ });
+}
+
+ test('simulation diagnostics retain actionable failure details without raw transport data',()=>{
+  const result=projectResult({runs:[{id:'run',diagnostics:{code:'SIMULATION_ROUTING_AUTH_FAILED',operation:'connect_call',http_status:400,message:'Voice routing authorization failed.',next_action:'Contact your administrator.',failure_count:1,status_retry_count:0,status_retry_limit:6,response:{token:'secret'},callback_url:'secret',account_sid:'secret'}}]});
+  assert.equal(result.runs[0].diagnostics.http_status,400);
+  assert.equal(result.runs[0].diagnostics.status_retry_count,0);
+  assert.equal(result.runs[0].diagnostics.code,'SIMULATION_ROUTING_AUTH_FAILED');
+  assert(!JSON.stringify(result).includes('secret'));
+ });

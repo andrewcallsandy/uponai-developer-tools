@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.8 — 2026-11-11
+
+- Add ordered locale arrays to voice and chat agent inputs and response types.
+- Preserve language arrays in MCP summaries and add opt-in agent language tools.
+
+- Session detail response types include nullable per-run diagnostics with safe
+  failure guidance and separate bounded status-check retry counts.
+- MCP session reads retain reviewed diagnostic fields while excluding raw
+  transport responses, callback URLs and credentials.
+
+
 ## 0.1.7 — 2026-11-05
 
 - Correct package-local installation examples to the integration-capable version and add release validation preventing stale package version pins.

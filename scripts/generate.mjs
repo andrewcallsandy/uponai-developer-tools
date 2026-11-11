@@ -32,3 +32,6 @@ fs.writeFileSync('packages/mcp-server/src/catalog.ts','// Reviewed MCP operation
 
 // Webhook inputs and safe outputs share the reviewed contract enums.
 fs.writeFileSync('packages/mcp-server/src/webhookEvents.ts', '// Generated from the approved public contract.\n'+['Voice','Chat'].map(channel=>'export const '+channel.toLowerCase()+'WebhookEvents = '+JSON.stringify(spec.components.schemas[channel+'WebhookEvent'].enum)+' as const;').join('\n')+'\n');
+
+// Agent locale inputs and safe multilingual outputs follow the public contract.
+fs.writeFileSync('packages/mcp-server/src/agentLanguages.ts', '// Generated from the approved public contract.\nexport const agentLanguageLocales = '+JSON.stringify(spec.components.schemas.AgentLanguageLocale.enum)+' as const;\n');
