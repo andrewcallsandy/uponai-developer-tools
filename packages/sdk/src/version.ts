@@ -1,1 +1,1 @@
-export const publicContractSha256 = 'b9440b1d63d510781397900dc493339c13fe3362529a16732183f99d80de0e02';
+export const publicContractSha256 = 'f821bc791d0ddf2500f405ae92af8b19231ee069aa5c094433b25624e1aae548';

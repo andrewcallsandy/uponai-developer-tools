@@ -63,3 +63,8 @@ const chatMoved:Promise<Array<{tag:string;error:string}>|undefined>=client.publi
 void chatMoved;
 const tagVersion:Promise<number|null|undefined>=client.listChatAgentEnvironmentTags({path:{agentId:'a'},query:{workspaceId:1}}).then(r=>r.tags[0]?.version);
 void tagVersion;
+
+client.updateAgent({path:{agentId:'a'},body:{workspaceId:1,language:['en-US','es-ES']}});
+client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,language:'fr-FR'}});
+// @ts-expect-error Locale values must come from the supported catalog.
+client.updateAgent({path:{agentId:'a'},body:{workspaceId:1,language:['invalid']}});

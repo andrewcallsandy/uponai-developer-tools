@@ -865,6 +865,8 @@
       "CreateLlmRequest",
       "UpdateLlmRequest",
       "AgentSummary",
+      "AgentLanguage",
+      "AgentLanguageLocale",
       "Agent",
       "ResponseEngine",
       "VoiceModel",
@@ -998,7 +1000,8 @@
       "EnvironmentTagUpdateResponse",
       "EnvironmentTagMoveResult",
       "PublishedAgentVersion",
-      "PublishedChatAgentVersion"
+      "PublishedChatAgentVersion",
+      "VoiceSimulationDiagnostics"
     ]
   },
   "tags": [

@@ -3,7 +3,7 @@
 `@upon-ai/sdk` and `@upon-ai/mcp-server`, owned by UponAI and licensed under MIT.
 
 ```sh
-npm install @upon-ai/sdk@0.1.7
+npm install @upon-ai/sdk@0.1.8
 ```
 
 [SDK guide](https://docs.uponai.com/sdk/overview/) ·
@@ -50,3 +50,19 @@ Recurring voice improvement policies are available through
 budgets and a bounded number of cycles before reapproval. MCP exposes schedule
 summaries and the optional `pauseVoiceSimulationSchedule` write capability;
 automatic recurring approval is deliberately excluded from the MCP catalog.
+
+## Agent languages
+
+Agent create/update inputs and responses accept `language` as a supported locale
+string or an ordered array. For example:
+
+```ts
+await client.updateAgent({path:{agentId:'agent_id'},query:{version:3},body:{workspaceId:58,language:['es-ES','en-US']}});
+```
+
+The first locale is the voice pronunciation fallback. Use an editable version;
+the voice and speech recognition configuration must support the entire selection.
+MCP opt-in writes `updateAgentLanguages` and `updateChatAgentLanguages` accept the
+same language values with `workspaceId`, `agentId`, optional `version`, and
+`confirm: true`. These tools do not publish. MCP read summaries preserve locale
+arrays in order. Empty and duplicate selections are rejected.
