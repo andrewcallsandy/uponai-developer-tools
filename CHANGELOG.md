@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.9 — 2026-11-16
+
+- SDK: upload and list workspace-scoped custom transfer hold music using
+  `createHoldMusic` (FormData) and `listHoldMusic`.
+- Transfer types include custom hold music and its asset identifier.
+- MCP: updated SDK dependency and contract; curated tool permissions are unchanged.
+
+
 ## 0.1.8 — 2026-11-11
 
 - Add ordered locale arrays to voice and chat agent inputs and response types.

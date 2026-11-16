@@ -67,6 +67,8 @@ export class UponAI extends ClientCore {
   cloneVoice(args: OperationInput<'cloneVoice'>, options?: RequestOptions): Promise<OperationOutput<'cloneVoice'>> { return this.execute('cloneVoice', args, options); }
   getVoice(args: OperationInput<'getVoice'>, options?: RequestOptions): Promise<OperationOutput<'getVoice'>> { return this.execute('getVoice', args, options); }
   streamVoiceSample(args: OperationInput<'streamVoiceSample'>, options?: RequestOptions): Promise<OperationOutput<'streamVoiceSample'>> { return this.execute('streamVoiceSample', args, options); }
+  listHoldMusic(args: OperationInput<'listHoldMusic'>, options?: RequestOptions): Promise<OperationOutput<'listHoldMusic'>> { return this.execute('listHoldMusic', args, options); }
+  createHoldMusic(args: OperationInput<'createHoldMusic'>, options?: RequestOptions): Promise<OperationOutput<'createHoldMusic'>> { return this.execute('createHoldMusic', args, options); }
   listTestCaseDefinitions(args: OperationInput<'listTestCaseDefinitions'>, options?: RequestOptions): Promise<OperationOutput<'listTestCaseDefinitions'>> { return this.execute('listTestCaseDefinitions', args, options); }
   createTestCaseDefinition(args: OperationInput<'createTestCaseDefinition'>, options?: RequestOptions): Promise<OperationOutput<'createTestCaseDefinition'>> { return this.execute('createTestCaseDefinition', args, options); }
   listBatchTests(args: OperationInput<'listBatchTests'>, options?: RequestOptions): Promise<OperationOutput<'listBatchTests'>> { return this.execute('listBatchTests', args, options); }

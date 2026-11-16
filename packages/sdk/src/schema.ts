@@ -963,6 +963,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/hold-music": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List hold music
+         * @description List custom transfer hold music uploaded to a workspace, newest first.
+         */
+        get: operations["listHoldMusic"];
+        put?: never;
+        /**
+         * Upload hold music
+         * @description Upload an audio file to play while a call transfer connects. Use the returned
+         *     `assetId` as `custom_on_hold_music_asset_id` with `on_hold_music: custom` on a
+         *     cold (SIP INVITE), warm, or agentic warm `transfer_option`. Accepted formats are
+         *     MP3, WAV, WebM, OGG, M4A, AAC and FLAC, up to 10 MB and 210 seconds. Uploads are
+         *     shared by every agent in the workspace and can only be used by that workspace.
+         */
+        post: operations["createHoldMusic"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/test-case-definitions": {
         parameters: {
             query?: never;
@@ -2283,7 +2311,20 @@ export interface components {
             /** @description Show the original caller as caller ID when supported. Applies to SIP INVITE transfers. */
             show_transferee_as_caller?: boolean;
             transfer_ring_duration_ms?: number;
+            /** @description Audio the caller hears while the transfer connects. Optional for cold transfers; if omitted, the existing cold-transfer audio behavior is kept. */
+            on_hold_music?: components["schemas"]["TransferOnHoldMusic"];
+            custom_on_hold_music_asset_id?: components["schemas"]["CustomOnHoldMusicAssetId"];
         };
+        /**
+         * @description Audio the caller hears while the transfer connects. Use `custom` with `custom_on_hold_music_asset_id` to play audio uploaded through `POST /api/v1/hold-music`.
+         * @enum {string}
+         */
+        TransferOnHoldMusic: "none" | "relaxing_sound" | "uplifting_beats" | "ringtone" | "custom";
+        /**
+         * @description Asset ID returned by `POST /api/v1/hold-music`. Required when `on_hold_music` is `custom`; ignored otherwise. The audio must be uploaded to the same workspace that owns the agent.
+         * @example asset_abc123def456
+         */
+        CustomOnHoldMusicAssetId: string;
         TransferOptionWarmTransfer: {
             /** @enum {string} */
             type: "warm_transfer";
@@ -2291,8 +2332,8 @@ export interface components {
             /** @description Milliseconds to wait for human detection before treating the transfer as failed. */
             agent_detection_timeout_ms?: number;
             transfer_ring_duration_ms?: number;
-            /** @enum {string} */
-            on_hold_music?: "none" | "relaxing_sound" | "uplifting_beats" | "ringtone";
+            on_hold_music?: components["schemas"]["TransferOnHoldMusic"];
+            custom_on_hold_music_asset_id?: components["schemas"]["CustomOnHoldMusicAssetId"];
             public_handoff_option?: components["schemas"]["WarmTransferHandoffOption"];
             private_handoff_option?: components["schemas"]["WarmTransferHandoffOption"];
             ivr_option?: components["schemas"]["WarmTransferPrompt"];
@@ -2315,8 +2356,8 @@ export interface components {
             /** @enum {string} */
             type: "agentic_warm_transfer";
             show_transferee_as_caller?: boolean;
-            /** @enum {string} */
-            on_hold_music?: "none" | "relaxing_sound" | "uplifting_beats" | "ringtone";
+            on_hold_music?: components["schemas"]["TransferOnHoldMusic"];
+            custom_on_hold_music_asset_id?: components["schemas"]["CustomOnHoldMusicAssetId"];
             transfer_ring_duration_ms?: number;
             public_handoff_option?: components["schemas"]["WarmTransferHandoffOption"];
             agentic_transfer_config: {
@@ -3290,6 +3331,36 @@ export interface components {
             voiceName: string;
             files: string[];
         };
+        HoldMusic: {
+            /**
+             * @description Use as `custom_on_hold_music_asset_id` on a transfer option.
+             * @example asset_abc123def456
+             */
+            assetId: string;
+            /**
+             * @description Original file name of the upload.
+             * @example lobby-theme.mp3
+             */
+            fileName: string;
+            /**
+             * @description Stored size in bytes after audio normalization.
+             * @example 4800000
+             */
+            fileSize?: number | null;
+            /**
+             * Format: date-time
+             * @example 2026-11-13T18:00:00.000Z
+             */
+            createdAt?: string;
+        };
+        CreateHoldMusicRequest: {
+            workspaceId: number;
+            /**
+             * Format: binary
+             * @description MP3, WAV, WebM, OGG, M4A, AAC or FLAC audio, up to 10 MB and 210 seconds.
+             */
+            file: string;
+        };
         TestCaseDefinition: components["schemas"]["TestCaseDefinitionInput"] & {
             test_case_definition_id: string;
             type?: string;
@@ -4171,6 +4242,21 @@ export interface components {
             completed_at?: string | null;
             report?: components["schemas"]["VoiceSimulationReport"] | null;
         };
+        VoiceSimulationDiagnostics: {
+            code: string;
+            message: string;
+            next_action: string;
+            /** @enum {string} */
+            operation: "connect_call" | "stop_call" | "routing_configuration" | "register_call" | "read_call" | "voice_operation" | "simulation_operation";
+            http_status: number | null;
+            /** Format: date-time */
+            last_error_at: string | null;
+            /** @description Failed operations recorded for this run, not call attempts. */
+            failure_count: number;
+            status_retry_count: number;
+            /** @constant */
+            status_retry_limit: 6;
+        };
         VoiceSimulationReport: {
             outcome: string;
             score?: number | null;
@@ -4455,21 +4541,6 @@ export interface components {
              * @default 0
              */
             new_scenarios?: number;
-        };
-        VoiceSimulationDiagnostics: {
-            code: string;
-            message: string;
-            next_action: string;
-            /** @enum {string} */
-            operation: "connect_call" | "stop_call" | "routing_configuration" | "register_call" | "read_call" | "voice_operation" | "simulation_operation";
-            http_status: number | null;
-            /** Format: date-time */
-            last_error_at: string | null;
-            /** @description Failed operations recorded for this run, not call attempts. */
-            failure_count: number;
-            status_retry_count: number;
-            /** @constant */
-            status_retry_limit: 6;
         };
     };
     responses: never;
@@ -6362,6 +6433,81 @@ export interface operations {
                 content: {
                     "audio/mpeg": string;
                 };
+            };
+        };
+    };
+    listHoldMusic: {
+        parameters: {
+            query: {
+                /** @description Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token. */
+                workspaceId: components["parameters"]["WorkspaceIdQuery"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Uploaded hold music. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HoldMusic"][];
+                };
+            };
+            /** @description Missing or invalid workspaceId. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Workspace not found or not accessible to this token. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    createHoldMusic: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["CreateHoldMusicRequest"];
+            };
+        };
+        responses: {
+            /** @description Uploaded hold music. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HoldMusic"];
+                };
+            };
+            /** @description Missing workspaceId or file, unsupported format, file over 10 MB, or audio longer than 210 seconds. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Workspace not found or not accessible to this token. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
