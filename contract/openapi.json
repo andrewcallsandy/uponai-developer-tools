@@ -57,6 +57,10 @@
       "description": "Discover and manage speech synthesis voices available to a workspace."
     },
     {
+      "name": "Hold Music",
+      "description": "Upload custom audio to play to callers while a call transfer connects."
+    },
+    {
       "name": "Test Case Definitions",
       "description": "Create and manage simulation test case definitions for response engines."
     },
@@ -303,6 +307,33 @@
                             "action_on_timeout": "cancel_transfer"
                           },
                           "enable_bridge_audio_cue": true
+                        }
+                      }
+                    ]
+                  }
+                },
+                "warmTransferCustomHoldMusic": {
+                  "summary": "Warm transfer with custom hold music",
+                  "value": {
+                    "workspaceId": 42,
+                    "display_name": "Support router with branded hold music",
+                    "model": "gpt-4o-mini",
+                    "general_prompt": "Help the caller, then warm transfer to a live teammate when requested.",
+                    "general_tools": [
+                      {
+                        "type": "transfer_call",
+                        "name": "warm_transfer_to_support",
+                        "description": "Warm transfer the caller to support after confirming the reason.",
+                        "transfer_destination": {
+                          "type": "predefined",
+                          "number": "+18885551212"
+                        },
+                        "transfer_option": {
+                          "type": "warm_transfer",
+                          "agent_detection_timeout_ms": 30000,
+                          "transfer_ring_duration_ms": 30000,
+                          "on_hold_music": "custom",
+                          "custom_on_hold_music_asset_id": "asset_abc123def456"
                         }
                       }
                     ]
@@ -3057,6 +3088,89 @@
           }
         },
         "operationId": "streamVoiceSample",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/hold-music": {
+      "get": {
+        "summary": "List hold music",
+        "description": "List custom transfer hold music uploaded to a workspace, newest first.",
+        "tags": [
+          "Hold Music"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/WorkspaceIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Uploaded hold music.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoldMusic"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid workspaceId."
+          },
+          "404": {
+            "description": "Workspace not found or not accessible to this token."
+          }
+        },
+        "operationId": "listHoldMusic",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Upload hold music",
+        "description": "Upload an audio file to play while a call transfer connects. Use the returned\n`assetId` as `custom_on_hold_music_asset_id` with `on_hold_music: custom` on a\ncold (SIP INVITE), warm, or agentic warm `transfer_option`. Accepted formats are\nMP3, WAV, WebM, OGG, M4A, AAC and FLAC, up to 10 MB and 210 seconds. Uploads are\nshared by every agent in the workspace and can only be used by that workspace.\n",
+        "tags": [
+          "Hold Music"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHoldMusicRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Uploaded hold music.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoldMusic"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing workspaceId or file, unsupported format, file over 10 MB, or audio longer than 210 seconds."
+          },
+          "404": {
+            "description": "Workspace not found or not accessible to this token."
+          }
+        },
+        "operationId": "createHoldMusic",
         "security": [
           {
             "bearerAuth": []
@@ -12878,8 +12992,35 @@
             "type": "integer",
             "minimum": 5000,
             "maximum": 90000
+          },
+          "on_hold_music": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransferOnHoldMusic"
+              }
+            ],
+            "description": "Audio the caller hears while the transfer connects. Optional for cold transfers; if omitted, the existing cold-transfer audio behavior is kept."
+          },
+          "custom_on_hold_music_asset_id": {
+            "$ref": "#/components/schemas/CustomOnHoldMusicAssetId"
           }
         }
+      },
+      "TransferOnHoldMusic": {
+        "type": "string",
+        "enum": [
+          "none",
+          "relaxing_sound",
+          "uplifting_beats",
+          "ringtone",
+          "custom"
+        ],
+        "description": "Audio the caller hears while the transfer connects. Use `custom` with `custom_on_hold_music_asset_id` to play audio uploaded through `POST /api/v1/hold-music`."
+      },
+      "CustomOnHoldMusicAssetId": {
+        "type": "string",
+        "description": "Asset ID returned by `POST /api/v1/hold-music`. Required when `on_hold_music` is `custom`; ignored otherwise. The audio must be uploaded to the same workspace that owns the agent.",
+        "example": "asset_abc123def456"
       },
       "TransferOptionWarmTransfer": {
         "type": "object",
@@ -12906,13 +13047,10 @@
             "maximum": 90000
           },
           "on_hold_music": {
-            "type": "string",
-            "enum": [
-              "none",
-              "relaxing_sound",
-              "uplifting_beats",
-              "ringtone"
-            ]
+            "$ref": "#/components/schemas/TransferOnHoldMusic"
+          },
+          "custom_on_hold_music_asset_id": {
+            "$ref": "#/components/schemas/CustomOnHoldMusicAssetId"
           },
           "public_handoff_option": {
             "$ref": "#/components/schemas/WarmTransferHandoffOption",
@@ -12997,13 +13135,10 @@
             "type": "boolean"
           },
           "on_hold_music": {
-            "type": "string",
-            "enum": [
-              "none",
-              "relaxing_sound",
-              "uplifting_beats",
-              "ringtone"
-            ]
+            "$ref": "#/components/schemas/TransferOnHoldMusic"
+          },
+          "custom_on_hold_music_asset_id": {
+            "$ref": "#/components/schemas/CustomOnHoldMusicAssetId"
           },
           "transfer_ring_duration_ms": {
             "type": "integer",
@@ -15922,6 +16057,53 @@
           }
         }
       },
+      "HoldMusic": {
+        "type": "object",
+        "required": [
+          "assetId",
+          "fileName"
+        ],
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "description": "Use as `custom_on_hold_music_asset_id` on a transfer option.",
+            "example": "asset_abc123def456"
+          },
+          "fileName": {
+            "type": "string",
+            "description": "Original file name of the upload.",
+            "example": "lobby-theme.mp3"
+          },
+          "fileSize": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Stored size in bytes after audio normalization.",
+            "example": 4800000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-13T18:00:00.000Z"
+          }
+        }
+      },
+      "CreateHoldMusicRequest": {
+        "type": "object",
+        "required": [
+          "workspaceId",
+          "file"
+        ],
+        "properties": {
+          "workspaceId": {
+            "type": "integer"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "MP3, WAV, WebM, OGG, M4A, AAC or FLAC audio, up to 10 MB and 210 seconds."
+          }
+        }
+      },
       "TestCaseDefinition": {
         "allOf": [
           {
@@ -18612,6 +18794,71 @@
           "status"
         ]
       },
+      "VoiceSimulationDiagnostics": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "next_action": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "connect_call",
+              "stop_call",
+              "routing_configuration",
+              "register_call",
+              "read_call",
+              "voice_operation",
+              "simulation_operation"
+            ]
+          },
+          "http_status": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "last_error_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "failure_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Failed operations recorded for this run, not call attempts."
+          },
+          "status_retry_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "status_retry_limit": {
+            "type": "integer",
+            "const": 6
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "next_action",
+          "operation",
+          "http_status",
+          "last_error_at",
+          "failure_count",
+          "status_retry_count",
+          "status_retry_limit"
+        ]
+      },
       "VoiceSimulationReport": {
         "type": "object",
         "properties": {
@@ -19553,71 +19800,6 @@
             "description": "Automatically generate this many new tests from recent real calls each cycle, in addition to the fixed approved suite."
           }
         }
-      },
-      "VoiceSimulationDiagnostics": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "next_action": {
-            "type": "string"
-          },
-          "operation": {
-            "type": "string",
-            "enum": [
-              "connect_call",
-              "stop_call",
-              "routing_configuration",
-              "register_call",
-              "read_call",
-              "voice_operation",
-              "simulation_operation"
-            ]
-          },
-          "http_status": {
-            "type": [
-              "integer",
-              "null"
-            ]
-          },
-          "last_error_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "failure_count": {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Failed operations recorded for this run, not call attempts."
-          },
-          "status_retry_count": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 6
-          },
-          "status_retry_limit": {
-            "type": "integer",
-            "const": 6
-          }
-        },
-        "required": [
-          "code",
-          "message",
-          "next_action",
-          "operation",
-          "http_status",
-          "last_error_at",
-          "failure_count",
-          "status_retry_count",
-          "status_retry_limit"
-        ]
       }
     }
   }

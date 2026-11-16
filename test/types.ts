@@ -68,3 +68,11 @@ client.updateAgent({path:{agentId:'a'},body:{workspaceId:1,language:['en-US','es
 client.updateChatAgent({path:{agentId:'a'},body:{workspaceId:1,language:'fr-FR'}});
 // @ts-expect-error Locale values must come from the supported catalog.
 client.updateAgent({path:{agentId:'a'},body:{workspaceId:1,language:['invalid']}});
+
+const holdMusic = new FormData();
+holdMusic.append('workspaceId', '1');
+holdMusic.append('file', new Blob(['audio']), 'hold.wav');
+client.createHoldMusic({body:holdMusic}).then(asset => { const id:string=asset.assetId; return id; });
+client.listHoldMusic({query:{workspaceId:1}});
+// @ts-expect-error Upload requires multipart FormData, not JSON.
+client.createHoldMusic({body:{workspaceId:1,file:'audio'}});

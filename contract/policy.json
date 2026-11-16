@@ -368,6 +368,18 @@
       "operationId": "streamVoiceSample"
     },
     {
+      "sourcePath": "/api/hold-music",
+      "path": "/api/v1/hold-music",
+      "method": "get",
+      "operationId": "listHoldMusic"
+    },
+    {
+      "sourcePath": "/api/hold-music",
+      "path": "/api/v1/hold-music",
+      "method": "post",
+      "operationId": "createHoldMusic"
+    },
+    {
       "sourcePath": "/api/test-case-definitions",
       "path": "/api/v1/test-case-definitions",
       "method": "get",
@@ -434,7 +446,7 @@
       "operationId": "getConcurrency"
     },
     {
-      "sourcePath": "/api/workspaces",
+      "sourcePath": "/api/v1/workspaces",
       "path": "/api/v1/workspaces",
       "method": "get",
       "operationId": "listWorkspaces"
@@ -848,6 +860,8 @@
       "TransferDestination",
       "TransferDestinationPredefined",
       "TransferDestinationInferred",
+      "TransferOnHoldMusic",
+      "CustomOnHoldMusicAssetId",
       "TransferOption",
       "TransferOptionColdTransfer",
       "TransferOptionWarmTransfer",
@@ -921,6 +935,8 @@
       "SearchCommunityVoiceResponse",
       "AddCommunityVoiceRequest",
       "CloneVoiceRequest",
+      "HoldMusic",
+      "CreateHoldMusicRequest",
       "TestResponseEngine",
       "TestCaseDefinitionInput",
       "TestCaseDefinition",
@@ -1013,6 +1029,7 @@
     "Conversation Flows",
     "Knowledge Bases",
     "Voices",
+    "Hold Music",
     "Test Case Definitions",
     "Batch Tests",
     "Test Runs",
@@ -1029,6 +1046,7 @@
     "conversation-flows",
     "knowledge-bases",
     "voices",
+    "hold-music",
     "test-case-definitions",
     "batch-tests",
     "test-runs",

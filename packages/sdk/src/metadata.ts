@@ -1710,6 +1710,36 @@ export const metadata = {
     "bodyType": null,
     "bodySchema": null
   },
+  "listHoldMusic": {
+    "path": "/api/v1/hold-music",
+    "method": "get",
+    "summary": "List hold music",
+    "parameters": [
+      {
+        "name": "workspaceId",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Workspace identifier. Call GET /api/v1/workspaces to list workspaces accessible to your token."
+      }
+    ],
+    "bodyRequired": false,
+    "bodyType": null,
+    "bodySchema": null
+  },
+  "createHoldMusic": {
+    "path": "/api/v1/hold-music",
+    "method": "post",
+    "summary": "Upload hold music",
+    "parameters": [],
+    "bodyRequired": true,
+    "bodyType": "multipart/form-data",
+    "bodySchema": {
+      "$ref": "#/components/schemas/CreateHoldMusicRequest"
+    }
+  },
   "listTestCaseDefinitions": {
     "path": "/api/v1/test-case-definitions",
     "method": "get",
