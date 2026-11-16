@@ -135,3 +135,16 @@ test('environment tag methods build scoped requests, allow unassignment and trea
  await assert.rejects(()=>sdk.updateAgentEnvironmentTag({path:{agentId:'a',tagName:'../admin'},body:{workspaceId:1}}),UponAIValidationError);
  assert.equal(requests.length,n);
 });
+
+test('hold music upload preserves multipart body and lets fetch set its boundary', async () => {
+ let request;
+ const sdk = new UponAI({apiKey:'test', fetch:async(url,options)=>{request={url,options};return json({assetId:'asset_test'},201);}});
+ const body = new FormData();
+ body.append('workspaceId','12');
+ body.append('file',new Blob(['audio'],{type:'audio/wav'}),'hold.wav');
+ assert.deepEqual(await sdk.createHoldMusic({body}),{assetId:'asset_test'});
+ assert.equal(request.url,'https://api.upon-ai.com/api/v1/hold-music');
+ assert.equal(request.options.method,'POST');
+ assert.equal(request.options.body,body);
+ assert.equal(new Headers(request.options.headers).has('Content-Type'),false);
+});
